@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/findbuddy.jar
+web: java -cp target/classes/:target/dependency/* -Dserver.port=$PORT -jar target/findbuddy.jar
