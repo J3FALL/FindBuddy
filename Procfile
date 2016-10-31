@@ -1,1 +1,1 @@
-web: java -jar findbuddy.jar
+web: java -jar target/findbuddy.jar
