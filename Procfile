@@ -1,0 +1,1 @@
+web: java -jar target/findbuddy-1.0.jar
