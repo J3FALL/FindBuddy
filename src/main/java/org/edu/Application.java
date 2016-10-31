@@ -7,10 +7,10 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-public class Main {
+public class Application {
 
     public static void main(String[] args) {
-        ApplicationContext app = SpringApplication.run(Main.class, args);
+        ApplicationContext app = SpringApplication.run(Application.class, args);
 //        UserDao userDao = app.getBean(UserDao.class);
 //        User user = userDao.findByName("Ilnur");
     }

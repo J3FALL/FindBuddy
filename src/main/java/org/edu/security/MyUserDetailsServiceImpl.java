@@ -24,8 +24,6 @@ public class MyUserDetailsServiceImpl implements UserDetailsService{
     @Autowired
     UserService userService;
 
-
-
     @Override
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
         User user = userService.getUser(email);

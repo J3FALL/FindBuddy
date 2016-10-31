@@ -28,9 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
 //                .passwordEncoder(encoder());
-        auth.inMemoryAuthentication()
-                .withUser("user1").password("user1Pass").roles("USER")
-                .and().withUser("admin").password("admin").roles("ADMIN");
+//        auth.inMemoryAuthentication()
+//                .withUser("user1").password("user1Pass").roles("USER")
+//                .and().withUser("admin").password("admin").roles("ADMIN");
     }
 
     @Override
@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable();
 
-        http.antMatcher("/**")
+        http
                 .authorizeRequests()
                 .anyRequest()
                 .permitAll()
