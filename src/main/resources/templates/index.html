@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
@@ -9,23 +9,18 @@
     <script src="/resources/js/bootstrap.min.js"></script>
 </head>
 <body>
-<a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
-<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="loginmodal-container">
-            <h1>Login to Your Account</h1><br/>
-            <form>
-                <input type="text" name="user" placeholder="Username"/>
-                <input type="password" name="pass" placeholder="Password"/>
-                <input type="submit" name="login" class="login loginmodal-submit" value="Login"/>
-            </form>
-
-            <div class="login-help">
-                <a href="#">Register</a> - <a href="#">Forgot Password</a>
-            </div>
-        </div>
+<a href="/login">Login</a>
+<div th:if="${username}">
+    <a href="/logout">Logout</a>
+</div>
+<div th:if="${username}">
+    <h1 th:text="'Hello ' + ${username}"></h1>
+    <div th:each="role : ${roles}">
+        <h2 th:text="'Role ' + ${role.name}"></h2>
     </div>
+</div>
+<div th:unless="${username}">
+    <h1>Hello anonymous</h1>
 </div>
 <!--<script src="../resources/js/jquery-2.1.4.js"></script>-->
 </body>

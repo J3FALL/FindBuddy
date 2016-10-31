@@ -9,9 +9,10 @@
     <version>1.0</version>
 
     <properties>
-            <spring.version>4.3.2.RELEASE</spring.version>
-            <hibernate.version>4.3.6.Final</hibernate.version>
-            <guava.version>17.0</guava.version>
+        <spring.version>4.3.2.RELEASE</spring.version>
+        <hibernate.version>4.3.6.Final</hibernate.version>
+        <guava.version>17.0</guava.version>
+        <spring.security.version>4.0.1.RELEASE</spring.security.version>
     </properties>
 
     <parent>
@@ -23,11 +24,30 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
@@ -84,6 +104,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>

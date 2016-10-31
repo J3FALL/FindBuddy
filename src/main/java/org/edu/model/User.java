@@ -60,7 +60,7 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     public String getName() {
         return name;
     }
@@ -78,7 +78,7 @@ public class User implements Serializable {
         this.surname = surname;
     }
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     public String getPassword() {
         return password;
     }
@@ -87,7 +87,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     public String getEmail() {
         return email;
     }

@@ -1,6 +1,5 @@
 package org.edu.dao.impl;
 
-import org.edu.dao.IUserDao;
 import org.edu.dao.common.AbstractHibernateDao;
 import org.edu.model.User;
 import org.hibernate.Query;
@@ -9,9 +8,9 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class UserDao extends AbstractHibernateDao<User> implements IUserDao {
+public class UserDaoImpl extends AbstractHibernateDao<User> implements org.edu.dao.UserDao {
 
-    public UserDao() {
+    public UserDaoImpl() {
         super();
 
         setClazz(User.class);
@@ -28,7 +27,11 @@ public class UserDao extends AbstractHibernateDao<User> implements IUserDao {
 
     @Override
     public User findByEmail(String email) {
-        return null;
+        Session session =  getCurrentSession();
+        Query query = session.createQuery("from " + clazz.getName() + " where email = :email");
+        query.setParameter("email", email);
+        User user = (User) query.uniqueResult();
+        return user;
     }
 
 }

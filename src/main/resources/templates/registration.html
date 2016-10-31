@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/resources/js/jquery-3.1.1.min.js"></script>
+    <script src="/resources/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/resources/css/login.css"/>
+</head>
+<body>
+<div class="container">
+    <form class="form-signin" action="/perform_registration" method="post">
+        <h2 class="form-signin-heading">Sign up</h2>
+        <input name="name" placeholder="Name" class="form-control"/>
+        <input name="email" placeholder="Email" class="form-control" />
+        <input name="password" placeholder="Password" class="form-control"/>
+        <!--<div class="checkbox">-->
+        <!--<label>-->
+        <!--<input type="checkbox" value="remember-me"/> Remember me-->
+        <!--</label>-->
+        <!--</div>-->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    </form>
+</div>
+</body>
+</html>
