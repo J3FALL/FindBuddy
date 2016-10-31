@@ -112,13 +112,13 @@
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>1.1.1</version>
-                <!--<configuration>-->
-                    <!--<appName>findbuddy</appName>-->
-                    <!--<warFile>findbuddy.war</warFile>-->
-                    <!--<processTypes>-->
-                        <!--<web>java -cp target/classes:target/dependency/* Application</web>-->
-                    <!--</processTypes>-->
-                <!--</configuration>-->
+                <configuration>
+                    <appName>findbuddy</appName>
+                    <warFile>findbuddy.war</warFile>
+                    <processTypes>
+                        <web>java -cp target/classes:target/dependency/* Application</web>
+                    </processTypes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -127,6 +127,31 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>findbuddy</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <archive>
+                        <manifest>
+                            <mainClass>Application</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>build-jar-with-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!--<plugin>-->
                 <!--<groupId>org.apache.maven.plugins</groupId>-->

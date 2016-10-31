@@ -1,1 +1,1 @@
-web: java -jar target/dependency/webapp-runner.jar target/findbuddy-1.0.jar
+web: java -jar findbuddy.jar
