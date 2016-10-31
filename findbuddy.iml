@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="Spring" name="Spring">
-      <configuration>
-        <fileset id="spring_boot_org.edu.Main" name="Main" removed="true">
-          <file>file://$MODULE_DIR$/src/main/java/org/edu/Main.java</file>
-        </fileset>
-        <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/main/java/org/edu/Main.java</file>
-          <file>file://$MODULE_DIR$/src/main/java/org/edu/config/PersistenceConfig.java</file>
-        </fileset>
-      </configuration>
-    </facet>
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
           <unit-entry name="sessionFactory" />
         </datasource-map>
         <naming-strategy-map />
+      </configuration>
+    </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/org/edu/Application.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/org/edu/config/PersistenceConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/org/edu/config/SecurityConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/org/edu/config/WebAppConfig.java</file>
+        </fileset>
       </configuration>
     </facet>
   </component>

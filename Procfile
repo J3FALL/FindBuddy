@@ -1,1 +1,1 @@
-web: java -jar target/findbuddy.jar
+web: java -Dserver.port=8000 -jar target/findbuddy.jar
