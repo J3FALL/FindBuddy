@@ -1,51 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/resources/css/login.css"/>
-    <script src="/resources/js/jquery-3.1.1.min.js"></script>
-    <script src="/resources/js/bootstrap.min.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../resources/css/materialize.min.css"
+          media="screen,projection"/>
+    <link rel="stylesheet" href="../resources/css/style.css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        /*body {*/
+            /*vertical-align: middle;*/
+        /*}*/
+        #login-page {
+            /*align-self: center;*/
+            display: block;
+            width: 70%;
+            max-width: 450px;
+            margin-top: 5%;
+        }
+        #email {
+            margin-left: 0;
+        }
+        #password {
+            margin-left: 0;
+        }
+    </style>
 </head>
-<body>
-<!--<a href="#" data-toggle="modal" data-target="#login-modal">Login</a>-->
-<!--<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"-->
-     <!--aria-hidden="true" style="display: none;">-->
-    <!--<div class="modal-dialog">-->
-        <!--<div class="loginmodal-container">-->
-            <!--<h1>Login to Your Account</h1><br/>-->
-            <!--<form action="/perform_login" method="post">-->
-                <!--<input type="text" name="username" placeholder="Username"/>-->
-                <!--<input type="password" name="password" placeholder="Password"/>-->
-                <!--<input type="submit" name="login" class="login loginmodal-submit"/>-->
-                <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-            <!--</form>-->
-
-            <!--<div class="login-help">-->
-                <!--<a href="#">Register</a> - <a href="#">Forgot Password</a>-->
+<body class="grey lighten-4">
+<div id="login-page" class="row center">
+    <div class="col s12 z-depth-6 card-panel">
+        <form class="login-form" action="/perform_login" method="post">
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <!--<img width="35%" src="https://pbs.twimg.com/profile_images/516299379699748864/7fHIsrhF.png" alt="" class="responsive-img valign profile-image-login">-->
+                    <h4 class="indigo-text">Please, login into your account</h4>
+                    <!--<p class="center login-form-text">Please, login into your account</p>-->
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    <i class="mdi-social-person-outline prefix"></i>
+                    <input class="validate" id="email" type="email" name="email"/>
+                    <label for="email" data-error="wrong" data-success="right" class="left-align">Email</label>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    <i class="mdi-action-lock-outline prefix"></i>
+                    <input id="password" type="password" name="password"/>
+                    <label class="left-align" for="password">Password</label>
+                </div>
+            </div>
+            <!--<div class="row">-->
+                <!--<div class="input-field col s12 m12 l12  login-text">-->
+                    <!--<input type="checkbox" id="remember-me" />-->
+                    <!--<label for="remember-me">Remember me</label>-->
+                <!--</div>-->
             <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
+            <div class="row">
+                <div class="input-field col s12">
+                    <button href="#" class="btn waves-effect waves-light col s12" type="submit">Login</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 m6 l6">
+                    <p class="margin medium-small"><a href="/registration">Register Now!</a></p>
+                </div>
+                <div class="input-field col s6 m6 l6">
+                    <p class="margin right-align medium-small"><a href="forgot-password.html">Forgot password?</a></p>
+                </div>
+            </div>
 
-<div class="container">
-
-<form class="form-signin" action="/perform_login" method="post">
-    <h2 class="form-signin-heading">Please sign in</h2>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input name="username" id="inputEmail" class="form-control" placeholder="Email address"/>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password"/>
-    <!--<div class="checkbox">-->
-        <!--<label>-->
-            <!--<input type="checkbox" value="remember-me"/> Remember me-->
-        <!--</label>-->
-    <!--</div>-->
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-</form>
-
+        </form>
+    </div>
 </div>
-<!--<script src="../resources/js/jquery-2.1.4.js"></script>-->
+<script type="text/javascript" src="../resources/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../resources/js/materialize.js"></script>
 </body>
 </html>
