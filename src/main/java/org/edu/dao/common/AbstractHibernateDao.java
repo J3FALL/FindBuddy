@@ -17,8 +17,6 @@ public abstract class AbstractHibernateDao<T extends Serializable> implements IO
     @Autowired
     private SessionFactory sessionFactory;
 
-    // API
-
     protected final void setClazz(final Class<T> clazzToSet) {
         clazz = Preconditions.checkNotNull(clazzToSet);
     }

@@ -1,5 +1,6 @@
 package org.edu.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,11 +15,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "privileges")
-public class Privilege {
+public class Privilege implements Serializable {
 
     private Long id;
     private String name;
     private List<Role> roles;
+
+    public Privilege() {
+    }
+
+    public Privilege(String name) {
+        this.name = name;
+    }
 
     @Id
     @SequenceGenerator(name = "pk2_sequence", sequenceName = "privileges_id_seq", allocationSize = 1)

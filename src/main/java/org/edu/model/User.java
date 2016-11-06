@@ -33,6 +33,20 @@ public class User implements Serializable {
     private String photo;
     private Date birthday;
 
+    public User() {
+    }
+
+    public User(List<Role> roles, String name, String surname, String password, String email, String description, String photo, Date birthday) {
+        this.roles = roles;
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.email = email;
+        this.description = description;
+        this.photo = photo;
+        this.birthday = birthday;
+    }
+
     @Id
     @SequenceGenerator(name = "pk1_sequence", sequenceName = "users_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk1_sequence")

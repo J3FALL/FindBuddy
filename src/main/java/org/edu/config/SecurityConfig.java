@@ -24,10 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-//                .passwordEncoder(encoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
 //        auth.inMemoryAuthentication()
 //                .withUser("user1").password("user1Pass").roles("USER")
 //                .and().withUser("admin").password("admin").roles("ADMIN");
@@ -40,14 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .anyRequest()
+                .antMatchers("/admin**")
+                .access("hasAuthority('WRITE_PRIVILEGE')")
+                .antMatchers("/login**","/registration","/perform_login")
                 .permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/")
-                .usernameParameter("username")
+                .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
 //                .rememberMe()
@@ -59,35 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true);
-
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/logout").authenticated()
-//                .antMatchers("/login*").permitAll()
-//                .antMatchers("/admin").access("hasRole('ADMIN')")
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .loginProcessingUrl("/perform_login")
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/login?error=true")
-//                .and()
-//                .logout().logoutSuccessUrl("/login");
-
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/login*").anonymous()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .loginProcessingUrl("/perform_login")
-//                .defaultSuccessUrl("/")
-//                .failureUrl("/login?error=true")
-//                .and()
-//                .logout().logoutSuccessUrl("/login");
-
-    }
+}
 
     @Override
     public void configure(WebSecurity web) throws Exception {

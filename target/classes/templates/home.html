@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../resources/css/materialize.min.css"
+          media="screen,projection"/>
+    <link rel="stylesheet" href="../resources/css/style.css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<style>
+    .tabs .indicator {
+        color: #bdbdbd;
+        background-color: #bdbdbd !important;
+    }
+
+    #logo {
+        margin-top: 1%;
+        color: inherit;
+        font-size: 280%
+
+    }
+
+    #logo:hover {
+        color: inherit;
+        background-color: inherit;
+    }
+</style>
+<body>
+<header>
+    <ul id="slide-out" class="side-nav fixed grey lighten-4">
+        <nav class="nav-wrapper center hide-on-med-and-down grey darken-1" href="#">
+            <a class="brand-logo hide-on-med-and-down center valign-wrapper" id="logo" href="/">FindBuddy</a>
+        </nav>
+        <li th:if="${username}" class="no-padding" id="username">
+            <ul class="collapsible collapsible-accordion">
+                <li>
+                    <a class="collapsible-header waves-effect"><i class="material-icons">perm_identity</i><span th:text="${username}"></span><i
+                            class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="waves-effect" href="#!">Профиль</a></li>
+                            <li><a class="waves-effect" href="/logout">Выход</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li th:unless="${username}"><a href="/login" class="waves-effect">Войти</a></li>
+        <li th:if="${username}"><a href="#!" class="waves-effect" style="display: none">Моя
+            лента</a></li>
+        <li><a href="#!" class="waves-effect">Все встречи</a></li>
+        <li><a href="#!" class="waves-effect">Все теги</a></li>
+        <li th:if="${username}"><a href="#!" class="waves-effect">Создать встречу</a></li>
+    </ul>
+    <nav class="#d7ccc8 grey darken-1 fixed">
+        <div class="nav-wrapper row">
+            <!--<ul class="col l1 right">-->
+            <!--<a class="waves-effect waves-light btn">button</a>-->
+            <!--</ul>-->
+            <a href="#" data-activates="slide-out" class="button-collapse"><i
+                    class="material-icons">menu</i></a>
+            <!--<a href="#" class="brand-logo hide-on-large-only">FindBuddy</a>-->
+
+            <form>
+                <div class="input-field col s10 l12" style="padding-left: 0;padding-right: 0">
+                    <input class="" id="search" type="search" placeholder=""/>
+                    <label for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+
+            </form>
+
+        </div>
+    </nav>
+    <!--<ul class="right hide-on-med-and-down">-->
+    <!--<li><a href="#!">First Sidebar Link</a></li>-->
+    <!--<li><a href="#!">Second Sidebar Link</a></li>-->
+    <!--<li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>-->
+    <!--<ul id='dropdown1' class='dropdown-content'>-->
+    <!--<li><a href="#!">First</a></li>-->
+    <!--<li><a href="#!">Second</a></li>-->
+    <!--<li><a href="#!">Third</a></li>-->
+    <!--<li><a href="#!">Fourth</a></li>-->
+    <!--</ul>-->
+    <!--</ul>-->
+</header>
+
+<main>
+    <!--<div class="container hide-on-large-only">-->
+    <!--<a href="#" data-activates="slide-out" class="button-collapse"><i-->
+    <!--class="material-icons">menu</i></a>-->
+    <!--<a href="#" class="brand-logo">FindBuddy</a>-->
+    <!--</div>-->
+
+    <div class="parallax-container">
+        <div class="row">
+            <div class="col s12 m9 l10 push-l1">
+                <div id="head" class="section">
+                    <h4>Все встречи</h4>
+                    <div class="divider"></div>
+                    <ul class="tabs">
+                        <li class="tab col s3"><a href="#test1" class="black-text">Test 1</a></li>
+                        <li class="tab col s3"><a class="active black-text" href="#test2">Test 2</a>
+                        </li>
+                        <li class="tab col s3"><a href="#test3" class="black-text">Disabled Tab</a>
+                        </li>
+                        <li class="tab col s3"><a href="#test4" class="black-text">Test 4</a></li>
+                    </ul>
+                    <div class="divider"></div>
+                </div>
+                <div id="introduction" class="section">
+                    <div class="chip">
+                        <!--<img src="images/yuna.jpg" alt="Contact Person">-->
+                        Jane Doe
+                    </div>
+                    <span class="grey-text">+1</span>
+                    <div class="row" style="margin-bottom: 0">
+                        <h5 class="col s10 l11">Content Content Content Content Content Content
+                            Content Content</h5>
+                        <h5 class="col l1 s2 right grey-text">2</h5>
+                        <!--<a class="col s2 l2 left-align">1 подписчик</a>-->
+                        <!--<a class="col s2 l2 left-align">1 подписчик</a>-->
+                        <!--<a class="col s2 l2 left-align">1 подписчик</a>-->
+                    </div>
+                    <div class="row" style="margin-bottom: 0">
+                        <ul class="inline">
+                            <li class="col s4 l3 left-align">
+                                <span class="grey-text">1 подписxbr</span>
+                            </li>
+                            <li class="col s4 l3 left-align">
+                                <span class="grey-text">60 минут</span>
+                            </li>
+                            <li class="col s4  l3 left-align">
+                                <span class="grey-text">1000 прсмотров</span>
+                            </li>
+                        </ul>
+                        <!--<span class="col s4 l2">1 подпис</span>-->
+                        <!--<span class="col s4 l2">60 минут</span>-->
+                        <!--<span class="col s4 l2">1000 просмотров</span>-->
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div id="structure" class="section scrollspy">
+                    <p>Content </p>
+                </div>
+                <div class="divider"></div>
+                <div id="initialization" class="section scrollspy">
+                    <p>Content </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--<div class="row" style="height: 100%">-->
+<!--<div class="col s4 m3 lg3 hide-on-med-and-down indigo lighten-3" style="height: 100%">-->
+<!--<ul class="">-->
+<!--<li><a href="sass.html">Sass</a></li>-->
+<!--<li><a href="badges.html">Components</a></li>-->
+<!--<li><a href="collapsible.html">Javascript</a></li>-->
+<!--<li><a href="mobile.html">Mobile</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<div class="" style="height: 100%">-->
+<!--<div class="container" style="height: 100%;">-->
+<!--<h5>This should be vertically aligned</h5>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col m3 lg3 indigo lighten-5" style="height: 100%">-->
+<!--<div class="parallax-container">-->
+<!--<h5>This should be vertically aligned</h5>-->
+<!--</div>-->
+<!--</div>-->
+
+<script type="text/javascript" src="../resources/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../resources/js/materialize.js"></script>
+<script>
+    $(".button-collapse").sideNav();
+    $('.collapsible').collapsible();
+    $('ul.tabs').tabs();
+</script>
+</body>
+</html>

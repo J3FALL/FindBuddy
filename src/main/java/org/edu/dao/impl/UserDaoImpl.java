@@ -18,11 +18,7 @@ public class UserDaoImpl extends AbstractHibernateDao<User> implements org.edu.d
 
     @Override
     public User findByName(String name) {
-        Session session =  getCurrentSession();
-        Query query = session.createQuery("from " + User.class.getName() + " where name = :name");
-        query.setParameter("name", name);
-        User user = (User) query.uniqueResult();
-        return user;
+        return null;
     }
 
     @Override

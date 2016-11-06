@@ -31,7 +31,6 @@ public class PersistenceConfig {
         sessionFactory.setDataSource(restDataSource());
         sessionFactory.setPackagesToScan(new String[]{"org.edu.model"});
         sessionFactory.setHibernateProperties(hibernateProperties());
-
         return sessionFactory;
     }
 
@@ -42,7 +41,6 @@ public class PersistenceConfig {
         dataSource.setUrl(env.getProperty("jdbc.url"));
         dataSource.setUsername(env.getProperty("jdbc.user"));
         dataSource.setPassword(env.getProperty("jdbc.pass"));
-
         return dataSource;
     }
 
