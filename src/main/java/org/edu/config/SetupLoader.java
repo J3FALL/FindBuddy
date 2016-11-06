@@ -1,6 +1,6 @@
 package org.edu.config;
 
-import org.edu.dao.PrivilegeDAO;
+import org.edu.dao.PrivilegeDao;
 import org.edu.dao.RoleDao;
 import org.edu.dao.UserDao;
 import org.edu.model.Privilege;
@@ -28,7 +28,7 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
     RoleDao roleDao;
 
     @Autowired
-    PrivilegeDAO privilegeDAO;
+    PrivilegeDao privilegeDAO;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

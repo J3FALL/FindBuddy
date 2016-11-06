@@ -30,7 +30,7 @@ public class ViewController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
-        return "login2";
+        return "login";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
