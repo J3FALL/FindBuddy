@@ -1,6 +1,6 @@
 package org.edu.config;
 
-import org.edu.dao.PrivilegeDao;
+import org.edu.dao.PrivilegeDAO;
 import org.edu.dao.RoleDao;
 import org.edu.dao.UserDao;
 import org.edu.model.Privilege;
@@ -28,7 +28,7 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
     RoleDao roleDao;
 
     @Autowired
-    PrivilegeDao privilegeDao;
+    PrivilegeDAO privilegeDAO;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -61,10 +61,10 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     @Transactional
     private Privilege createPrivilegeIfNotFound(final String name) {
-        Privilege privilege = privilegeDao.findByName(name);
+        Privilege privilege = privilegeDAO.findByName(name);
         if (privilege == null) {
             privilege = new Privilege(name);
-            privilegeDao.create(privilege);
+            privilegeDAO.create(privilege);
         }
         return privilege;
     }
