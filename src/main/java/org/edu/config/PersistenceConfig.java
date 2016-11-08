@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.Map;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -37,10 +38,26 @@ public class PersistenceConfig {
     @Bean
     public DataSource restDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+
+        String dbUrl = System.getenv("DATABASE_URL"); //get db url from environment variables
+        /*
         dataSource.setUrl(env.getProperty("jdbc.url"));
         dataSource.setUsername(env.getProperty("jdbc.user"));
         dataSource.setPassword(env.getProperty("jdbc.pass"));
+        */
+        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+        //crazy parsing of db url
+        String host = dbUrl.split("/")[2].split("@")[1].split(":")[0];
+        String port = dbUrl.split("/")[2].split("@")[1].split(":")[1];
+        String path = dbUrl.split("/")[3];
+        String username = dbUrl.split("/")[2].split(":")[0];
+        String password = dbUrl.split("/")[2].split("@")[0].split(":")[1];
+
+        dataSource.setUrl("jdbc:postgresql://" + host + ":" + port +
+                "/" + path +
+                "?sslmode=require&createDatabaseIfNotExist=true");
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
         return dataSource;
     }
 
