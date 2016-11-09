@@ -12,6 +12,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <style>
+    @media screen and (max-width: 992px) {
+        #btn-collapse {
+            width: 3%;
+            margin-left: 4%;
+            margin-right: 3%;
+        }
+
+        #search-field {
+            width: 90%;
+        }
+    }
+
+    @media screen and (max-width: 370px) {
+        #btn-collapse {
+            width: 8%;
+            margin-left: 4%;
+            margin-right: 3%;
+        }
+
+        #search-field {
+            width: 85%;
+        }
+    }
+
+    .chip {
+        margin-bottom: 0;
+    }
+
     .tabs .indicator {
         color: #bdbdbd;
         background-color: #bdbdbd !important;
@@ -28,6 +56,30 @@
         color: inherit;
         background-color: inherit;
     }
+
+    .meeting-info li {
+        display: inline;
+        margin-right: 2%;
+    }
+
+    .meeting-info {
+        margin: 0 !important;
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .meeting-header {
+        padding-left: 0 !important;
+    }
+
+    .meeting-bottom {
+        margin-bottom: 0;
+    }
+
+    .parallax-container {
+        overflow: inherit !important;
+    }
+
 </style>
 <body>
 <header>
@@ -38,36 +90,51 @@
         <li th:if="${username}" class="no-padding" id="username">
             <ul class="collapsible collapsible-accordion">
                 <li>
-                    <a class="collapsible-header waves-effect"><i class="material-icons">perm_identity</i><span th:text="${username}"></span><i
+                    <a class="collapsible-header waves-effect"><i class="material-icons">perm_identity</i><span
+                            th:text="${username}"></span><i
                             class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                         <ul>
                             <li><a class="waves-effect" href="#!">Профиль</a></li>
                             <li><a class="waves-effect" href="/logout">Выход</a></li>
+                            <li>
+                                <form class="row">
+                                    <div id="search-field" class="input-field col l12"
+                                         style="padding-left: 0;padding-right: 0">
+                                        <input class="" id="search" type="search" placeholder=""/>
+                                        <label for="search"><i
+                                                class="material-icons">search</i></label>
+                                        <i class="material-icons">close</i>
+                                    </div>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </li>
             </ul>
         </li>
         <li th:unless="${username}"><a href="/login" class="waves-effect">Войти</a></li>
-        <li th:if="${username}"><a href="#!" class="waves-effect" style="display: none">Моя
+        <li th:if="${username}"><a href="#!" class="waves-effect">Моя
             лента</a></li>
         <li><a href="#!" class="waves-effect">Все встречи</a></li>
         <li><a href="#!" class="waves-effect">Все теги</a></li>
-        <li><div class="divider"></div></li>
-        <li th:if="${username}"><a href="#!" class="waves-effect btn light-blue accent-1">Создать встречу</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li th:if="${username}"><a href="#!" class="waves-effect btn light-blue accent-1">Создать
+            встречу</a></li>
     </ul>
     <nav class="#d7ccc8 grey darken-1 fixed">
-        <div class="nav-wrapper row">
-            <a href="#" data-activates="slide-out" class="button-collapse"><i
-                    class="material-icons">menu</i></a>
-            <form>
-                <div class="input-field col s9 l12" style="padding-left: 0;padding-right: 0">
+        <div class="nav-wrapper">
+            <form class="row">
+                <a href="#" data-activates="slide-out" class="button-collapse" id="btn-collapse"><i
+                        class="material-icons">menu</i></a>
+                <div id="search-field" class="input-field col l12"
+                     style="padding-left: 0;padding-right: 0">
                     <input class="" id="search" type="search" placeholder=""/>
                     <label for="search"><i class="material-icons">search</i></label>
                     <i class="material-icons">close</i>
                 </div>
-
             </form>
 
         </div>
@@ -77,51 +144,183 @@
 <main>
     <div class="parallax-container">
         <div class="row">
-            <div class="col s12 m9 l10 push-l1">
+            <div class="col s12 m10 l10 offset-l1 offset-m1">
                 <div id="head" class="section">
-                    <h4>Все встречи</h4>
+                    <h4 class="left-align">Все встречи</h4>
                     <div class="divider"></div>
                     <ul class="tabs">
-                        <li class="tab col s3"><a href="#test1" class="black-text">Test 1</a></li>
-                        <li class="tab col s3"><a class="active black-text" href="#test2">Test 2</a>
+                        <li class="tab col s4">
+                            <a href="#test1" class="black-text">Новые</a>
                         </li>
-                        <li class="tab col s3"><a href="#test3" class="black-text">Disabled Tab</a>
+                        <li class="tab col s4">
+                            <a class="active black-text" href="#test2">Ближайшие</a>
                         </li>
-                        <li class="tab col s3"><a href="#test4" class="black-text">Test 4</a></li>
+                        <li class="tab col s4">
+                            <a href="#test3" class="black-text">Популярные</a>
+                        </li>
+                        <!--<li class="tab col s3">-->
+                        <!--<a href="#test4" class="black-text">Test 4</a>-->
+                        <!--</li>-->
                     </ul>
                     <div class="divider"></div>
                 </div>
+
                 <div id="introduction" class="section">
                     <div class="chip">
                         <!--<img src="images/yuna.jpg" alt="Contact Person">-->
-                        Jane Doe
+                        Спорт
                     </div>
-                    <span class="grey-text">+1</span>
+                    <!--<span class="grey-text">+1</span>-->
                     <div class="row" style="margin-bottom: 0">
-                        <h5 class="col s10 l11">Content Content Content Content Content Content
-                            Content Content</h5>
-                        <h5 class="col l1 s2 right grey-text">2</h5>
+                        <a href="#">
+                            <h5 class="meeting-header col s8 l9 flow-text black-text">Самая
+                                прекранся в мире
+                                встреча Самая прекранся в мире
+                                встреча
+                            </h5>
+                        </a>
+                        <div class="meeting-date col l3 s4 m3 right">
+                            <h5 class="center flow-text">2 октября</h5>
+                            <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
+                            <h5 class="flow-text center" style="margin-top: 0;">18:00</h5>
+                        </div>
                     </div>
-                    <div class="row" style="margin-bottom: 0">
-                        <ul class="inline">
-                            <li class="col s4 l3 left-align">
-                                <span class="grey-text">1 подписчик</span>
+                    <div class="row meeting-bottom">
+                        <ul class="meeting-info">
+                            <li class="">
+                                <a class="grey-text">м. Автово</a>
                             </li>
-                            <li class="col s4 l3 left-align">
-                                <span class="grey-text">60 минут</span>
+                            <li class="">
+                                <a href="#" class="grey-text">5 подписчиков</a>
                             </li>
-                            <li class="col s4  l3 left-align">
-                                <span class="grey-text">1000 просмотров</span>
+                            <li class="">
+                                <a class="grey-text"></a>
                             </li>
                         </ul>
                     </div>
+
+                    <!--<div class="row" style="margin-bottom: 0">-->
+                    <!--<ul class="inline">-->
+                    <!--<li class="col s4 l3 left-align">-->
+                    <!--<span class="grey-text">1 подписчик</span>-->
+                    <!--</li>-->
+                    <!--<li class="col s4 l3 left-align">-->
+                    <!--<span class="grey-text">60 минут</span>-->
+                    <!--</li>-->
+                    <!--<li class="col s4  l3 left-align">-->
+                    <!--<span class="grey-text">1000 просмотров</span>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
                 </div>
                 <div class="divider"></div>
-                <div id="structure" class="section scrollspy">
+                <div id="introduction1" class="section">
+                    <div class="chip">
+                        <!--<img src="images/yuna.jpg" alt="Contact Person">-->
+                        Спорт
+                    </div>
+                    <!--<span class="grey-text">+1</span>-->
+                    <div class="row" style="margin-bottom: 0; border: thin !important;">
+                        <a href="#">
+                            <h5 class="meeting-header col s8 l9 flow-text black-text">
+                                Камон пацаны на турнички
+                            </h5>
+                        </a>
+                        <div class="meeting-date col l3 s4 m3 right">
+                            <h5 class="center flow-text">2 октября</h5>
+                            <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
+                            <h5 class="flow-text center" style="margin-top: 0;">18:00</h5>
+                        </div>
+                        <div class="row meeting-bottom">
+                            <ul class="meeting-info">
+                                <li class="">
+                                    <a class="grey-text">м. Автово</a>
+                                </li>
+                                <li class="">
+                                    <a href="#" class="grey-text">5 подписчиков</a>
+                                </li>
+                                <li class="">
+                                    <a class="grey-text"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div id="introduction1" class="section">
+                    <div class="chip">
+                        <!--<img src="images/yuna.jpg" alt="Contact Person">-->
+                        Спорт
+                    </div>
+                    <!--<span class="grey-text">+1</span>-->
+                    <div class="row" style="margin-bottom: 0; border: thin !important;">
+                        <a href="#">
+                            <h5 class="meeting-header col s8 l9 flow-text black-text">
+                                Камон пацаны на турнички
+                            </h5>
+                        </a>
+                        <div class="meeting-date col l3 s4 m3 right">
+                            <h5 class="center flow-text">2 октября</h5>
+                            <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
+                            <h5 class="flow-text center" style="margin-top: 0;">18:00</h5>
+                        </div>
+                        <div class="row meeting-bottom">
+                            <ul class="meeting-info">
+                                <li class="">
+                                    <a class="grey-text">м. Автово</a>
+                                </li>
+                                <li class="">
+                                    <a href="#" class="grey-text">5 подписчиков</a>
+                                </li>
+                                <li class="">
+                                    <a class="grey-text"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div id="introduction1" class="section">
+                    <div class="chip">
+                        <!--<img src="images/yuna.jpg" alt="Contact Person">-->
+                        Спорт
+                    </div>
+                    <!--<span class="grey-text">+1</span>-->
+                    <div class="row" style="margin-bottom: 0;">
+                        <a href="#">
+                            <h5 class="meeting-header col s8 l9 flow-text black-text">
+                                Камон пацаны на турнички
+                            </h5>
+                        </a>
+                        <div class="meeting-date col l3 s4 m3 right">
+                            <h5 class="center flow-text">2 октября</h5>
+                            <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
+                            <h5 class="flow-text center" style="margin-top: 0;">18:00</h5>
+                        </div>
+                        <div class="row meeting-bottom">
+                            <ul class="meeting-info">
+                                <li class="">
+                                    <a class="grey-text">м. Автово</a>
+                                </li>
+                                <li class="">
+                                    <a href="#" class="grey-text">5 подписчиков</a>
+                                </li>
+                                <li class="">
+                                    <a class="grey-text"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div id="structure" class="section">
                     <p>Content </p>
                 </div>
                 <div class="divider"></div>
-                <div id="initialization" class="section scrollspy">
+                <div id="initialization" class="section">
+                    <p>Content </p>
+                </div>
+                <div id="initialization1" class="section">
                     <p>Content </p>
                 </div>
             </div>

@@ -48,8 +48,8 @@ public class User implements Serializable {
     }
 
     @Id
-    @SequenceGenerator(name = "pk1_sequence", sequenceName = "users_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk1_sequence")
+    @SequenceGenerator(name = "pk_users_sequence", sequenceName = "users_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk1_users_sequence")
     @Column(name = "id", unique = true, nullable = false)
     public long getId() {
         return id;
@@ -128,7 +128,7 @@ public class User implements Serializable {
         this.photo = photo;
     }
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     public Date getBirthday() {
         return birthday;
     }

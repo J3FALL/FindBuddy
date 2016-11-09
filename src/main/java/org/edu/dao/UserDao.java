@@ -8,5 +8,4 @@ public interface UserDao extends IOperations<User> {
     User findByName(String name);
 
     User findByEmail(String email);
-
 }
