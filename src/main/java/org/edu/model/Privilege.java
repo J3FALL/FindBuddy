@@ -30,7 +30,7 @@ public class Privilege implements Serializable {
 
     @Id
     @SequenceGenerator(name = "pk_privileges_sequence", sequenceName = "privileges_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk2_privileges_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_privileges_sequence")
     @Column(name = "id", unique = true, nullable = false)
     public Long getId() {
         return id;

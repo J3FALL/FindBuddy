@@ -1,6 +1,8 @@
 package org.edu.model;
 
 
+import org.hibernate.Hibernate;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -32,6 +35,7 @@ public class User implements Serializable {
     private String description;
     private String photo;
     private Date birthday;
+    private List<Comment> comments;
 
     public User() {
     }
@@ -49,7 +53,7 @@ public class User implements Serializable {
 
     @Id
     @SequenceGenerator(name = "pk_users_sequence", sequenceName = "users_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk1_users_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_users_sequence")
     @Column(name = "id", unique = true, nullable = false)
     public long getId() {
         return id;
@@ -101,7 +105,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     public String getEmail() {
         return email;
     }
@@ -151,5 +155,15 @@ public class User implements Serializable {
                 ", photo='" + photo + '\'' +
                 ", birthday=" + birthday +
                 '}';
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Comment> getComments() {
+        Hibernate.initialize(comments);
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

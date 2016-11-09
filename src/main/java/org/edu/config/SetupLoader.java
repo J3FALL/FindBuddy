@@ -1,5 +1,6 @@
 package org.edu.config;
 
+import org.edu.dao.CommentDao;
 import org.edu.dao.PrivilegeDao;
 import org.edu.dao.RoleDao;
 import org.edu.dao.UserDao;
@@ -14,7 +15,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+
+;
+
 
 @Component
 public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -29,6 +34,9 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
     PrivilegeDao privilegeDAO;
+
+    @Autowired
+    CommentDao commentDao;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -55,6 +63,7 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
         user.setPassword(passwordEncoder.encode("test"));
         user.setEmail("test@test.com");
         user.setRoles(Arrays.asList(adminRole));
+        user.setBirthday(new Date());
         userDao.create(user);
         alreadySetup = true;
     }

@@ -13,7 +13,6 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.util.Map;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -38,7 +37,6 @@ public class PersistenceConfig {
     @Bean
     public DataSource restDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-
         String dbUrl = System.getenv("DATABASE_URL"); //get db url from environment variables
         /*
         dataSource.setUrl(env.getProperty("jdbc.url"));
