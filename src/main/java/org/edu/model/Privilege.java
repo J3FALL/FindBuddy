@@ -1,11 +1,17 @@
 package org.edu.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.Hibernate;
+
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,9 +23,9 @@ import javax.persistence.Table;
 @Table(name = "privileges")
 public class Privilege implements Serializable {
 
-    private Long id;
+    private long id;
     private String name;
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
 
     public Privilege() {
     }
@@ -32,11 +38,11 @@ public class Privilege implements Serializable {
     @SequenceGenerator(name = "pk_privileges_sequence", sequenceName = "privileges_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_privileges_sequence")
     @Column(name = "id", unique = true, nullable = false)
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -49,8 +55,10 @@ public class Privilege implements Serializable {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "privileges")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "privileges", fetch = FetchType.LAZY)
     public List<Role> getRoles() {
+        Hibernate.initialize(roles);
         return roles;
     }
 

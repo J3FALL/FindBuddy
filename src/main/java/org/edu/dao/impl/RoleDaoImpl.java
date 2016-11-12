@@ -13,7 +13,6 @@ public class RoleDaoImpl extends AbstractHibernateDao<Role> implements RoleDao{
 
     public RoleDaoImpl() {
         super();
-
         setClazz(Role.class);
     }
 

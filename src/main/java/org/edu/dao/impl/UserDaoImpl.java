@@ -16,11 +16,11 @@ import java.util.List;
 
 
 @Repository
+@Transactional
 public class UserDaoImpl extends AbstractHibernateDao<User> implements UserDao {
 
     public UserDaoImpl() {
         super();
-
         setClazz(User.class);
     }
 

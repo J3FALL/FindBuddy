@@ -12,7 +12,6 @@ public class PrivilegeDaoImpl extends AbstractHibernateDao<Privilege> implements
 
     public PrivilegeDaoImpl(){
         super();
-
         setClazz(Privilege.class);
     }
 

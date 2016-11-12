@@ -3,9 +3,6 @@ package org.edu.dao.common;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by ILNUR on 29.10.2016.
- */
 public interface IOperations<T extends Serializable> {
 
     T findOne(final long id);

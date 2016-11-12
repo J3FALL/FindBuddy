@@ -1,6 +1,9 @@
 package org.edu.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
@@ -35,7 +38,7 @@ public class User implements Serializable {
     private String description;
     private String photo;
     private Date birthday;
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     public User() {
     }
@@ -63,14 +66,15 @@ public class User implements Serializable {
         this.id = id;
     }
 
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     public List<Role> getRoles() {
+        Hibernate.initialize(roles);
         return roles;
     }
 
@@ -96,6 +100,7 @@ public class User implements Serializable {
         this.surname = surname;
     }
 
+    @JsonIgnore
     @Column(nullable = false)
     public String getPassword() {
         return password;
@@ -137,26 +142,11 @@ public class User implements Serializable {
         return birthday;
     }
 
-    @Column(nullable = true)
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", roles=" + roles +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", description='" + description + '\'' +
-                ", photo='" + photo + '\'' +
-                ", birthday=" + birthday +
-                '}';
-    }
-
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Comment> getComments() {
         Hibernate.initialize(comments);
@@ -165,5 +155,20 @@ public class User implements Serializable {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", roles=" + getRoles() +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", description='" + description + '\'' +
+                ", photo='" + photo + '\'' +
+                ", birthday=" + birthday +
+                '}';
     }
 }
