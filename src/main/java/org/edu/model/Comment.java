@@ -38,7 +38,6 @@ public class Comment implements Serializable {
         this.date = date;
         this.text = text;
     }
-
     @Id
     @SequenceGenerator(name = "pk_comments_sequence", sequenceName = "comments_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_comments_sequence")
