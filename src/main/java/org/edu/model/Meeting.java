@@ -1,6 +1,8 @@
 package org.edu.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +29,23 @@ public class Meeting implements Serializable {
     private long id;
     private String title;
     private String description;
-    private Date startDate;
+    private Calendar startDate;
     private Date createDate;
     private long longitude;
     private long latitude;
     private User author;
     private List<Comment> comments = new ArrayList<>();
+
+    public Meeting() {
+
+    }
+
+    public Meeting(String title, String description, Calendar startDate) {
+        this.title = title;
+        this.description = description;
+        this.startDate = startDate;
+        createDate = Calendar.getInstance().getTime();    //save creation date
+    }
 
     @Id
     @SequenceGenerator(name = "pk_meetings_sequence", sequenceName = "meeting_id_seq", allocationSize = 1)
@@ -64,16 +78,18 @@ public class Meeting implements Serializable {
     }
 
     @Column(name = "start_date", nullable = false)
+    @JsonProperty("start_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:ss")
-    public Date getStartDate() {
+    public Calendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Calendar startDate) {
         this.startDate = startDate;
     }
 
     @Column(name = "create_date", nullable = false)
+    @JsonProperty("create_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:ss")
     public Date getCreateDate() {
         return createDate;
