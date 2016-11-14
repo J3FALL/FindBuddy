@@ -3,16 +3,7 @@ package org.edu.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,6 +27,7 @@ public class Meeting implements Serializable {
     private User author;
     private Station station_id;
     private List<Comment> comments = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     public Meeting() {
 
@@ -134,4 +126,15 @@ public class Meeting implements Serializable {
     public Station getStation() {return station_id;}
 
     public void setStation(Station station_id) {this.station_id = station_id;}
+
+    @ManyToMany
+    @JoinTable(name = "category_meetings",
+            joinColumns = @JoinColumn(name = "meeting_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {this.categories = categories; }
+
 }
