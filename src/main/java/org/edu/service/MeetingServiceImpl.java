@@ -29,17 +29,24 @@ public class MeetingServiceImpl implements MeetingService {
     public void createMeeting(Meeting meeting, Principal principal) {
         User user = userDao.findByEmail(principal.getName());
         meeting.setAuthor(user);
+        meeting.setCreateDate(Calendar.getInstance().getTime());
         meetingDao.create(meeting);
         System.out.println("Meeting has created");
     }
 
     @Override
     public Meeting getMeetingById(long id) {
-        return null;
+
+        return meetingDao.findOne(id);
     }
 
     @Override
     public boolean updateMeeting(Meeting meeting, Principal principal) {
+        User user = userDao.findByEmail(principal.getName());
+        if (user.getId() == meeting.getAuthor().getId()) {
+            meetingDao.update(meeting);
+            return true;
+        }
         return false;
     }
 
@@ -50,6 +57,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public List<Meeting> getAllMeetings() {
+
         return meetingDao.findAll();
     }
 }

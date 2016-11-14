@@ -1,6 +1,7 @@
 package org.edu.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
@@ -34,19 +35,19 @@ public class Meeting implements Serializable {
     private long longitude;
     private long latitude;
     private User author;
-    private Station station_id;
-    private List<Comment> comments = new ArrayList<>();
+    private Station station;
+    //private List<Comment> comments = new ArrayList<>();
 
     public Meeting() {
 
     }
 
-    public Meeting(String title, String description, Calendar startDate, Station station_id) {
+    public Meeting(String title, String description, Calendar startDate, Station station) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         createDate = Calendar.getInstance().getTime();//save creation date
-        this.station_id = station_id;
+        this.station = station;
     }
 
     @Id
@@ -129,9 +130,18 @@ public class Meeting implements Serializable {
         this.author = author;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "station_id")
-    public Station getStation() {return station_id;}
 
-    public void setStation(Station station_id) {this.station_id = station_id;}
+    /*public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }*/
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "station")
+    public Station getStation() {return station;}
+
+    public void setStation(Station station) {this.station = station;}
 }

@@ -76,7 +76,7 @@ public class Station implements Serializable {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Meeting> getMettings() {
+    public List<Meeting> getMeetings() {
         Hibernate.initialize(meetings);
         return meetings;
     }
