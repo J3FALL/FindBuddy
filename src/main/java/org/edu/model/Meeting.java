@@ -26,14 +26,14 @@ public class Meeting implements Serializable {
     private long longitude;
     private long latitude;
     private User author;
-<<<<<<< HEAD
+
     private Station station;
     //private List<Comment> comments = new ArrayList<>();
-=======
+
     private Station station_id;
     private List<Comment> comments = new ArrayList<>();
     private List<Category> categories = new ArrayList<>();
->>>>>>> origin/develop
+
 
     public Meeting() {
 
@@ -140,10 +140,8 @@ public class Meeting implements Serializable {
     @JoinColumn(name = "station")
     public Station getStation() {return station;}
 
-<<<<<<< HEAD
+
     public void setStation(Station station) {this.station = station;}
-=======
-    public void setStation(Station station_id) {this.station_id = station_id;}
 
     @ManyToMany
     @JoinTable(name = "category_meetings",
@@ -155,5 +153,4 @@ public class Meeting implements Serializable {
 
     public void setCategories(List<Category> categories) {this.categories = categories; }
 
->>>>>>> origin/develop
 }
