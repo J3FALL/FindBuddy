@@ -31,6 +31,7 @@ public class Category implements Serializable {
     private long id;
     private String name;
     private String color;
+    private List<User> users = new ArrayList<>();
 
     public Category() {
 
@@ -71,6 +72,16 @@ public class Category implements Serializable {
     public void setColor(String color) {
         this.color = color;
     }
+
+    @ManyToMany
+    @JoinTable(name = "category_users",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) { this.users = users; }
 
     @Override
     public String toString() {
