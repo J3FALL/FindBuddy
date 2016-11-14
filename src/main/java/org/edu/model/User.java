@@ -39,6 +39,7 @@ public class User implements Serializable {
     private String photo;
     private Date birthday;
     private List<Comment> comments = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     public User() {
     }
@@ -156,6 +157,16 @@ public class User implements Serializable {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+
+    @ManyToMany
+    @JoinTable(name = "category_users",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {this.categories = categories; }
 
     @Override
     public String toString() {
