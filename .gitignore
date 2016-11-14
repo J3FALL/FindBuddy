@@ -3,6 +3,8 @@
 *.iml
 *.iws
 
+#Heroku local
+.env
 
 # Maven
 log/
