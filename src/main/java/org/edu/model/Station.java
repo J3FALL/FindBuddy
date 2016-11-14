@@ -1,5 +1,6 @@
 package org.edu.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.Hibernate;
 
 
@@ -31,6 +32,7 @@ public class Station implements Serializable {
     private long id;
     private String name;
     private String color;
+    private List<Meeting> meetings = new ArrayList<>();
 
     public Station() {
 
@@ -72,6 +74,14 @@ public class Station implements Serializable {
         this.color = color;
     }
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Meeting> getMettings() {
+        Hibernate.initialize(meetings);
+        return meetings;
+    }
+
+    public void setMeetings(List<Meeting> meetings) {this.meetings = meetings; }
 
     @Override
     public String toString() {

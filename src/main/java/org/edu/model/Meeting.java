@@ -34,17 +34,19 @@ public class Meeting implements Serializable {
     private long longitude;
     private long latitude;
     private User author;
+    private Station station_id;
     private List<Comment> comments = new ArrayList<>();
 
     public Meeting() {
 
     }
 
-    public Meeting(String title, String description, Calendar startDate) {
+    public Meeting(String title, String description, Calendar startDate, Station station_id) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;
-        createDate = Calendar.getInstance().getTime();    //save creation date
+        createDate = Calendar.getInstance().getTime();//save creation date
+        this.station_id = station_id;
     }
 
     @Id
@@ -126,4 +128,10 @@ public class Meeting implements Serializable {
     public void setAuthor(User author) {
         this.author = author;
     }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "station_id")
+    public Station getStation() {return station_id;}
+
+    public void setStation(Station station_id) {this.station_id = station_id;}
 }
