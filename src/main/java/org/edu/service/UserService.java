@@ -1,14 +1,26 @@
 package org.edu.service;
 
+import org.edu.model.Comment;
 import org.edu.model.User;
-import org.edu.model.dto.UserDTO;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
+import java.util.List;
+
 
 @Service
 public interface UserService {
 
-    User getUser(String email);
+    User getUserById(long id);
 
-    User registerNewUser(UserDTO userDTO);
+    User getUserByEmail(String email);
+
+    User createUser(User newUser);
+
+    boolean updateUser(User user, Principal principal);
+
+    boolean deleteUser(long id, Principal principal);
+
+    List<Comment> getUserComments(long userID);
 
 }

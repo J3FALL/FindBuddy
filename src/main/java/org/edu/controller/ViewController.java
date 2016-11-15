@@ -21,7 +21,7 @@ public class ViewController {
     public String homePage(Model model, Principal principal) {
         if (principal != null) {
             String email = principal.getName();
-            User user = userService.getUser(email);
+            User user = userService.getUserByEmail(email);
             model.addAttribute("username", user.getName());
             model.addAttribute("roles", user.getRoles());
         }

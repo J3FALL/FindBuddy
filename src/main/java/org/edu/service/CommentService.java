@@ -19,7 +19,7 @@ public interface CommentService {
 
     boolean updateComment(Comment comment, Principal principal);
 
-    void removeComment(long id);
+    boolean removeComment(long id, Principal principal);
 
 
 //    List<Comment> getCommentByMeeting(Meeting meeting);

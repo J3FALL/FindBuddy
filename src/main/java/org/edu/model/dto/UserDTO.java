@@ -1,14 +1,33 @@
 package org.edu.model.dto;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-public class UserDTO {
+import org.edu.util.LocalDateDeserializer;
+import org.edu.util.LocalDateSerializer;
 
+import java.time.LocalDate;
+
+public class UserDto {
+
+    private long id;
     private String name;
     private String surname;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String email;
-    private Date birthday;
+    private LocalDate birthday;
+    private String description;
+    private String photo;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -42,18 +61,36 @@ public class UserDTO {
         this.email = email;
     }
 
-
-    public Date getBirthday() {
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+//    @JsonIgnore
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Override
     public String toString() {
-        return "UserDTO{" +
+        return "UserDto{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", password='" + password + '\'' +
