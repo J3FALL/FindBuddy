@@ -15,9 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
@@ -65,24 +65,21 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
         user.setPassword(passwordEncoder.encode("test"));
         user.setEmail("test@test.com");
         user.setRoles(Arrays.asList(adminRole));
-        user.setBirthday(new Date());
+        user.setBirthday(LocalDate.now());
 //        userDao.create(user);
         createIfNotFound(user);
         final Comment firstComment = new Comment();
         firstComment.setId(1);
-        firstComment.setDate(Calendar.getInstance());
+        firstComment.setDate(LocalDateTime.now());
         firstComment.setText("First comment!");
         firstComment.setAuthor(user);
         createIfNotFound(firstComment);
         final Comment secondComment = new Comment();
         secondComment.setId(2);
-        secondComment.setDate(Calendar.getInstance());
+        secondComment.setDate(LocalDateTime.now());
         secondComment.setText("Second comment!");
         secondComment.setAuthor(user);
         createIfNotFound(secondComment);
-        List<User> users = userDao.findAll();
-        List<Comment> comments = commentDao.findAll();
-
         alreadySetup = true;
     }
 
