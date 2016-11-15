@@ -1,10 +1,8 @@
 package org.edu.model;
 
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.codehaus.jackson.annotate.JsonBackReference;
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,23 +19,25 @@ import javax.persistence.Table;
 public class Comment implements Serializable {
 
     private long id;
-    private Calendar date;
+    private LocalDateTime date;
     private String text;
     private User author;
+//    private Meeting meeting;
 
     public Comment() {
     }
 
-    public Comment(long id, Calendar date, String text) {
+    public Comment(long id, LocalDateTime date, String text) {
         this.id = id;
         this.date = date;
         this.text = text;
     }
 
-    public Comment(Calendar date, String text) {
+    public Comment(LocalDateTime date, String text) {
         this.date = date;
         this.text = text;
     }
+
     @Id
     @SequenceGenerator(name = "pk_comments_sequence", sequenceName = "comments_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_comments_sequence")
@@ -51,12 +51,11 @@ public class Comment implements Serializable {
     }
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:ss")
-    public Calendar getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -71,7 +70,6 @@ public class Comment implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     public User getAuthor() {
         return author;
     }

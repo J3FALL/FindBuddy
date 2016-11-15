@@ -2,13 +2,13 @@ package org.edu.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,14 +37,14 @@ public class User implements Serializable {
     private String email;
     private String description;
     private String photo;
-    private Date birthday;
+    private LocalDate birthday;
     private List<Comment> comments = new ArrayList<>();
     private List<Category> categories = new ArrayList<>();
 
     public User() {
     }
 
-    public User(List<Role> roles, String name, String surname, String password, String email, String description, String photo, Date birthday) {
+    public User(List<Role> roles, String name, String surname, String password, String email, String description, String photo, LocalDate birthday) {
         this.roles = roles;
         this.name = name;
         this.surname = surname;
@@ -68,7 +68,7 @@ public class User implements Serializable {
     }
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -92,7 +92,7 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    @Column(nullable = true)
+    @Column
     public String getSurname() {
         return surname;
     }
@@ -120,7 +120,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    @Column(nullable = true)
+    @Column
     public String getDescription() {
         return description;
     }
@@ -129,7 +129,7 @@ public class User implements Serializable {
         this.description = description;
     }
 
-    @Column(nullable = true)
+    @Column
     public String getPhoto() {
         return photo;
     }
@@ -139,16 +139,15 @@ public class User implements Serializable {
     }
 
     @Column(nullable = false)
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<Comment> getComments() {
         Hibernate.initialize(comments);
         return comments;
@@ -158,7 +157,7 @@ public class User implements Serializable {
         this.comments = comments;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "category_users",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -166,7 +165,9 @@ public class User implements Serializable {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {this.categories = categories; }
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 
     @Override
     public String toString() {
