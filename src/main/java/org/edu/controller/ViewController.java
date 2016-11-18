@@ -1,7 +1,6 @@
 package org.edu.controller;
 
 import org.edu.model.User;
-import org.edu.service.StorageService;
 import org.edu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,9 +16,6 @@ public class ViewController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    StorageService storageService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String homePage(Model model, Principal principal) {

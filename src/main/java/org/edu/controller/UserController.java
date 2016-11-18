@@ -7,7 +7,6 @@ import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.CommentDto;
 import org.edu.model.dto.UserDto;
 import org.edu.service.UserService;
-import org.edu.service.impl.FileStorageService;
 import org.edu.util.GenericResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +32,6 @@ public class UserController{
 
     @Autowired
     ModelMapper modelMapper;
-
-    @Autowired
-    FileStorageService fileStorageService;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<GenericResponse> registerUser(@RequestBody UserDto newUser) {
