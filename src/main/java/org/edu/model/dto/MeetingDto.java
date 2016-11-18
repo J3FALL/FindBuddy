@@ -1,5 +1,13 @@
 package org.edu.model.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import org.edu.util.LocalDateTimeDeserializer;
+import org.edu.util.LocalDateTimeSerializer;
+
+import java.time.LocalDateTime;
+
 /**
  * Created by Pavel on 19.11.2016.
  */
@@ -10,6 +18,7 @@ public class MeetingDto {
     private String description;
     private long longitude;
     private long latitude;
+    private LocalDateTime createDate;
 
     public long getId() {
         return id;
@@ -49,5 +58,15 @@ public class MeetingDto {
 
     public void setLatitude(long latitude) {
         this.latitude = latitude;
+    }
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
 }
