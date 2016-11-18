@@ -1,10 +1,13 @@
 package org.edu.controller;
 
+import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.User;
+import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.CommentDto;
 import org.edu.model.dto.UserDto;
 import org.edu.service.UserService;
+import org.edu.service.impl.FileStorageService;
 import org.edu.util.GenericResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class UserController{
 
     @Autowired
     UserService userService;
@@ -30,11 +34,13 @@ public class UserController {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    FileStorageService fileStorageService;
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<GenericResponse> registerUser(@RequestBody UserDto newUser) {
         User user = convertToEntity(newUser);
-        userService.createUser(user);
-        System.out.println(user);
+        user = userService.createUser(user);
         if (user == null)
             return new ResponseEntity<>(new GenericResponse("Fail."), HttpStatus.BAD_REQUEST);
         else
@@ -45,7 +51,7 @@ public class UserController {
     public ResponseEntity<UserDto> getUser(@PathVariable("id") long id) {
         User user = userService.getUserById(id);
         if (user == null)
-            return new ResponseEntity<>(convertToDto((User) null), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(convertToDto(user), HttpStatus.OK);
     }
 
@@ -56,6 +62,7 @@ public class UserController {
         }
         User user = convertToEntity(userDto);
         user.setId(id);
+        System.out.println(user);
         boolean isSuccess = userService.updateUser(user, principal);
         if (isSuccess)
             return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
@@ -75,12 +82,47 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/comments", method = RequestMethod.GET)
     public ResponseEntity<List<CommentDto>> getUserComments(@PathVariable("id") long id) {
-        List<Comment> comments = userService.getUserComments(id);
+        Set<Comment> comments = userService.getUserComments(id);
+        if (comments == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         List<CommentDto> commentDtos = new ArrayList<>();
         for (Comment comment:comments) {
             commentDtos.add(convertToDto(comment));
         }
         return new ResponseEntity<>(commentDtos, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/categories", method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryDto>> getUserCategories(@PathVariable("id") long id){
+        Set<Category> categories = userService.getUserCategories(id);
+        if (categories == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<CategoryDto> categoryDtos = new ArrayList<>();
+        for (Category category:categories) {
+            categoryDtos.add(convertToDto(category));
+        }
+        return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
+//        return new ResponseEntity<>(userService.getUserCategories(id), HttpStatus.OK);
+    }
+
+//    @RequestMapping(value = "/upload_image")
+//    public void uploadUserImage(Principal principal, @RequestParam("file")MultipartFile file) {
+////        ProfileImageDto profileImageDto = new ProfileImageDto();
+////        profileImageDto.setFile(file);
+////        try {
+////            imageUtil.processProfileImage(profileImageDto, principal.getName());
+////        } catch (IOException e) {
+////            e.printStackTrace();
+////        }
+//        fileStorageService.store(file);
+//    }
+
+    private CategoryDto convertToDto(Category category) {
+        return modelMapper.map(category, CategoryDto.class);
+    }
+
+    private Category convertToEntity(CategoryDto categoryDto) {
+        return modelMapper.map(categoryDto, Category.class);
     }
 
     private UserDto convertToDto(User user) {
@@ -92,8 +134,7 @@ public class UserController {
     }
 
     private CommentDto convertToDto(Comment comment) {
-        return modelMapper.map(comment, CommentDto.class);
-    }
+        return modelMapper.map(comment, CommentDto.class);    }
 
     private Comment convertToEntity(CommentDto commentDto) {
         return modelMapper.map(commentDto, Comment.class);

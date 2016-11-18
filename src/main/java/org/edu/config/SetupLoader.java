@@ -1,9 +1,11 @@
 package org.edu.config;
 
+import org.edu.dao.CategoryDao;
 import org.edu.dao.CommentDao;
 import org.edu.dao.PrivilegeDao;
 import org.edu.dao.RoleDao;
 import org.edu.dao.UserDao;
+import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.Privilege;
 import org.edu.model.Role;
@@ -18,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Component
@@ -39,7 +43,13 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
     CommentDao commentDao;
 
     @Autowired
+    CategoryDao categoryDao;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+
+
 
 
     @Override
@@ -54,8 +64,8 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
 
         // == create initial roles
         final List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);
-        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
+        createRoleIfNotFound("ROLE_ADMIN", new HashSet<>(adminPrivileges));
+        createRoleIfNotFound("ROLE_USER", new HashSet<>(Arrays.asList(readPrivilege)));
 
         final Role adminRole = roleDao.findByName("ROLE_ADMIN");
         final User user = new User();
@@ -64,7 +74,8 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
         user.setSurname("Test");
         user.setPassword(passwordEncoder.encode("test"));
         user.setEmail("test@test.com");
-        user.setRoles(Arrays.asList(adminRole));
+        user.setRoles(new HashSet<>(Arrays.asList(adminRole)));
+//        user.setCategories(new HashSet<>(Arrays.asList(category)));
         user.setBirthday(LocalDate.now());
 //        userDao.create(user);
         createIfNotFound(user);
@@ -80,6 +91,12 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
         secondComment.setText("Second comment!");
         secondComment.setAuthor(user);
         createIfNotFound(secondComment);
+        final Category category = new Category();
+        category.setId(1);
+        category.setColor("Red");
+        category.setName("Sport");
+        category.setUsers(new HashSet<>(Arrays.asList(user)));
+        createIfNotFound(category);
         alreadySetup = true;
     }
 
@@ -94,7 +111,7 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     @Transactional
-    private Role createRoleIfNotFound(final String name, final List<Privilege> privileges) {
+    private Role createRoleIfNotFound(final String name, final Set<Privilege> privileges) {
         Role role = roleDao.findByName(name);
         if (role == null) {
             role = new Role(name);
@@ -119,5 +136,14 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
         if (comment == null)
             commentDao.create(newComment);
         return comment;
+    }
+
+    @Transactional
+    private Category createIfNotFound(final Category newCategory) {
+        Category category = categoryDao.findOne(newCategory.getId());
+        if (category == null) {
+            categoryDao.create(newCategory);
+        }
+        return category;
     }
 }

@@ -1,14 +1,10 @@
 package org.edu.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import org.hibernate.Hibernate;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,12 +19,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable{
+public class Role implements Serializable {
 
     private long id;
     private String name;
-    private List<User> users = new ArrayList<>();
-    private List<Privilege> privileges = new ArrayList<>();
+    private Set<User> users;
+    private Set<Privilege> privileges = new HashSet<>();
 
     public Role() {
     }
@@ -49,30 +45,26 @@ public class Role implements Serializable{
         this.id = id;
     }
 
-//    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "privilege_id"))
-    public List<Privilege> getPrivileges() {
-        Hibernate.initialize(privileges);
+    public Set<Privilege> getPrivileges() {
         return privileges;
     }
 
-    public void setPrivileges(List<Privilege> privileges) {
+    public void setPrivileges(Set<Privilege> privileges) {
         this.privileges = privileges;
     }
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    public List<User> getUsers() {
-        Hibernate.initialize(users);
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "roles")
+    public Set<User> getUsers() {
         return users;
     }
 
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
@@ -83,5 +75,14 @@ public class Role implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", privileges=" + privileges +
+                '}';
     }
 }

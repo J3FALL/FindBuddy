@@ -1,15 +1,9 @@
 package org.edu.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import org.hibernate.Hibernate;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +24,7 @@ import javax.persistence.Table;
 public class User implements Serializable {
 
     private long id;
-    private List<Role> roles = new ArrayList<>();
+    private Set<Role> roles = new HashSet<>();
     private String name;
     private String surname;
     private String password;
@@ -38,13 +32,13 @@ public class User implements Serializable {
     private String description;
     private String photo;
     private LocalDate birthday;
-    private List<Comment> comments = new ArrayList<>();
-    private List<Category> categories = new ArrayList<>();
+    private Set<Comment> comments = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
     public User() {
     }
 
-    public User(List<Role> roles, String name, String surname, String password, String email, String description, String photo, LocalDate birthday) {
+    public User(Set<Role> roles, String name, String surname, String password, String email, String description, String photo, LocalDate birthday) {
         this.roles = roles;
         this.name = name;
         this.surname = surname;
@@ -67,19 +61,17 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    public List<Role> getRoles() {
-        Hibernate.initialize(roles);
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -101,7 +93,6 @@ public class User implements Serializable {
         this.surname = surname;
     }
 
-    @JsonIgnore
     @Column(nullable = false)
     public String getPassword() {
         return password;
@@ -148,24 +139,20 @@ public class User implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Comment> getComments() {
-        Hibernate.initialize(comments);
+    public Set<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "category_users",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    public List<Category> getCategories() {
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "users")
+    public Set<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
 
@@ -173,7 +160,7 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", roles=" + getRoles() +
+                ", roles=" + roles +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", password='" + password + '\'' +
@@ -181,6 +168,8 @@ public class User implements Serializable {
                 ", description='" + description + '\'' +
                 ", photo='" + photo + '\'' +
                 ", birthday=" + birthday +
+                ", comments=" + comments +
+                ", categories=" + categories +
                 '}';
     }
 }
