@@ -140,4 +140,19 @@ public class Meeting implements Serializable {
 
     public void setCategories(List<Category> categories) {this.categories = categories; }*/
 
+    @Override
+    public String toString() {
+        return "Meeting {" +
+                " id = " + id +
+                ", title = " + title +
+                ", description = " + description +
+                ", create_date = " + createDate +
+                ", start_date = " + startDate +
+                ", longitude = " + longitude +
+                ", latitude = " + latitude +
+                ", author = " + author +
+                "}";
+
+
+    }
 }
