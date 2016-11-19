@@ -47,6 +47,7 @@ public class MeetingController {
         }
 
         meeting.setCreateDate(LocalDateTime.now());
+        meeting.setStartDate(LocalDateTime.now());
         meetingService.createMeeting(meeting, principal);
         return ResponseEntity.accepted().body(new GenericResponse("Successful"));
     }

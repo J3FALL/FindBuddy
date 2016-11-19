@@ -16,13 +16,13 @@ public class Meeting implements Serializable {
     private String title;
     private String description;
     private LocalDateTime createDate;
+    private LocalDateTime startDate;
     private long longitude;
     private long latitude;
     private User author;
 
     private Station station;
 
-    private Station station_id;
     //private List<Comment> comments = new ArrayList<>();
     //private List<Category> categories = new ArrayList<>();
 
@@ -75,6 +75,15 @@ public class Meeting implements Serializable {
 
     public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
+    }
+
+    @Column(name = "start_date", nullable = false)
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
     @Column(name = "longitude")
