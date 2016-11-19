@@ -1,7 +1,9 @@
 package org.edu.controller;
 
+import org.edu.converter.Converter;
 import org.edu.model.Comment;
 import org.edu.model.Meeting;
+import org.edu.model.dto.MeetingDto;
 import org.edu.service.MeetingService;
 import org.edu.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ import javax.persistence.Table;
 
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,13 +45,21 @@ public class MeetingController {
         if (principal == null) { //user did not log-in
             return ResponseEntity.badRequest().body(new GenericResponse("Please login"));
         }
+
+        meeting.setCreateDate(LocalDateTime.now());
         meetingService.createMeeting(meeting, principal);
         return ResponseEntity.accepted().body(new GenericResponse("Successful"));
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Meeting>> getAllComments() {
-        return new ResponseEntity<>(meetingService.getAllMeetings(), HttpStatus.OK);
+    public ResponseEntity<List<MeetingDto>> getAllMeetings() {
+        List<Meeting> meetings = meetingService.getAllMeetings();
+        List<MeetingDto> meetingDtos = new ArrayList<>();
+        for (Meeting meeting : meetings) {
+            meetingDtos.add(Converter.convert(meeting, MeetingDto.class));
+        }
+
+        return new ResponseEntity<>(meetingDtos, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

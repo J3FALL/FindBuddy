@@ -30,7 +30,7 @@ public class MeetingServiceImpl implements MeetingService {
     public void createMeeting(Meeting meeting, Principal principal) {
         User user = userDao.findByEmail(principal.getName());
         meeting.setAuthor(user);
-        meeting.setCreateDate(Calendar.getInstance().getTime());
+        //meeting.setCreateDate(Calendar.getInstance().getTime());
         meetingDao.create(meeting);
         System.out.println("Meeting has created");
     }
