@@ -5,9 +5,7 @@ import org.hibernate.Hibernate;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +30,7 @@ public class Station implements Serializable {
     private long id;
     private String name;
     private String color;
-    private List<Meeting> meetings = new ArrayList<>();
+    private Set<Meeting> meetings = new HashSet<>();
 
     public Station() {
 
@@ -76,12 +74,12 @@ public class Station implements Serializable {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    public List<Meeting> getMeetings() {
+    public Set<Meeting> getMeetings() {
         Hibernate.initialize(meetings);
         return meetings;
     }
 
-    public void setMeetings(List<Meeting> meetings) {this.meetings = meetings; }
+    public void setMeetings(Set<Meeting> meetings) {this.meetings = meetings; }
 
     @Override
     public String toString() {
