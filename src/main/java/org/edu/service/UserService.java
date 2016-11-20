@@ -1,11 +1,12 @@
 package org.edu.service;
 
+import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.User;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -21,6 +22,7 @@ public interface UserService {
 
     boolean deleteUser(long id, Principal principal);
 
-    List<Comment> getUserComments(long userID);
+    Set<Comment> getUserComments(long userID);
 
+    Set<Category> getUserCategories(long userID);
 }

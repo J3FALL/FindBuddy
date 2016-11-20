@@ -3,11 +3,8 @@ package org.edu.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import org.hibernate.Hibernate;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +22,7 @@ public class Privilege implements Serializable {
 
     private long id;
     private String name;
-    private List<Role> roles = new ArrayList<>();
+    private Set<Role> roles;
 
     public Privilege() {
     }
@@ -56,13 +53,12 @@ public class Privilege implements Serializable {
     }
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "privileges", fetch = FetchType.LAZY)
-    public List<Role> getRoles() {
-        Hibernate.initialize(roles);
+    @ManyToMany(mappedBy = "privileges", fetch = FetchType.EAGER)
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 }

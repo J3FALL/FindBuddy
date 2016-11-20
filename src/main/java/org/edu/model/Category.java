@@ -1,23 +1,20 @@
 package org.edu.model;
 
-import org.hibernate.Hibernate;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -31,15 +28,14 @@ public class Category implements Serializable {
     private long id;
     private String name;
     private String color;
-    private List<User> users = new ArrayList<>();
-    private List<Meeting> meetings = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
+    private Set<Meeting> meetings = new HashSet<>();
 
     public Category() {
 
     }
 
     public Category(String name, String color) {
-
         this.name = name;
         this.color = color;
     }
@@ -74,25 +70,25 @@ public class Category implements Serializable {
         this.color = color;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "category_users",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) { this.users = users; }
+    public void setUsers(Set<User> users) { this.users = users; }
 
     @ManyToMany
     @JoinTable(name = "category_meetings",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "meeting_id"))
-    public List<Meeting> getMeetings() {
+    public Set<Meeting> getMeetings() {
         return meetings;
     }
 
-    public void setMeetings(List<Meeting> meetings) {this.meetings = meetings; }
+    public void setMeetings(Set<Meeting> meetings) {this.meetings = meetings; }
 
     @Override
     public String toString() {

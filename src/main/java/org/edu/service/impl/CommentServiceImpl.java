@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -59,7 +60,7 @@ public class CommentServiceImpl implements CommentService {
         User principalUser = userDao.findByEmail(principal.getName());
         if (principalUser.getId() != user.getId())
             return false;
-        List<Comment> comments = user.getComments();
+        Set<Comment> comments = user.getComments();
         for (Comment comment : comments) {
             if (comment.getId() == id) {
                 comments.remove(comment);

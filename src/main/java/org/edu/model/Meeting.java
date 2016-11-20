@@ -1,16 +1,10 @@
 package org.edu.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
+import java.time.LocalDateTime;
 /**
  * Created by Pavel on 13.11.2016.
  */
@@ -21,29 +15,26 @@ public class Meeting implements Serializable {
     private long id;
     private String title;
     private String description;
-    private Calendar startDate;
-    private Date createDate;
+    private LocalDateTime createDate;
+    private LocalDateTime startDate;
     private long longitude;
     private long latitude;
     private User author;
 
     private Station station;
-    //private List<Comment> comments = new ArrayList<>();
 
-    private Station station_id;
-    private List<Comment> comments = new ArrayList<>();
-    private List<Category> categories = new ArrayList<>();
+    //private List<Comment> comments = new ArrayList<>();
+    //private List<Category> categories = new ArrayList<>();
 
 
     public Meeting() {
 
     }
 
-    public Meeting(String title, String description, Calendar startDate, Station station) {
+    public Meeting(String title, String description, Station station) {
         this.title = title;
         this.description = description;
-        this.startDate = startDate;
-        createDate = Calendar.getInstance().getTime();//save creation date
+        this.createDate = LocalDateTime.now();
         this.station = station;
     }
 
@@ -77,26 +68,22 @@ public class Meeting implements Serializable {
         this.description = description;
     }
 
-    @Column(name = "start_date", nullable = false)
-    @JsonProperty("start_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:ss")
-    public Calendar getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Calendar startDate) {
-        this.startDate = startDate;
-    }
-
     @Column(name = "create_date", nullable = false)
-    @JsonProperty("create_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:ss")
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
+    }
+
+    @Column(name = "start_date", nullable = false)
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
     @Column(name = "longitude")
@@ -143,7 +130,7 @@ public class Meeting implements Serializable {
 
     public void setStation(Station station) {this.station = station;}
 
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(name = "category_meetings",
             joinColumns = @JoinColumn(name = "meeting_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -151,6 +138,21 @@ public class Meeting implements Serializable {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {this.categories = categories; }
+    public void setCategories(List<Category> categories) {this.categories = categories; }*/
 
+    @Override
+    public String toString() {
+        return "Meeting {" +
+                " id = " + id +
+                ", title = " + title +
+                ", description = " + description +
+                ", create_date = " + createDate +
+                ", start_date = " + startDate +
+                ", longitude = " + longitude +
+                ", latitude = " + latitude +
+                ", author = " + author +
+                "}";
+
+
+    }
 }

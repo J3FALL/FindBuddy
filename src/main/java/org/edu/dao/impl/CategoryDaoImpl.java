@@ -7,4 +7,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class CategoryDaoImpl extends AbstractHibernateDao<Category> implements CategoryDao {
+
+    public CategoryDaoImpl() {
+        super();
+        setClazz(Category.class);
+    }
+
+
 }

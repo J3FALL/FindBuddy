@@ -5,6 +5,7 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.edu.dao.CommentDao;
 import org.edu.dao.RoleDao;
 import org.edu.dao.UserDao;
+import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.User;
 import org.edu.service.UserService;
@@ -17,7 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -56,7 +58,7 @@ public class UserServiceImpl implements UserService {
         user.setSurname(newUser.getSurname());
         user.setEmail(newUser.getEmail());
         user.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        user.setRoles(Arrays.asList(roleDao.findByName("ROLE_USER")));
+        user.setRoles(new HashSet<>(Arrays.asList(roleDao.findByName("ROLE_USER"))));
         userDao.create(user);
         return user;
     }
@@ -94,10 +96,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Comment> getUserComments(long userID) {
+    public Set<Comment> getUserComments(long userID) {
         User commentingUser = userDao.findOne(userID);
         if (commentingUser != null)
             return commentingUser.getComments();
+        return null;
+    }
+
+    @Override
+    public Set<Category> getUserCategories(long userID) {
+        User user = userDao.findOne(userID);
+        if (user != null) {
+            return user.getCategories();
+        }
         return null;
     }
 }
