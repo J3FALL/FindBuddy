@@ -21,6 +21,8 @@ public class MeetingDto {
     private long latitude;
     private LocalDateTime createDate;
     private LocalDateTime startDate;
+    private long authorId;
+    private String authorName;
 
     public long getId() {
         return id;
@@ -81,5 +83,21 @@ public class MeetingDto {
 
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
+    }
+
+    public long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(long authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String author) {
+        this.authorName = author;
     }
 }
