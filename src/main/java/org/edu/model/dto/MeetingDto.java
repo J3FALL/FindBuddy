@@ -23,6 +23,10 @@ public class MeetingDto {
     private LocalDateTime startDate;
     private long authorId;
     private String authorName;
+    private long stationId;
+    private String stationName;
+    private long categoryId;
+    private long categoryName;
 
     public long getId() {
         return id;
@@ -99,5 +103,41 @@ public class MeetingDto {
 
     public void setAuthorName(String author) {
         this.authorName = author;
+    }
+
+    @JsonProperty("station_id")
+    public long getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(long stationId) {
+        this.stationId = stationId;
+    }
+
+    @JsonProperty("station_name")
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+
+    @JsonProperty("category_id")
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    @JsonProperty("category_name")
+    public long getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(long categoryName) {
+        this.categoryName = categoryName;
     }
 }

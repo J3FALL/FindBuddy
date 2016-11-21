@@ -35,10 +35,6 @@ public class Meeting implements Serializable {
     private Set<User> subscribedUsers = new HashSet<>();
     private Station station;
 
-    //private List<Comment> comments = new ArrayList<>();
-    //private List<Category> categories = new ArrayList<>();
-
-
     public Meeting() {
 
     }
@@ -126,21 +122,11 @@ public class Meeting implements Serializable {
         this.author = author;
     }
 
-
-    /*public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }*/
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "station")
     public Station getStation() {
         return station;
     }
-
 
     public void setStation(Station station) {
         this.station = station;
@@ -155,6 +141,13 @@ public class Meeting implements Serializable {
         this.subscribedUsers = subscribedUsers;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
     public void addUser(User user) {
         this.subscribedUsers.add(user);
     }
@@ -162,18 +155,6 @@ public class Meeting implements Serializable {
     public void deleteUser(User user) {
         this.subscribedUsers.remove(user);
     }
-
-
-
-    /*@ManyToMany
-    @JoinTable(name = "category_meetings",
-            joinColumns = @JoinColumn(name = "meeting_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {this.categories = categories; }*/
 
     @Override
     public String toString() {
