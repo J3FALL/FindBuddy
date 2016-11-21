@@ -58,7 +58,7 @@ public class Role implements Serializable {
         this.privileges = privileges;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "roles")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
     public Set<User> getUsers() {
         return users;
     }
