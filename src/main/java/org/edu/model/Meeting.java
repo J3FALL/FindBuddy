@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -34,7 +35,7 @@ public class Meeting implements Serializable {
     private User author;
     private Set<User> subscribedUsers = new HashSet<>();
     private Station station;
-    //private Category category;
+    private Category category;
 
     public Meeting() {
 
@@ -142,8 +143,8 @@ public class Meeting implements Serializable {
         this.subscribedUsers = subscribedUsers;
     }
 
-    /*@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "category")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "category_id")
     public Category getCategory() {
         return category;
     }
@@ -151,7 +152,6 @@ public class Meeting implements Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
-    */
     public void addUser(User user) {
         this.subscribedUsers.add(user);
     }
