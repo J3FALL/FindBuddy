@@ -160,17 +160,6 @@ public class User implements Serializable {
         this.categories = categories;
     }
 
-    public void addCategories(List<Category> categories) {
-        for (Category category : categories) {
-            this.categories.add(category);
-        }
-    }
-
-    public void removeCategory(Category category) {
-        this.categories.remove(category);
-    }
-
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "users_meeting",
             joinColumns = @JoinColumn(name = "user_id"),
