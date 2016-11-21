@@ -20,7 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -117,15 +116,4 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public void subscribeCategories(List<Category> categories, Principal principal) {
-        User user = userDao.findByEmail(principal.getName());
-        for (int i = 0; i < categories.size(); i++) {
-            categories.set(i, categoryDao.findOne(categories.get(i).getId()));
-        }
-        if (user != null) {
-            user.addCategories(categories);
-            userDao.update(user);
-        }
-    }
 }

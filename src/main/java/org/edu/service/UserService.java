@@ -6,7 +6,6 @@ import org.edu.model.User;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Set;
 
 
@@ -26,6 +25,4 @@ public interface UserService {
     Set<Comment> getUserComments(long userID);
 
     Set<Category> getUserCategories(long userID);
-
-    void subscribeCategories(List<Category> categories, Principal principal);
 }

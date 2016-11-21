@@ -70,9 +70,21 @@ public class Category implements Serializable {
         this.color = color;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "categories")
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "category_users",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     public Set<User> getUsers() {
         return users;
+    }
+
+    public void addUser(User user) {
+        this.users.add(user);
+    }
+
+    public void removeuser(User user) {
+        this.users.remove(user);
     }
 
     public void setUsers(Set<User> users) { this.users = users; }
