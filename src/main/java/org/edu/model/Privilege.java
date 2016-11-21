@@ -52,8 +52,7 @@ public class Privilege implements Serializable {
         this.name = name;
     }
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "privileges", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "privileges")
     public Set<Role> getRoles() {
         return roles;
     }

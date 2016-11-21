@@ -73,7 +73,6 @@ public class Station implements Serializable {
         this.color = color;
     }
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Meeting> getMeetings() {
         Hibernate.initialize(meetings);
