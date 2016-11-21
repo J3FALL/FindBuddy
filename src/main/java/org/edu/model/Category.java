@@ -83,7 +83,7 @@ public class Category implements Serializable {
         this.users.add(user);
     }
 
-    public void removeuser(User user) {
+    public void deleteUser(User user) {
         this.users.remove(user);
     }
 
