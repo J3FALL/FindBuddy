@@ -1,7 +1,6 @@
 package org.edu.controller;
 
 import org.edu.converter.Converter;
-import org.edu.model.Comment;
 import org.edu.model.Meeting;
 import org.edu.model.dto.MeetingDto;
 import org.edu.service.MeetingService;
@@ -10,20 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,8 +36,8 @@ public class MeetingController {
         if (principal == null) { //user did not log-in
             return new ResponseEntity<>(new GenericResponse("Please login"), HttpStatus.BAD_GATEWAY);
         }
-
         meetingDto.setCreateDate(LocalDateTime.now());
+        meetingDto.setStartDate(LocalDateTime.now());
         Meeting meeting = Converter.convert(meetingDto, Meeting.class);
         meetingService.createMeeting(meeting, principal);
 
@@ -83,7 +74,6 @@ public class MeetingController {
 
         Meeting meeting = Converter.convert(meetingDto, Meeting.class);
         meeting.setId(id);
-        System.out.println(meeting);
         boolean isSuccess = meetingService.updateMeeting(meeting, principal);
         if (isSuccess) {
             return new ResponseEntity<>(new GenericResponse("Successful"), HttpStatus.OK);
