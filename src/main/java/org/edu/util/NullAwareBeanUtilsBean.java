@@ -13,6 +13,7 @@ public class NullAwareBeanUtilsBean extends BeanUtilsBean {
         if (value == null)
             return;
         if ((value instanceof Set) && (((Set) value).isEmpty()))
-            super.copyProperty(dest, name, value);
+            return;
+        super.copyProperty(dest, name, value);
     }
 }
