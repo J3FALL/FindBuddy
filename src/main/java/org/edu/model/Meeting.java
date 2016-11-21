@@ -135,7 +135,7 @@ public class Meeting implements Serializable {
         this.comments = comments;
     }*/
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "station")
     public Station getStation() {
         return station;
@@ -153,6 +153,14 @@ public class Meeting implements Serializable {
 
     public void setSubscribedUsers(Set<User> subscribedUsers) {
         this.subscribedUsers = subscribedUsers;
+    }
+
+    public void addUser(User user) {
+        this.subscribedUsers.add(user);
+    }
+
+    public void deleteUser(User user) {
+        this.subscribedUsers.remove(user);
     }
 
 
