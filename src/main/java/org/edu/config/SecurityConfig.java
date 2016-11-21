@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/admin**")
+                .antMatchers("/admin**", "/categories/new")
                 .access("hasAuthority('WRITE_PRIVILEGE')")
                 .antMatchers("/login**","/registration","/perform_login")
                 .permitAll()
