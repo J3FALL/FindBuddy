@@ -34,6 +34,7 @@ public class Meeting implements Serializable {
     private User author;
     private Set<User> subscribedUsers = new HashSet<>();
     private Station station;
+    //private Category category;
 
     public Meeting() {
 
@@ -141,6 +142,8 @@ public class Meeting implements Serializable {
         this.subscribedUsers = subscribedUsers;
     }
 
+    /*@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "category")
     public Category getCategory() {
         return category;
     }
@@ -148,6 +151,7 @@ public class Meeting implements Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
+    */
     public void addUser(User user) {
         this.subscribedUsers.add(user);
     }

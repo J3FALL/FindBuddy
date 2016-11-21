@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -30,7 +31,7 @@ public class Category implements Serializable {
     private String name;
     private String color;
     private Set<User> users = new HashSet<>();
-    private Set<Meeting> meetings = new HashSet<>();
+    //private Set<Meeting> meetings = new HashSet<>();
 
     public Category() {
     }
@@ -89,15 +90,13 @@ public class Category implements Serializable {
 
     public void setUsers(Set<User> users) { this.users = users; }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "category_meetings",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "meeting_id"))
+    /*@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "meeting_id")
     public Set<Meeting> getMeetings() {
         return meetings;
     }
 
-    public void setMeetings(Set<Meeting> meetings) {this.meetings = meetings; }
+    public void setMeetings(Set<Meeting> meetings) {this.meetings = meetings; }*/
 
     @Override
     public String toString() {
