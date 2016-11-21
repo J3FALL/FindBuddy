@@ -134,7 +134,10 @@ public class Meeting implements Serializable {
         this.station = station;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "subscribedMeetings")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "meeting_user",
+            joinColumns = @JoinColumn(name = "meeting_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     public Set<User> getSubscribedUsers() {
         return subscribedUsers;
     }
@@ -152,6 +155,7 @@ public class Meeting implements Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
+
     public void addUser(User user) {
         this.subscribedUsers.add(user);
     }

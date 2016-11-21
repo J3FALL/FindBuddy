@@ -160,10 +160,7 @@ public class User implements Serializable {
         this.categories = categories;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "users_meeting",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "meeting_id"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "subscribedUsers")
     public Set<Meeting> getSubscribedMeetings() {
         return subscribedMeetings;
     }
