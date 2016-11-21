@@ -1,13 +1,25 @@
 package org.edu.model;
 
 
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-/**
- * Created by Pavel on 13.11.2016.
- */
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 @Entity
 @Table(name = "meetings")
 public class Meeting implements Serializable {
@@ -20,7 +32,7 @@ public class Meeting implements Serializable {
     private long longitude;
     private long latitude;
     private User author;
-
+    private Set<User> subscribedUsers = new HashSet<>();
     private Station station;
 
     //private List<Comment> comments = new ArrayList<>();
@@ -104,7 +116,7 @@ public class Meeting implements Serializable {
         this.latitude = latitude;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id")
     public User getAuthor() {
         return author;
@@ -125,10 +137,25 @@ public class Meeting implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "station")
-    public Station getStation() {return station;}
+    public Station getStation() {
+        return station;
+    }
 
 
-    public void setStation(Station station) {this.station = station;}
+    public void setStation(Station station) {
+        this.station = station;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "subscribedMeetings")
+    public Set<User> getSubscribedUsers() {
+        return subscribedUsers;
+    }
+
+    public void setSubscribedUsers(Set<User> subscribedUsers) {
+        this.subscribedUsers = subscribedUsers;
+    }
+
+
 
     /*@ManyToMany
     @JoinTable(name = "category_meetings",
@@ -150,7 +177,7 @@ public class Meeting implements Serializable {
                 ", start_date = " + startDate +
                 ", longitude = " + longitude +
                 ", latitude = " + latitude +
-                ", author = " + author +
+//                ", author = " + author +
                 "}";
 
 

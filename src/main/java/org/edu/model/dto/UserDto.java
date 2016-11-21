@@ -8,6 +8,8 @@ import org.edu.util.LocalDateDeserializer;
 import org.edu.util.LocalDateSerializer;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserDto {
 
@@ -20,6 +22,10 @@ public class UserDto {
     private LocalDate birthday;
     private String description;
     private String photo;
+    private Set<MeetingDto> createdMeetings = new HashSet<>();
+
+    public UserDto() {
+    }
 
     public long getId() {
         return id;
@@ -63,7 +69,6 @@ public class UserDto {
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
-//    @JsonIgnore
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -86,6 +91,14 @@ public class UserDto {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Set<MeetingDto> getCreatedMeetings() {
+        return createdMeetings;
+    }
+
+    public void setCreatedMeetings(Set<MeetingDto> createdMeetings) {
+        this.createdMeetings = createdMeetings;
     }
 
     @Override

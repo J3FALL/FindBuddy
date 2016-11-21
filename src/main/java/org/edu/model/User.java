@@ -3,6 +3,7 @@ package org.edu.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -34,6 +35,8 @@ public class User implements Serializable {
     private LocalDate birthday;
     private Set<Comment> comments = new HashSet<>();
     private Set<Category> categories = new HashSet<>();
+    private Set<Meeting> subscribedMeetings = new HashSet<>();
+    private Set<Meeting> createdMeetings = new HashSet<>();
 
     public User() {
     }
@@ -61,7 +64,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -138,7 +141,7 @@ public class User implements Serializable {
         this.birthday = birthday;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
     public Set<Comment> getComments() {
         return comments;
     }
@@ -147,13 +150,50 @@ public class User implements Serializable {
         this.comments = comments;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "users")
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "users_category",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     public Set<Category> getCategories() {
         return categories;
     }
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public void addCategories(List<Category> categories) {
+        for (Category category : categories) {
+            this.categories.add(category);
+        }
+    }
+
+    public void removeCategory(Category category) {
+        this.categories.remove(category);
+    }
+
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "users_meeting",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "meeting_id"))
+    public Set<Meeting> getSubscribedMeetings() {
+        return subscribedMeetings;
+    }
+
+    public void setSubscribedMeetings(Set<Meeting> meetings) {
+        this.subscribedMeetings = meetings;
+    }
+
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
+    public Set<Meeting> getCreatedMeetings() {
+        return createdMeetings;
+    }
+
+    public void setCreatedMeetings(Set<Meeting> createdMeeting) {
+        this.createdMeetings = createdMeeting;
     }
 
     @Override
@@ -168,8 +208,8 @@ public class User implements Serializable {
                 ", description='" + description + '\'' +
                 ", photo='" + photo + '\'' +
                 ", birthday=" + birthday +
-                ", comments=" + comments +
-                ", categories=" + categories +
+//                ", comments=" + comments +
+//                ", categories=" + categories +
                 '}';
     }
 }
