@@ -2,12 +2,12 @@ package org.edu.service.impl;
 
 
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.edu.dao.CategoryDao;
 import org.edu.dao.CommentDao;
 import org.edu.dao.RoleDao;
 import org.edu.dao.UserDao;
 import org.edu.model.Category;
 import org.edu.model.Comment;
+import org.edu.model.Meeting;
 import org.edu.model.User;
 import org.edu.service.UserService;
 import org.edu.util.NullAwareBeanUtilsBean;
@@ -37,9 +37,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     CommentDao commentDao;
-
-    @Autowired
-    CategoryDao categoryDao;
 
     @Override
     public User getUserByEmail(String email) {
@@ -93,7 +90,16 @@ public class UserServiceImpl implements UserService {
         User checkingUser = userDao.findOne(id);
         User principalUser = userDao.findByEmail(principal.getName());
         if (checkingUser != null && id == principalUser.getId()) {
-            userDao.deleteById(id);
+            checkingUser.getRoles().clear();
+            checkingUser.getComments().clear();
+            checkingUser.getCreatedMeetings().clear();
+            for (Category category : checkingUser.getCategories()) {
+                category.deleteUser(checkingUser);
+            }
+            for (Meeting subscribedMeeting:checkingUser.getSubscribedMeetings()) {
+                subscribedMeeting.deleteUser(checkingUser);
+            }
+            userDao.delete(checkingUser);
             return true;
         }
         return false;
