@@ -1,5 +1,6 @@
 package org.edu.controller;
 
+import org.edu.converter.Converter;
 import org.edu.model.Comment;
 import org.edu.model.dto.CommentDto;
 import org.edu.service.CommentService;
@@ -35,7 +36,7 @@ public class CommentController {
         if (principal == null) {
             return new ResponseEntity<>(new GenericResponse("Please login."), HttpStatus.BAD_REQUEST);
         }
-        Comment comment = convertToEntity(commentDto);
+        Comment comment = Converter.convert(commentDto, Comment.class);
         commentService.createComment(comment, principal);
         return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.CREATED);
     }
@@ -45,7 +46,7 @@ public class CommentController {
         List<Comment> comments = commentService.getAllComments();
         List<CommentDto> commentDtos = new ArrayList<>();
         for (Comment comment:comments) {
-            commentDtos.add(convertToDto(comment));
+            commentDtos.add(Converter.convert(comment, CommentDto.class));
         }
         return new ResponseEntity<>(commentDtos, HttpStatus.OK);
     }
@@ -55,7 +56,7 @@ public class CommentController {
         if (principal == null) {
             return new ResponseEntity<>(new GenericResponse("Please login."), HttpStatus.BAD_REQUEST);
         }
-        Comment comment = convertToEntity(commentDto);
+        Comment comment = Converter.convert(commentDto, Comment.class);
         comment.setId(id);
         boolean isSuccessUpdate = commentService.updateComment(comment, principal);
         if (isSuccessUpdate)
@@ -73,14 +74,4 @@ public class CommentController {
             return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
         return new ResponseEntity<>(new GenericResponse("Fail."), HttpStatus.BAD_REQUEST);
     }
-
-    private CommentDto convertToDto(Comment comment) {
-        return modelMapper.map(comment, CommentDto.class);
-    }
-
-    private Comment convertToEntity(CommentDto commentDto) {
-        return modelMapper.map(commentDto, Comment.class);
-    }
-
-
 }

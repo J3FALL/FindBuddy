@@ -1,5 +1,6 @@
 package org.edu.controller;
 
+import org.edu.converter.Converter;
 import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.User;
@@ -35,7 +36,7 @@ public class UserController{
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<GenericResponse> registerUser(@RequestBody UserDto newUser) {
-        User user = convertToEntity(newUser);
+        User user = Converter.convert(newUser, User.class);
         user = userService.createUser(user);
         if (user == null)
             return new ResponseEntity<>(new GenericResponse("Fail."), HttpStatus.BAD_REQUEST);
@@ -48,7 +49,7 @@ public class UserController{
         User user = userService.getUserById(id);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(convertToDto(user), HttpStatus.OK);
+        return new ResponseEntity<>(Converter.convert(user, UserDto.class), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -56,9 +57,8 @@ public class UserController{
         if (principal == null) {
             return new ResponseEntity<>(new GenericResponse("Please login."), HttpStatus.BAD_REQUEST);
         }
-        User user = convertToEntity(userDto);
+        User user = Converter.convert(userDto, User.class);
         user.setId(id);
-        System.out.println(user);
         boolean isSuccess = userService.updateUser(user, principal);
         if (isSuccess)
             return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
@@ -83,7 +83,7 @@ public class UserController{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         List<CommentDto> commentDtos = new ArrayList<>();
         for (Comment comment:comments) {
-            commentDtos.add(convertToDto(comment));
+            commentDtos.add(Converter.convert(comment, CommentDto.class));
         }
         return new ResponseEntity<>(commentDtos, HttpStatus.OK);
     }
@@ -95,10 +95,9 @@ public class UserController{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         List<CategoryDto> categoryDtos = new ArrayList<>();
         for (Category category:categories) {
-            categoryDtos.add(convertToDto(category));
+            categoryDtos.add(Converter.convert(category, CategoryDto.class));
         }
         return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
-//        return new ResponseEntity<>(userService.getUserCategories(id), HttpStatus.OK);
     }
 
 //    @RequestMapping(value = "/upload_image")
@@ -112,27 +111,4 @@ public class UserController{
 ////        }
 //        fileStorageService.store(file);
 //    }
-
-    private CategoryDto convertToDto(Category category) {
-        return modelMapper.map(category, CategoryDto.class);
-    }
-
-    private Category convertToEntity(CategoryDto categoryDto) {
-        return modelMapper.map(categoryDto, Category.class);
-    }
-
-    private UserDto convertToDto(User user) {
-        return modelMapper.map(user, UserDto.class);
-    }
-
-    private User convertToEntity(UserDto userDto) {
-        return modelMapper.map(userDto, User.class);
-    }
-
-    private CommentDto convertToDto(Comment comment) {
-        return modelMapper.map(comment, CommentDto.class);    }
-
-    private Comment convertToEntity(CommentDto commentDto) {
-        return modelMapper.map(commentDto, Comment.class);
-    }
 }
