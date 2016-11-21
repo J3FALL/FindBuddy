@@ -66,4 +66,13 @@ public class CategoryController {
         categoryService.subscribeCategories(Converter.convert(categories, Category.class), principal);
         return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/unsubscribe", method = RequestMethod.POST)
+    public ResponseEntity<GenericResponse> unsubscribeUser(@RequestBody CategoryDto[] categoryDtos, Principal principal) {
+        if (principal == null)
+            return new ResponseEntity<>(new GenericResponse("Please login"), HttpStatus.BAD_REQUEST);
+        List<CategoryDto> categories = new ArrayList<>(Arrays.asList(categoryDtos));
+        categoryService.unsubscribeCategories(Converter.convert(categories, Category.class), principal);
+        return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
+    }
 }

@@ -19,4 +19,6 @@ public interface CategoryService {
     boolean removeCategory(long id, Principal principal);
 
     void subscribeCategories(List<Category> categories, Principal principal);
+
+    void unsubscribeCategories(List<Category> categories, Principal principal);
 }

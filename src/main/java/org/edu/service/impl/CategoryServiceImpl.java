@@ -70,11 +70,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void subscribeCategories(List<Category> categories, Principal principal) {
+    public void subscribeCategories(List<Category> categories, Principal principal){
         User user = userDao.findByEmail(principal.getName());
         for (Category category : categories) {
             Category updatedCategory = categoryDao.findOne(category.getId());
             updatedCategory.addUser(user);
+        }
+    }
+
+    @Override
+    public void unsubscribeCategories(List<Category> categories, Principal principal) {
+        User user = userDao.findByEmail(principal.getName());
+        for (Category category:categories) {
+            Category updateCategory = categoryDao.findOne(category.getId());
+            updateCategory.deleteUser(user);
         }
     }
 }
