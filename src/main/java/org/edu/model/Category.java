@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,6 @@ public class Category implements Serializable {
     private Set<Meeting> meetings = new HashSet<>();
 
     public Category() {
-
     }
 
     public Category(String name, String color) {
@@ -70,17 +70,14 @@ public class Category implements Serializable {
         this.color = color;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "category_users",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "categories")
     public Set<User> getUsers() {
         return users;
     }
 
     public void setUsers(Set<User> users) { this.users = users; }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "category_meetings",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "meeting_id"))
