@@ -53,12 +53,26 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void removeMeeting(long id) {
-
+        
     }
 
     @Override
     public List<Meeting> getAllMeetings() {
 
         return meetingDao.findAll();
+    }
+
+    @Override
+    public void subscribeMeeting(Meeting meeting, Principal principal) {
+        User user = userDao.findByEmail(principal.getName());
+        Meeting updatedMeeting = meetingDao.findOne(meeting.getId());
+        updatedMeeting.addUser(user);
+    }
+
+    @Override
+    public void unSubscribeMeeting(Meeting meeting, Principal principal) {
+        User user = userDao.findByEmail(principal.getName());
+        Meeting updatedMeeting = meetingDao.findOne(meeting.getId());
+        updatedMeeting.deleteUser(user);
     }
 }

@@ -23,4 +23,7 @@ public interface MeetingService {
 
     List<Meeting> getAllMeetings();
 
+    void subscribeMeeting(Meeting meeting, Principal principal);
+
+    void unSubscribeMeeting(Meeting meeting, Principal principal);
 }

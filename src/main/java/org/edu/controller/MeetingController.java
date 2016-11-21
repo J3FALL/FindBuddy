@@ -81,4 +81,22 @@ public class MeetingController {
             return new ResponseEntity<>(new GenericResponse("Failed"), HttpStatus.BAD_REQUEST);
         }
      }
+
+    @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
+    public ResponseEntity<GenericResponse> subscribeUser(@RequestBody MeetingDto meetingDto, Principal principal) {
+        if (principal == null) {
+            return new ResponseEntity<>(new GenericResponse("Please login"), HttpStatus.BAD_REQUEST);
+        }
+        meetingService.subscribeMeeting(Converter.convert(meetingDto, Meeting.class), principal);
+        return new ResponseEntity<>(new GenericResponse("Successful"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/unsubscribe", method = RequestMethod.POST)
+    public ResponseEntity<GenericResponse> unSubscribeUser(@RequestBody MeetingDto meetingDto, Principal principal) {
+        if (principal == null) {
+            return new ResponseEntity<>(new GenericResponse("Please login"), HttpStatus.BAD_REQUEST);
+        }
+        meetingService.unSubscribeMeeting(Converter.convert(meetingDto, Meeting.class), principal);
+        return new ResponseEntity<>(new GenericResponse("Successful"), HttpStatus.OK);
+    }
 }
