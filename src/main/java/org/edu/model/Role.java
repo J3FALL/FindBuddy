@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,17 +44,13 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "roles_privileges",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "privilege_id"))
-    public Set<Privilege> getPrivileges() {
-        return privileges;
+    @Column(unique = true)
+    public String getName() {
+        return name;
     }
 
-    public void setPrivileges(Set<Privilege> privileges) {
-        this.privileges = privileges;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
@@ -68,14 +63,19 @@ public class Role implements Serializable {
         this.users = users;
     }
 
-    @Column
-    public String getName() {
-        return name;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "role_privilege",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "privilege_id"))
+    public Set<Privilege> getPrivileges() {
+        return privileges;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPrivileges(Set<Privilege> privileges) {
+        this.privileges = privileges;
     }
+
 
     @Override
     public String toString() {

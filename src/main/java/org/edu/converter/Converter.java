@@ -3,10 +3,12 @@ package org.edu.converter;
 import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.Meeting;
+import org.edu.model.Role;
 import org.edu.model.User;
 import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.CommentDto;
 import org.edu.model.dto.MeetingDto;
+import org.edu.model.dto.RoleDto;
 import org.edu.model.dto.UserDto;
 import org.modelmapper.ModelMapper;
 
@@ -53,6 +55,14 @@ public class Converter {
                 .byDefault()
                 .field("author.id", "authorId")
                 .field("author.name", "authorName")
+                .field("station.id", "stationId")
+                .field("station.name", "stationName")
+                .field("category.id", "categoryId")
+                .field("category.name", "categoryName")
+                .register();
+
+        mapperFactory.classMap(Role.class, RoleDto.class)
+                .byDefault()
                 .register();
 
         mapperFactory.classMap(Comment.class, CommentDto.class)
