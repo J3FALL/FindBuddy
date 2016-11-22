@@ -3,11 +3,13 @@ package org.edu.converter;
 import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.Meeting;
+import org.edu.model.Privilege;
 import org.edu.model.Role;
 import org.edu.model.User;
 import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.CommentDto;
 import org.edu.model.dto.MeetingDto;
+import org.edu.model.dto.PrivilegeDto;
 import org.edu.model.dto.RoleDto;
 import org.edu.model.dto.UserDto;
 import org.modelmapper.ModelMapper;
@@ -62,6 +64,10 @@ public class Converter {
                 .register();
 
         mapperFactory.classMap(Role.class, RoleDto.class)
+                .byDefault()
+                .register();
+
+        mapperFactory.classMap(Privilege.class, PrivilegeDto.class)
                 .byDefault()
                 .register();
 

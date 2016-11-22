@@ -76,6 +76,14 @@ public class Role implements Serializable {
         this.privileges = privileges;
     }
 
+    public void addPrivilege(Privilege privilege) {
+        this.privileges.add(privilege);
+    }
+
+    public void deletePrivilege(Privilege privilege) {
+        this.privileges.remove(privilege);
+    }
+
 
     @Override
     public String toString() {
