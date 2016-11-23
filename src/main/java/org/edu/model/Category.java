@@ -1,9 +1,7 @@
 package org.edu.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,14 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-/**
- * Created by Ленизка on 13.11.2016.
- */
 @Entity
 @Table(name = "categories")
 public class Category implements Serializable {
@@ -89,15 +83,18 @@ public class Category implements Serializable {
         this.users.remove(user);
     }
 
-    public void setUsers(Set<User> users) { this.users = users; }
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "meeting_id")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "category")
     public Set<Meeting> getMeetings() {
         return meetings;
     }
 
-    public void setMeetings(Set<Meeting> meetings) {this.meetings = meetings; }
+    public void setMeetings(Set<Meeting> meetings) {
+        this.meetings = meetings;
+    }
 
     @Override
     public String toString() {
