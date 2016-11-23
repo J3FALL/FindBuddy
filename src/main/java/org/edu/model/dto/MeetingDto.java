@@ -26,7 +26,7 @@ public class MeetingDto {
     private long stationId;
     private String stationName;
     private long categoryId;
-    private long categoryName;
+    private String categoryName;
 
     public long getId() {
         return id;
@@ -133,11 +133,11 @@ public class MeetingDto {
     }
 
     @JsonProperty("category_name")
-    public long getCategoryName() {
+    public String getCategoryName() {
         return categoryName;
     }
 
-    public void setCategoryName(long categoryName) {
+    public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 }
