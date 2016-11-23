@@ -3,9 +3,11 @@ package org.edu.controller;
 import org.edu.converter.Converter;
 import org.edu.model.Category;
 import org.edu.model.Comment;
+import org.edu.model.Meeting;
 import org.edu.model.User;
 import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.CommentDto;
+import org.edu.model.dto.MeetingDto;
 import org.edu.model.dto.UserDto;
 import org.edu.service.UserService;
 import org.edu.util.GenericResponse;
@@ -98,6 +100,14 @@ public class UserController{
             categoryDtos.add(Converter.convert(category, CategoryDto.class));
         }
         return new ResponseEntity<>(categoryDtos, HttpStatus.OK);
+    }
+
+    // get meetings by user's subscribed categories
+    @RequestMapping(value = "/feed", method = RequestMethod.GET)
+    public ResponseEntity<List<MeetingDto>> getUserFeed(Principal principal) {
+        Set<Meeting> meetings = userService.getMeetingsByCategories(principal);
+        List<MeetingDto> meetingDtos = Converter.convert(new ArrayList<>(meetings), MeetingDto.class);
+        return new ResponseEntity<>(meetingDtos, HttpStatus.OK);
     }
 
 //    @RequestMapping(value = "/upload_image")
