@@ -61,6 +61,15 @@ public class Converter {
                 .field("station.name", "stationName")
                 .field("category.id", "categoryId")
                 .field("category.name", "categoryName")
+                .customize(
+                        new CustomMapper<Meeting, MeetingDto>() {
+
+                            @Override
+                            public void mapAtoB(Meeting meeting, MeetingDto meetingDto, MappingContext context) {
+                                meetingDto.setSubscribersNum(meeting.getSubscribedUsers().size());
+                            }
+                        }
+                )
                 .register();
 
         mapperFactory.classMap(Role.class, RoleDto.class)

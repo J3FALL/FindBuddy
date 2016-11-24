@@ -9,9 +9,6 @@ import org.edu.util.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
 
-/**
- * Created by Pavel on 19.11.2016.
- */
 public class MeetingDto {
 
     private long id;
@@ -27,6 +24,10 @@ public class MeetingDto {
     private String stationName;
     private long categoryId;
     private String categoryName;
+    private int subscribersNum;
+
+    private static final String[] months = {"Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля",
+            "Августа", "Сентября", "Октября", "Ноября", "Дрекабря"};
 
     public long getId() {
         return id;
@@ -139,5 +140,52 @@ public class MeetingDto {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public int getSubscribersNum() {
+        return subscribersNum;
+    }
+
+    public void setSubscribersNum(int subscribersNum) {
+        this.subscribersNum = subscribersNum;
+    }
+
+    public String convertDate() {
+        StringBuilder date = new StringBuilder();
+        date.append(startDate.getDayOfMonth()).append(" ").append(months[startDate.getMonthValue() - 1]);
+        return date.toString();
+    }
+
+    public String convertTime() {
+        StringBuilder date = new StringBuilder();
+        int hours;
+        int minutes;
+        if ((hours = this.startDate.getHour()) < 10)
+            date.append(0);
+        date.append(hours).append(":");
+        if ((minutes = this.startDate.getMinute()) < 10)
+            date.append(0);
+        date.append(minutes);
+        return date.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "MeetingDto{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", createDate=" + createDate +
+                ", startDate=" + startDate +
+                ", authorId=" + authorId +
+                ", authorName='" + authorName + '\'' +
+                ", stationId=" + stationId +
+                ", stationName='" + stationName + '\'' +
+                ", categoryId=" + categoryId +
+                ", categoryName='" + categoryName + '\'' +
+                ", subscribersNum=" + subscribersNum +
+                '}';
     }
 }
