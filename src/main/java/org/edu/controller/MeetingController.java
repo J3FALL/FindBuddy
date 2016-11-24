@@ -19,10 +19,8 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-/**
- * Created by Pavel on 13.11.2016.
- */
 @RestController
 @RequestMapping("/meetings")
 @Transactional
@@ -36,8 +34,9 @@ public class MeetingController {
         if (principal == null) { //user did not log-in
             return new ResponseEntity<>(new GenericResponse("Please login"), HttpStatus.BAD_GATEWAY);
         }
+        Random random = new Random();
         meetingDto.setCreateDate(LocalDateTime.now());
-        meetingDto.setStartDate(LocalDateTime.now());
+        meetingDto.setStartDate(LocalDateTime.of(2016, 11, 25, Math.abs(random.nextInt()) % 23, Math.abs(random.nextInt()) % 23));
         Meeting meeting = Converter.convert(meetingDto, Meeting.class);
         meetingService.createMeeting(meeting, principal);
 

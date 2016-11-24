@@ -97,17 +97,6 @@
                         <ul>
                             <li><a class="waves-effect" href="#!">Профиль</a></li>
                             <li><a class="waves-effect" href="/logout">Выход</a></li>
-                            <li>
-                                <form class="row">
-                                    <div id="search-field" class="input-field col l12"
-                                         style="padding-left: 0;padding-right: 0">
-                                        <input class="" id="search" type="search" placeholder=""/>
-                                        <label for="search"><i
-                                                class="material-icons">search</i></label>
-                                        <i class="material-icons">close</i>
-                                    </div>
-                                </form>
-                            </li>
                         </ul>
                     </div>
                 </li>
@@ -117,7 +106,7 @@
         <li th:if="${username}"><a href="#!" class="waves-effect">Моя
             лента</a></li>
         <li><a href="#!" class="waves-effect">Все встречи</a></li>
-        <li><a href="#!" class="waves-effect">Все теги</a></li>
+        <li><a href="#!" class="waves-effect" onclick="">Все теги</a></li>
         <li>
             <div class="divider"></div>
         </li>
@@ -143,17 +132,17 @@
 
 <main>
     <div class="parallax-container">
-        <div class="row">
+        <div class="row" id="main-row">
             <div class="col s12 m10 l10 offset-l1 offset-m1">
                 <div id="head" class="section">
                     <h4 class="left-align">Все встречи</h4>
                     <div class="divider"></div>
                     <ul class="tabs">
                         <li class="tab col s4">
-                            <a href="#test1" class="black-text">Новые</a>
+                            <a href="#test1" class="active black-text">Новые</a>
                         </li>
                         <li class="tab col s4">
-                            <a class="active black-text" href="#test2">Ближайшие</a>
+                            <a class="black-text" href="#test2">Ближайшие</a>
                         </li>
                         <li class="tab col s4">
                             <a href="#test3" class="black-text">Популярные</a>
@@ -164,7 +153,44 @@
                     </ul>
                     <div class="divider"></div>
                 </div>
+                <div th:each="meeting : ${meetings}" style="margin-bottom: 2%">
+                    <div th:id="${meeting.id}" style="margin-bottom: 2px" class="row">
+                        <div th:class="'chip'" th:text="${meeting.categoryName}">
+                            <!--<img src="images/yuna.jpg" alt="Contact Person">-->
+                        </div>
+                        <div style="margin-bottom: 0">
+                            <a href="#" class="col l9" style="padding-left: 0">
+                                <h5 class="meeting-header col s8 l9 flow-text black-text"
+                                    th:text="${meeting.description}">
+                                </h5>
+                            </a>
+                        </div>
+                        <div class="meeting-date col l3 s4 m3 right">
+                            <h5 class="center flow-text"
+                                th:text="${meeting.convertDate()}"></h5>
+                            <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
+                            <h5 class="flow-text center" style="margin-top: 0;" th:text="${meeting.convertTime()}"></h5>
+                        </div>
+                        <div class="meeting-bottom col s8 left" style="padding-left: 0">
+                            <ul class="meeting-info">
+                                <li class="">
+                                    <a class="grey-text" th:text="|м.${meeting.stationName}|">м.
+                                        Автово</a>
+                                </li>
+                                <li class="">
+                                    <a href="#" class="grey-text"
+                                       th:text="|Подписчиков: ${meeting.subscribersNum}|">5
+                                        подписчиков</a>
+                                </li>
+                                <li class="">
+                                    <a class="grey-text"></a>
+                                </li>
+                            </ul>
+                        </div>
 
+                    </div>
+                    <div class="divider"></div>
+                </div>
                 <div id="introduction" class="section">
                     <div class="chip">
                         <!--<img src="images/yuna.jpg" alt="Contact Person">-->
