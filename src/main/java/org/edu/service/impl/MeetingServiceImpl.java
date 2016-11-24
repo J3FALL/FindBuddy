@@ -16,9 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.List;
 
-/**
- * Created by Pavel on 13.11.2016.
- */
 @Service
 @Transactional
 public class MeetingServiceImpl implements MeetingService {
@@ -87,5 +84,15 @@ public class MeetingServiceImpl implements MeetingService {
         User user = userDao.findByEmail(principal.getName());
         Meeting updatedMeeting = meetingDao.findOne(meeting.getId());
         updatedMeeting.deleteUser(user);
+    }
+
+    @Override
+    public List<Meeting> getNewMeetings(int num, int pageNum) {
+        return meetingDao.findNewMeetings(num, pageNum);
+    }
+
+    @Override
+    public List<Meeting> getUpcomingMeetings(int num, int pageNum) {
+        return meetingDao.findUpcomingMeetings(num, pageNum);
     }
 }

@@ -7,9 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.List;
 
-/**
- * Created by Pavel on 13.11.2016.
- */
 @Service
 @Transactional
 public interface MeetingService {
@@ -26,4 +23,8 @@ public interface MeetingService {
     void subscribeMeeting(Meeting meeting, Principal principal);
 
     void unSubscribeMeeting(Meeting meeting, Principal principal);
+
+    List<Meeting> getNewMeetings(int num, int pageNum);
+
+    List<Meeting> getUpcomingMeetings(int num, int pageNum);
 }
