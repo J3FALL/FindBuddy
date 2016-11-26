@@ -96,6 +96,9 @@ public class Category implements Serializable {
         this.meetings = meetings;
     }
 
+    public void addMeeting(Meeting meeting) { this.meetings.add(meeting);}
+
+    public void deleteMeeting(Meeting meeting) {this.meetings.remove(meeting);}
     @Override
     public String toString() {
         return "Category{" +
