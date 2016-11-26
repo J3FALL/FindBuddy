@@ -30,38 +30,34 @@ public class ViewController {
     @Autowired
     private MeetingService meetingService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = {"/new", "/"}, method = RequestMethod.GET)
     public String homePage(Model model, Principal principal, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
-        if (principal != null) {
-            String email = principal.getName();
-            User user = userService.getUserByEmail(email);
-            model.addAttribute("username", user.getName());
-            model.addAttribute("roles", user.getRoles());
-        }
-//        System.out.println(Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, 0), MeetingDto.class));
-        if (pageNum != null)
-            model.addAttribute("meetings", Converter.convert(meetingService.getNewMeetings(meetingOnPageNum, pageNum), MeetingDto.class));
-        else
-            model.addAttribute("meetings", Converter.convert(meetingService.getNewMeetings(meetingOnPageNum, 0), MeetingDto.class));
+        double pageCount = Math.ceil(meetingService.getMeetingsNumber() / (double) meetingOnPageNum);
+        setMainVariablesToPage(principal, pageNum, "new", model, pageCount);
+        model.addAttribute("meetings",
+                Converter.convert(meetingService.getNewMeetings(meetingOnPageNum, pageNum == null ? 0 : pageNum), MeetingDto.class));
         return "home";
     }
 
     @RequestMapping(value = "/nearest", method = RequestMethod.GET)
     public String nearestMeetings(Model model, Principal principal, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
-        if (principal != null) {
-            String email = principal.getName();
-            User user = userService.getUserByEmail(email);
-            model.addAttribute("username", user.getName());
-            model.addAttribute("roles", user.getRoles());
-        }
-        if (pageNum != null)
-            model.addAttribute("meetings", Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, pageNum), MeetingDto.class));
-        else
-            model.addAttribute("meetings", Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, 0), MeetingDto.class));
+        double pageCount = Math.ceil(meetingService.getUpcomingMeetingsNumber() / (double) meetingOnPageNum);
+        setMainVariablesToPage(principal, pageNum, "nearest", model, pageCount);
+        model.addAttribute("meetings",
+                Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, pageNum == null ? 0 : pageNum), MeetingDto.class));
         return "home";
     }
 
+    @RequestMapping(value = "/popular", method = RequestMethod.GET)
+    public String popularMeetings(Model model, Principal principal, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+        double pageCount = Math.ceil(meetingService.getPopularMeetingsNumber() / (double) meetingOnPageNum);
+        setMainVariablesToPage(principal, pageNum, "popular", model, pageCount);
+        model.addAttribute("meetings",
+                Converter.convert(meetingService.getPopularMeetings(meetingOnPageNum, pageNum == null ? 0 : pageNum), MeetingDto.class));
+        return "home";
+    }
 
+//    public String
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
@@ -69,12 +65,38 @@ public class ViewController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String regisrationPage() {
+    public String registrationPage() {
         return "registration";
     }
 
     @RequestMapping(value = "/admin")
     public String adminPage() {
         return "admin";
+    }
+
+    private void setMainVariablesToPage(Principal principal, Integer pageNum, String location, Model model, double pageCount) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userService.getUserByEmail(email);
+            model.addAttribute("username", user.getName());
+            model.addAttribute("roles", user.getRoles());
+        }
+//        double pageCount = Math.ceil(meetingService.findUpcomingMeetingsNumber() / (double) meetingOnPageNum);
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+//        model.addAttribute("meetings", Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, pageNum), MeetingDto.class));
+        model.addAttribute("currentPageNum", pageNum);
+        if (pageNum > 1)
+            model.addAttribute("leftArrowDisabled", false);
+        else
+            model.addAttribute("leftArrowDisabled", true);
+        if (pageNum < pageCount)
+            model.addAttribute("rightArrowDisabled", false);
+        else
+            model.addAttribute("rightArrowDisabled", true);
+        model.addAttribute("active", pageNum);
+        model.addAttribute("currentLocation", location);
+        model.addAttribute("pageNum", pageCount);
     }
 }
