@@ -1,0 +1,21 @@
+#main-row {
+    padding-left: 2%;
+    padding-top: 2%;
+}
+
+#input {
+    padding-left: 0 !important;
+
+}
+
+.label-field {
+     left: 0 !important;
+ }
+
+.custom-input-field {
+    padding-left: 0 !important;
+}
+
+.custom-text-area {
+    min-height: 1rem !important;
+}
