@@ -24,7 +24,7 @@ public class MeetingDaoImpl extends AbstractHibernateDao<Meeting> implements Mee
         @SuppressWarnings("unchecked")
         List<Meeting> newMeetings = session.createQuery("from Meeting u order by createDate desc")
                 .setMaxResults(num)
-                .setFirstResult(pageNum * num - 1)
+                .setFirstResult(pageNum * num)
                 .getResultList();
         return newMeetings;
     }
@@ -34,11 +34,9 @@ public class MeetingDaoImpl extends AbstractHibernateDao<Meeting> implements Mee
         Session session = getCurrentSession();
         @SuppressWarnings("unchecked")
         List<Meeting> upcomingMeetings =
-                session.createNativeQuery("select * " +
-                        "from meetings " +
-                        "ORDER BY CASE WHEN start_date > now() " +
-                        "THEN start_date - now() " +
-                        "ELSE now() - start_date END DESC")
+                session.createNativeQuery("select * from meetings " +
+                        "where start_date > now() " +
+                        "ORDER BY start_date - now()")
                         .addEntity(Meeting.class)
                         .setMaxResults(num)
                         .setFirstResult(pageNum * num)
