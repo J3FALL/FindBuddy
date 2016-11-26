@@ -7,3 +7,78 @@ header, main, footer {
         padding-left: 0;
     }
 }
+@media screen and (max-width: 992px) {
+    #btn-collapse {
+        width: 3%;
+        margin-left: 4%;
+        margin-right: 3%;
+    }
+
+    #search-field {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    #btn-collapse {
+        width: 8%;
+        margin-left: 4%;
+        margin-right: 3%;
+    }
+
+    #search-field {
+        width: 85%;
+    }
+}
+
+.chip {
+    margin-bottom: 0;
+}
+
+.tabs .indicator {
+    color: #bdbdbd;
+    background-color: #bdbdbd !important;
+}
+
+#logo {
+    margin-top: 1%;
+    color: inherit;
+    font-size: 280%
+
+}
+
+#logo:hover {
+    color: inherit;
+    background-color: inherit;
+}
+
+.meeting-info li {
+    display: inline;
+    margin-right: 2%;
+}
+
+.meeting-info {
+    margin: 0 !important;
+    list-style-type: none;
+    padding: 0;
+}
+
+.meeting-header {
+    padding-left: 0 !important;
+}
+
+.meeting-bottom {
+    margin-bottom: 0;
+}
+
+.parallax-container {
+    overflow: inherit !important;
+}
+
+.pagination_item {
+    background-color: white;
+}
+
+.active.pagination_item {
+    background-color: #bdbdbd !important;
+}
