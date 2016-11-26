@@ -6,6 +6,8 @@ import org.edu.model.dto.MeetingDto;
 import org.edu.service.MeetingService;
 import org.edu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +18,11 @@ import java.security.Principal;
 
 
 @Controller
+@PropertySource({"classpath:ui.properties"})
 public class ViewController {
 
-    private static final int MEETING_ON_PAGE_NUM = 5;
+    @Value("${meetings.per.page}")
+    private int meetingOnPageNum;
 
     @Autowired
     private UserService userService;
@@ -34,13 +38,30 @@ public class ViewController {
             model.addAttribute("username", user.getName());
             model.addAttribute("roles", user.getRoles());
         }
-//        System.out.println(Converter.convert(meetingService.getUpcomingMeetings(MEETING_ON_PAGE_NUM, 0), MeetingDto.class));
+//        System.out.println(Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, 0), MeetingDto.class));
         if (pageNum != null)
-            model.addAttribute("meetings", Converter.convert(meetingService.getNewMeetings(MEETING_ON_PAGE_NUM, pageNum), MeetingDto.class));
+            model.addAttribute("meetings", Converter.convert(meetingService.getNewMeetings(meetingOnPageNum, pageNum), MeetingDto.class));
         else
-            model.addAttribute("meetings", Converter.convert(meetingService.getNewMeetings(MEETING_ON_PAGE_NUM, 0), MeetingDto.class));
+            model.addAttribute("meetings", Converter.convert(meetingService.getNewMeetings(meetingOnPageNum, 0), MeetingDto.class));
         return "home";
     }
+
+    @RequestMapping(value = "/nearest", method = RequestMethod.GET)
+    public String nearestMeetings(Model model, Principal principal, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userService.getUserByEmail(email);
+            model.addAttribute("username", user.getName());
+            model.addAttribute("roles", user.getRoles());
+        }
+        if (pageNum != null)
+            model.addAttribute("meetings", Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, pageNum), MeetingDto.class));
+        else
+            model.addAttribute("meetings", Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, 0), MeetingDto.class));
+        return "home";
+    }
+
+
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
