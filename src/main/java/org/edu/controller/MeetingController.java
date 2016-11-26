@@ -117,4 +117,15 @@ public class MeetingController {
         List<Meeting> meetings = meetingService.getUpcomingMeetings(meetingOnPageNum, pageNum);
         return new ResponseEntity<>(Converter.convert(meetings, MeetingDto.class), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<GenericResponse> deleteMeeting(@PathVariable("id") long id, Principal principal) {
+        if (principal == null) {
+            return new ResponseEntity<>(new GenericResponse("Please login."), HttpStatus.BAD_REQUEST);
+        }
+        boolean isSuccess = meetingService.deleteMeeting(id, principal);
+        if (isSuccess)
+            return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
+        return new ResponseEntity<>(new GenericResponse("Fail."), HttpStatus.BAD_REQUEST);
+    }
 }

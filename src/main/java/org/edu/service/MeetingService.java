@@ -16,7 +16,7 @@ public interface MeetingService {
 
     boolean updateMeeting(Meeting meeting, Principal principal);
 
-    void removeMeeting(long id);
+    boolean deleteMeeting(long id, Principal principal);
 
     List<Meeting> getAllMeetings();
 

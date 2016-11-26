@@ -1,5 +1,6 @@
 package org.edu.service.impl;
 
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.edu.dao.CategoryDao;
 import org.edu.dao.MeetingDao;
 import org.edu.dao.StationDao;
@@ -9,10 +10,12 @@ import org.edu.model.Meeting;
 import org.edu.model.Station;
 import org.edu.model.User;
 import org.edu.service.MeetingService;
+import org.edu.util.NullAwareBeanUtilsBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
 import java.util.List;
 
@@ -53,17 +56,52 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public boolean updateMeeting(Meeting meeting, Principal principal) {
-        User user = userDao.findByEmail(principal.getName());
-        if (user.getId() == meeting.getAuthor().getId()) {
-            meetingDao.update(meeting);
+        User principalUser = userDao.findByEmail(principal.getName());
+        Category category = null;
+        Station station = null;
+        if (meeting.getCategory() != null) {
+            category = categoryDao.findOne(meeting.getCategory().getId());
+        }
+        if (meeting.getStation() != null) {
+            station = stationDao.findOne(meeting.getStation().getId());
+        }
+
+        Meeting checkingMeeting = meetingDao.findOne(meeting.getId());
+        if (checkingMeeting != null && checkingMeeting.getAuthor().getId() == principalUser.getId()) {
+            BeanUtilsBean notNull = new NullAwareBeanUtilsBean();
+            try {
+                notNull.copyProperties(checkingMeeting, meeting);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            checkingMeeting.setAuthor(principalUser);
+            if (category != null) {
+                checkingMeeting.setCategory(category);
+            }
+            if (station != null) {
+                checkingMeeting.setStation(station);
+            }
+            meetingDao.update(checkingMeeting);
             return true;
         }
         return false;
     }
 
     @Override
-    public void removeMeeting(long id) {
-        
+    public boolean deleteMeeting(long id, Principal principal) {
+        User principalUser = userDao.findByEmail(principal.getName());
+        Meeting checkingMeeting = meetingDao.findOne(id);
+        //check if meeting with this id exists and this user is the author
+        if (checkingMeeting != null && checkingMeeting.getAuthor().getId() == principalUser.getId()) {
+            checkingMeeting.getAuthor().getCreatedMeetings().remove(checkingMeeting);
+            checkingMeeting.getSubscribedUsers().clear();
+            checkingMeeting.getCategory().deleteMeeting(checkingMeeting);
+            checkingMeeting.getStation().getMeetings().remove(checkingMeeting);
+            meetingDao.delete(checkingMeeting);
+            return true;
+        }
+        return false;
     }
 
     @Override
