@@ -13,4 +13,9 @@ public interface MeetingDao extends IOperations<Meeting> {
 
     List<Meeting> findPopularMeetings(int num, int pageNum);
 
+    long findMeetingsNumber();
+
+    long findUpcomingMeetingsNumber();
+
+    long findPopularMeetingsNumber();
 }
