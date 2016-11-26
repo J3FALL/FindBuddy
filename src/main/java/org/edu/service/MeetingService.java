@@ -27,4 +27,12 @@ public interface MeetingService {
     List<Meeting> getNewMeetings(int num, int pageNum);
 
     List<Meeting> getUpcomingMeetings(int num, int pageNum);
+
+    List<Meeting> getPopularMeetings(int num, int pageNum);
+
+    long getMeetingsNumber();
+
+    long getUpcomingMeetingsNumber();
+
+    long getPopularMeetingsNumber();
 }

@@ -133,4 +133,25 @@ public class MeetingServiceImpl implements MeetingService {
     public List<Meeting> getUpcomingMeetings(int num, int pageNum) {
         return meetingDao.findUpcomingMeetings(num, pageNum);
     }
+
+    @Override
+    public List<Meeting> getPopularMeetings(int num, int pageNum) {
+        return meetingDao.findPopularMeetings(num, pageNum);
+    }
+
+    @Override
+    public long getMeetingsNumber() {
+        return meetingDao.findMeetingsNumber();
+    }
+
+    @Override
+    public long getUpcomingMeetingsNumber() {
+        return meetingDao.findUpcomingMeetingsNumber();
+    }
+
+
+    @Override
+    public long getPopularMeetingsNumber() {
+        return meetingDao.findPopularMeetingsNumber();
+    }
 }
