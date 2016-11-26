@@ -6,6 +6,8 @@ import org.edu.model.dto.MeetingDto;
 import org.edu.service.MeetingService;
 import org.edu.util.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -24,7 +27,11 @@ import java.util.Random;
 @RestController
 @RequestMapping("/meetings")
 @Transactional
+@PropertySource({"classpath:ui.properties"})
 public class MeetingController {
+
+    @Value("${meetings.per.page}")
+    private int meetingOnPageNum;
 
     @Autowired
     MeetingService meetingService;
@@ -36,7 +43,7 @@ public class MeetingController {
         }
         Random random = new Random();
         meetingDto.setCreateDate(LocalDateTime.now());
-        meetingDto.setStartDate(LocalDateTime.of(2016, 11, 25, Math.abs(random.nextInt()) % 23, Math.abs(random.nextInt()) % 23));
+        meetingDto.setStartDate(LocalDateTime.of(2016, 11, 26, Math.abs(random.nextInt()) % 23, Math.abs(random.nextInt()) % 23));
         Meeting meeting = Converter.convert(meetingDto, Meeting.class);
         meetingService.createMeeting(meeting, principal);
 
@@ -97,5 +104,17 @@ public class MeetingController {
         }
         meetingService.unSubscribeMeeting(Converter.convert(meetingDto, Meeting.class), principal);
         return new ResponseEntity<>(new GenericResponse("Successful"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/newMeetings", method = RequestMethod.GET)
+    public ResponseEntity<List<MeetingDto>> getNewMeetings(@RequestParam(required = false) int pageNum) {
+        List<Meeting> meetings = meetingService.getNewMeetings(meetingOnPageNum, pageNum);
+        return new ResponseEntity<>(Converter.convert(meetings, MeetingDto.class), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/upcomingMeetings", method = RequestMethod.GET)
+    public ResponseEntity<List<MeetingDto>> getUpcomingMeetings(@RequestParam(required = false) int pageNum) {
+        List<Meeting> meetings = meetingService.getUpcomingMeetings(meetingOnPageNum, pageNum);
+        return new ResponseEntity<>(Converter.convert(meetings, MeetingDto.class), HttpStatus.OK);
     }
 }
