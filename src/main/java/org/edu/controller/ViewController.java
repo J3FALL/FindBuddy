@@ -4,8 +4,10 @@ import org.edu.converter.Converter;
 import org.edu.model.User;
 import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.MeetingDto;
+import org.edu.model.dto.StationDto;
 import org.edu.service.CategoryService;
 import org.edu.service.MeetingService;
+import org.edu.service.StationService;
 import org.edu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +36,9 @@ public class ViewController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private StationService stationService;
 
     @RequestMapping(value = {"/new", "/"}, method = RequestMethod.GET)
     public String homePage(Model model, Principal principal, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
@@ -110,6 +115,8 @@ public class ViewController {
 
         model.addAttribute("categories",
                 Converter.convert(categoryService.getAllCategories(), CategoryDto.class));
+        model.addAttribute("stations",
+                Converter.convert(stationService.getAllStations(), StationDto.class));
         return "create_meeting";
     }
 }
