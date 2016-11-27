@@ -158,9 +158,7 @@
                     <div class="input-field col s6 custom-input-field" id="station">
                         <select>
                             <option value="0" disabled="disabled" selected="selected">Выберите метро</option>
-                            <option value="1">Петроградская</option>
-                            <option value="2">Василеовстровская</option>
-                            <option value="3">Садовая</option>
+                            <option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}">Station</option>
                         </select>
                         <label class="label-field">Метро</label>
                     </div>
