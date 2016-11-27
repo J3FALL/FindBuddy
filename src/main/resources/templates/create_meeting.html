@@ -133,67 +133,69 @@
 <main>
     <div class="parallax-container">
         <div class="row" id="main-row">
-            <div class="col s12 m10 110">
-                <div class="row">
-                    <h4 class="meeting-header col s8 l9 flow-text black-text">
-                        Новая встреча
-                    </h4>
-                </div>
-                <div class="row" id="title-row">
-                    <div class="input-field col s6 custom-input-field">
-                        <input id="title" type="text" class="validate"/>
-                        <label class="label-field" for="title">Заголовок встречи</label>
+            <form class="create-meeting-form" id="create-meeting-form">
+                <div class="col s12 m10 110">
+                    <div class="row">
+                        <h4 class="meeting-header col s8 l9 flow-text black-text">
+                            Новая встреча
+                        </h4>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6 custom-input-field" id="category">
-                        <select>
-                            <option value="0" disabled="disabled" selected="selected">Выберите категорию</option>
-                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
-                        </select>
-                        <label class="label-field">Категория</label>
+                    <div class="row" id="title-row">
+                        <div class="input-field col s6 custom-input-field">
+                            <input id="title" type="text" class="validate" name="title"/>
+                            <label class="label-field" for="title">Заголовок встречи</label>
+                        </div>
                     </div>
-                    <div class="input-field col s6 custom-input-field" id="station">
-                        <select>
-                            <option value="0" disabled="disabled" selected="selected">Выберите метро</option>
-                            <option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}">Station</option>
-                        </select>
-                        <label class="label-field">Метро</label>
+                    <div class="row">
+                        <div class="input-field col s6 custom-input-field">
+                            <select id="category" name="category_id">
+                                <option value="0" disabled="disabled" selected="selected">Выберите категорию</option>
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
+                            </select>
+                            <label class="label-field">Категория</label>
+                        </div>
+                        <div class="input-field col s6 custom-input-field">
+                            <select id ="station" name="station_id">
+                                <option value="0" disabled="disabled" selected="selected">Выберите метро</option>
+                                <option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}">Station</option>
+                            </select>
+                            <label class="label-field">Метро</label>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6 custom-input-field" id="date">
-                        <label class="label-field">Дата</label>
-                        <input type="date" class="datepicker"/>
+                    <div class="row">
+                        <div class="input-field col s6 custom-input-field" id="date">
+                            <label class="label-field" for="datepicker">Дата</label>
+                            <input type="date" class="datepicker" id="datepicker" name="date"/>
+                        </div>
+                        <div class="input-field col s6 custom-input-field" id="time">
+                            <label class="label-field" for="timepicker">Время</label>
+                            <input id="timepicker" class="timepicker" type="time" name="time"/>
+                        </div>
                     </div>
-                    <div class="input-field col s6 custom-input-field" id="time">
-                        <label class="label-field" for="timepicker">Время</label>
-                        <input id="timepicker" class="timepicker" type="time"/>
+                    <div class="row">
+                        <div class="input-field col s12 custom-input-field ">
+                            <textarea id="description" class="materialize-textarea custom-text-area" name="description"></textarea>
+                            <label class="label-field" for="description">Описание</label>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12 custom-input-field ">
-                        <textarea id="description" class="materialize-textarea custom-text-area"></textarea>
-                        <label class="label-field" for="description">Описание</label>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Опубликовать
-                        <i class="material-icons right">send</i>
-                    </button>
-                    <button class="btn waves-effect waves-light red" type="submit" name="action" onclick="history.go(-1)">Отмена
-                        <i class="material-icons right">cancel</i>
-                    </button>
+                    <div class="row">
+                        <button class="btn waves-effect waves-light" type="submit" name="action" id="publish-button">Опубликовать
+                            <i class="material-icons right">send</i>
+                        </button>
+                        <button class="btn waves-effect waves-light red" type="submit" name="action" onclick="history.go(-1)">Отмена
+                            <i class="material-icons right">cancel</i>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </main>
 <script type="text/javascript" src="../resources/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="../resources/js/materialize.min.js"></script>
-<script type="text/javascript" src="../resources/js/materialize.clockpicker.js">
-</script>
+<script type="text/javascript" src="../resources/js/materialize.clockpicker.js"></script>
+<script type="text/javascript" src="../resources/js/create_meeting.js"></script>
 <script>
     $(".button-collapse").sideNav();
     $('.collapsible').collapsible();
