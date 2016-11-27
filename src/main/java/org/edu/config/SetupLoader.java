@@ -99,9 +99,15 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
         final Category category = new Category();
         category.setId(1);
         category.setColor("Red");
-        category.setName("Sport");
+        category.setName("Спорт");
         category.setUsers(new HashSet<>(Arrays.asList(user)));
         createIfNotFound(category);
+        final Category category2 = new Category();
+        category2.setId(2);
+        category2.setColor("Blue");
+        category2.setName("Концерт");
+        category2.setUsers(new HashSet<>(Arrays.asList(user)));
+        createIfNotFound(category2);
         final Station station = new Station();
         station.setId(1);
         station.setColor("Blue");

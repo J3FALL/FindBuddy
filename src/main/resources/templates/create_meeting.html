@@ -143,23 +143,21 @@
                 </div>
                 <div class="row" id="title-row">
                     <div class="input-field col s6 custom-input-field">
-                        <input id="title" type="text" class="validate">
+                        <input id="title" type="text" class="validate"/>
                         <label class="label-field" for="title">Заголовок встречи</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6 custom-input-field" id="category">
                         <select>
-                            <option value="" disabled selected>Выберите категорию</option>
-                            <option value="1">Спорт</option>
-                            <option value="2">Концерт</option>
-                            <option value="3">Настолки</option>
+                            <option value="0" disabled="disabled" selected="selected">Выберите категорию</option>
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
                         </select>
                         <label class="label-field">Категория</label>
                     </div>
-                    <div class="input-field col s6 custom-input-field" id="subway">
+                    <div class="input-field col s6 custom-input-field" id="station">
                         <select>
-                            <option value="" disabled selected>Выберите метро</option>
+                            <option value="0" disabled="disabled" selected="selected">Выберите метро</option>
                             <option value="1">Петроградская</option>
                             <option value="2">Василеовстровская</option>
                             <option value="3">Садовая</option>
@@ -170,11 +168,11 @@
                 <div class="row">
                     <div class="input-field col s6 custom-input-field" id="date">
                         <label class="label-field">Дата</label>
-                        <input type="date" class="datepicker">
+                        <input type="date" class="datepicker"/>
                     </div>
                     <div class="input-field col s6 custom-input-field" id="time">
                         <label class="label-field" for="timepicker">Время</label>
-                        <input id="timepicker" class="timepicker" type="time">
+                        <input id="timepicker" class="timepicker" type="time"/>
                     </div>
                 </div>
                 <div class="row">
