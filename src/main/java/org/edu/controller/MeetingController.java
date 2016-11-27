@@ -22,7 +22,6 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/meetings")
@@ -41,9 +40,7 @@ public class MeetingController {
         if (principal == null) { //user did not log-in
             return new ResponseEntity<>(new GenericResponse("Please login"), HttpStatus.BAD_GATEWAY);
         }
-        Random random = new Random();
         meetingDto.setCreateDate(LocalDateTime.now());
-        meetingDto.setStartDate(LocalDateTime.of(2016, 11, 26, Math.abs(random.nextInt()) % 23, Math.abs(random.nextInt()) % 23));
         Meeting meeting = Converter.convert(meetingDto, Meeting.class);
         meetingService.createMeeting(meeting, principal);
 
@@ -73,7 +70,7 @@ public class MeetingController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<GenericResponse> updateMeeting(@RequestBody MeetingDto meetingDto, @PathVariable("id")
-                                                       long id, Principal principal) {
+            long id, Principal principal) {
         if (principal == null) {
             return ResponseEntity.badRequest().body(new GenericResponse("Please login"));
         }
@@ -86,7 +83,7 @@ public class MeetingController {
         } else {
             return new ResponseEntity<>(new GenericResponse("Failed"), HttpStatus.BAD_REQUEST);
         }
-     }
+    }
 
     @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
     public ResponseEntity<GenericResponse> subscribeUser(@RequestBody MeetingDto meetingDto, Principal principal) {
