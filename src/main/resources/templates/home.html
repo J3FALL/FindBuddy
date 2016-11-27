@@ -41,7 +41,7 @@
         <li>
             <div class="divider"></div>
         </li>
-        <li th:if="${username}"><a href="#" class="waves-effect btn light-blue accent-1">Создать
+        <li th:if="${username}"><a th:href="@{/meetings/create}" class="waves-effect btn light-blue accent-1">Создать
             встречу</a></li>
     </ul>
     <nav class="grey darken-1 fixed">

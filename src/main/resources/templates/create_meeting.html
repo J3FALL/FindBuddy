@@ -112,8 +112,6 @@
         <li>
             <div class="divider"></div>
         </li>
-        <li th:if="${username}"><a href="#!" class="waves-effect btn light-blue accent-1">Создать
-            встречу</a></li>
     </ul>
     <nav class="#d7ccc8 grey darken-1 fixed">
         <div class="nav-wrapper">
@@ -184,7 +182,7 @@
                     <button class="btn waves-effect waves-light" type="submit" name="action">Опубликовать
                         <i class="material-icons right">send</i>
                     </button>
-                    <button class="btn waves-effect waves-light red" type="submit" name="action">Отмена
+                    <button class="btn waves-effect waves-light red" type="submit" name="action" onclick="history.go(-1)">Отмена
                         <i class="material-icons right">cancel</i>
                     </button>
                 </div>
