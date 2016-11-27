@@ -140,6 +140,11 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
+    public List<Meeting> getFeed(int num, int pageNum, String userName) {
+        return meetingDao.findSubscribedCategoryMeetings(num, pageNum, userName);
+    }
+
+    @Override
     public long getMeetingsNumber() {
         return meetingDao.findMeetingsNumber();
     }
@@ -149,9 +154,13 @@ public class MeetingServiceImpl implements MeetingService {
         return meetingDao.findUpcomingMeetingsNumber();
     }
 
-
     @Override
     public long getPopularMeetingsNumber() {
         return meetingDao.findPopularMeetingsNumber();
+    }
+
+    @Override
+    public long getFeedNumber(String userName) {
+        return meetingDao.findSubscribedCategoryMeetingsNumber(userName);
     }
 }

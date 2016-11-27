@@ -57,8 +57,33 @@ public class MeetingDaoImpl extends AbstractHibernateDao<Meeting> implements Mee
                 .createNativeQuery(
                         "select meetings.*, count_user.users_num from meetings left join " +
                                 "(select meeting_id, count(user_id) as users_num from meeting_user group by meeting_id) as count_user " +
-                        "on meetings.id = count_user.meeting_id " +
-                        "order by count_user.users_num")
+                                "on meetings.id = count_user.meeting_id " +
+                                "where create_date between now() - interval '7 days' and now() " +
+                                "order by count_user.users_num")
+                .addEntity(Meeting.class)
+                .setMaxResults(num)
+                .setFirstResult((pageNum - 1) * num)
+                .getResultList();
+        return meetings;
+    }
+
+    @Override
+    public List<Meeting> findSubscribedCategoryMeetings(int num, int pageNum, String userName) {
+        @SuppressWarnings("unchecked")
+        List<Meeting> meetings = getCurrentSession()
+                .createNativeQuery(
+                        "select meetings.* " +
+                                "from categories " +
+                                "inner join category_users " +
+                                "on categories.id = category_users.category_id " +
+                                "inner join users " +
+                                "on category_users.user_id = users.id " +
+                                "inner join meetings " +
+                                "on categories.id = meetings.category_id " +
+                                "where users.email = :user_name and create_date between now() - interval '7 days' and now()" +
+                                "order by create_date desc"
+                )
+                .setParameter("user_name", userName)
                 .addEntity(Meeting.class)
                 .setMaxResults(num)
                 .setFirstResult((pageNum - 1) * num)
@@ -94,6 +119,24 @@ public class MeetingDaoImpl extends AbstractHibernateDao<Meeting> implements Mee
                         "select count(*) as count from meetings left join " +
                                 "(select meeting_id, count(user_id) as users_num from meeting_user group by meeting_id) as count_user " +
                                 "on meetings.id = count_user.meeting_id")
+                .addScalar("count", StandardBasicTypes.LONG)
+                .uniqueResult();
+        return count;
+    }
+
+    @Override
+    public long findSubscribedCategoryMeetingsNumber(String userName) {
+        long count = (Long) getCurrentSession()
+                .createNativeQuery("select count(*) as count " +
+                        "from categories " +
+                        "inner join category_users " +
+                        "on categories.id = category_users.category_id " +
+                        "inner join users " +
+                        "on category_users.user_id = users.id " +
+                        "inner join meetings " +
+                        "on categories.id = meetings.category_id " +
+                        "where users.name = :user_name and create_date between now() - interval '7 days' and now()")
+                .setParameter("user_name", userName)
                 .addScalar("count", StandardBasicTypes.LONG)
                 .uniqueResult();
         return count;

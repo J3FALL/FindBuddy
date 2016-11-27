@@ -34,9 +34,9 @@
             </ul>
         </li>
         <li th:unless="${username}"><a th:href="@{/login}" class="waves-effect">Войти</a></li>
-        <li th:if="${username}"><a href="#" class="waves-effect">Моя
+        <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
             лента</a></li>
-        <li><a href="#" class="waves-effect">Все встречи</a></li>
+        <li><a href="/" class="waves-effect">Все встречи</a></li>
         <li><a href="#" class="waves-effect" onclick="">Все теги</a></li>
         <li>
             <div class="divider"></div>
@@ -67,9 +67,9 @@
             <!--/*@thymesVar id="currentLocation" type="1"*/-->
             <div class="col s12 m10 l10 offset-l1 offset-m1">
                 <div id="head" class="section">
-                    <h4 class="left-align">Все встречи</h4>
+                    <h4 class="left-align" th:text="${currentLocation} == 'feed' ? 'Моя лента' : 'Все встречи'">Все встречи</h4>
                     <div class="divider"></div>
-                    <ul class="tabs">
+                    <ul class="tabs"  th:unless="${currentLocation} == 'feed'">
                         <li class="tab col s4">
                             
                             <a target="_self" th:href="|new|"

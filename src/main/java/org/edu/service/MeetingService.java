@@ -30,9 +30,13 @@ public interface MeetingService {
 
     List<Meeting> getPopularMeetings(int num, int pageNum);
 
+    List<Meeting> getFeed(int num, int pageNum, String userName);
+
     long getMeetingsNumber();
 
     long getUpcomingMeetingsNumber();
 
     long getPopularMeetingsNumber();
+
+    long getFeedNumber(String userName);
 }

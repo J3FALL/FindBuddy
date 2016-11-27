@@ -54,7 +54,7 @@ public class ViewController {
         double pageCount = Math.ceil(meetingService.getUpcomingMeetingsNumber() / (double) meetingOnPageNum);
         setMainVariablesToPage(principal, pageNum, "nearest", model, pageCount);
         model.addAttribute("meetings",
-                Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, pageNum == null ? 0 : pageNum), MeetingDto.class));
+                Converter.convert(meetingService.getUpcomingMeetings(meetingOnPageNum, pageNum == null ? 1 : pageNum), MeetingDto.class));
         return "home";
     }
 
@@ -63,11 +63,19 @@ public class ViewController {
         double pageCount = Math.ceil(meetingService.getPopularMeetingsNumber() / (double) meetingOnPageNum);
         setMainVariablesToPage(principal, pageNum, "popular", model, pageCount);
         model.addAttribute("meetings",
-                Converter.convert(meetingService.getPopularMeetings(meetingOnPageNum, pageNum == null ? 0 : pageNum), MeetingDto.class));
+                Converter.convert(meetingService.getPopularMeetings(meetingOnPageNum, pageNum == null ? 1 : pageNum), MeetingDto.class));
         return "home";
     }
 
-//    public String
+    @RequestMapping(value = "/feed", method = RequestMethod.GET)
+    public String subscribedCategoryMeetings(Model model, Principal principal, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+        double pageCount = Math.ceil(meetingService.getFeedNumber(principal.getName()) / (double) meetingOnPageNum);
+        setMainVariablesToPage(principal, pageNum, "feed", model, pageCount);
+        System.out.println(meetingService.getFeed(meetingOnPageNum, pageNum == null ? 1 : pageNum, principal.getName()));
+        model.addAttribute("meetings",
+                Converter.convert(meetingService.getFeed(meetingOnPageNum, pageNum == null ? 1 : pageNum, principal.getName()), MeetingDto.class));
+        return "home";
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
