@@ -1,0 +1,34 @@
+#login-page {
+    display: block;
+    width: 80%;
+    max-width: 450px;
+    margin-top: 5%;
+}
+
+#email {
+    margin-left: 0;
+}
+
+#password {
+    margin-left: 0;
+}
+
+#password-again {
+    margin-left: 0 !important;
+}
+
+#name {
+    margin-left: 0 !important;
+}
+
+#surname {
+    margin-left: 0 !important;
+}
+
+#birthday {
+    margin-left: 0;
+}
+
+#datepicker {
+    margin-left: 0;
+}

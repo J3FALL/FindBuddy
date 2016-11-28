@@ -13,12 +13,19 @@ $("#registration-button").click(function () {
             values[this.id] = this.value;
         }
     });
+    var date =  new Date(values['birthday']);
+    console.log(date.getTimezoneOffset());
+    date.setUTCMinutes(date.getUTCMinutes() - date.getTimezoneOffset());
+    values['birthday'] = date.toISOString().slice(0, -1);
+    values = JSON.stringify(values);
+
     // $('#login-form').serializeArray();
 
     $.ajax({
                type: 'POST',
-               url: '/registration',
-               data: values
+               url: '/users',
+               data: values,
+        contentType: 'application/json'
            }).done(function (result) {
         console.log(result);
         window.location.replace("/login");

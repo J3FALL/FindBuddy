@@ -8,69 +8,34 @@
     <link type="text/css" rel="stylesheet" href="../resources/css/materialize.min.css"
           media="screen,projection"/>
     <link rel="stylesheet" href="../resources/css/style.css"/>
+    <link rel="stylesheet" href="../resources/css/login-page.css"/>
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <style>
-        #login-page {
-            display: block;
-            width: 80%;
-            max-width: 450px;
-            margin-top: 5%;
-        }
-
-        #email {
-            margin-left: 0;
-        }
-
-        #password {
-            margin-left: 0;
-        }
-
-        #password-again {
-            margin-left: 0 !important;
-        }
-
-        #name {
-            margin-left: 0 !important;
-        }
-
-        #surname {
-            margin-left: 0 !important;
-        }
-
-        #birthday {
-            margin-left: 0;
-        }
-    </style>
-
 </head>
 
 <body class="grey lighten-4">
-
-
 <div id="login-page" class="row">
     <div class="col s12 z-depth-6 card-panel">
         <form class="login-form" id="login-form">
             <div class="row">
                 <div class="input-field col s12 center">
                     <!--<img width="35%" src="http://www.jeraldsaddle.com/wp-content/uploads/2015/06/Buddy-Logo.gif" alt="" class="responsive-img valign profile-image-login">-->
-                    <h4 class="indigo-text">Create your account</h4>
+                    <h4 class="indigo-text">Регистрация</h4>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
                     <i class="mdi-social-person-outline prefix"></i>
                     <input id="name" type="text" class="validate"/>
-                    <label for="name" class="left-align">Name</label>
+                    <label for="name" class="left-align">Имя</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
                     <i class="mdi-social-person-outline prefix"></i>
                     <input id="surname" type="text" class="validate"/>
-                    <label for="surname" class="left-align">Surname</label>
+                    <label for="surname" class="left-align">Фамилия</label>
                 </div>
             </div>
             <div class="row margin">
@@ -84,30 +49,29 @@
                 <div class="input-field col s12 center">
                     <i class="mdi-action-lock-outline prefix"></i>
                     <input id="password" type="password" class="validate"/>
-                    <label class="left-align" for="password">Password</label>
+                    <label class="left-align" for="password">Пароль</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
                     <i class="mdi-action-lock-outline prefix"></i>
                     <input id="password-again" type="password"/>
-                    <label class="left-align" for="password-again">Re-type password</label>
+                    <label class="left-align" for="password-again">Повторите пароль</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
                     <i class="mdi-action-lock-outline prefix"></i>
-                    <input id="birthday" type="datetime" class="datepicker"/>
-                    <label class="left-align" for="birthday">Birthday</label>
+                    <label class="left-align" for="birthday">День рождения</label>
+                    <input type="date" class="datepicker" id="birthday" name="birthday"/>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <a href="#" id="registration-button" class="btn waves-effect waves-light col s12">Register
-                        Now</a>
+                    <a href="#" id="registration-button" class="btn waves-effect waves-light col s12">Регистрация</a>
                 </div>
                 <div class="input-field col s12">
-                    <p class="margin center medium-small sign-up">Already have an account? <a
+                    <p class="margin center medium-small sign-up">Уже есть аккаунт? <a
                             href="/login">Login</a></p>
                 </div>
             </div>
@@ -120,7 +84,7 @@
 <script>
     $('.datepicker').pickadate({
                                    selectMonths: true, // Creates a dropdown to control month
-                                   selectYears: 70 // Creates a dropdown of 15 years to control year
+                                       selectYears: 70 // Creates a dropdown of 15 years to control year
                                });
 </script>
 </body>
