@@ -37,11 +37,12 @@
         <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
             лента</a></li>
         <li><a href="/" class="waves-effect">Все встречи</a></li>
-        <li><a href="#" class="waves-effect" onclick="">Все теги</a></li>
+        <li><a href="categories" class="waves-effect">Все категории</a></li>
         <li>
             <div class="divider"></div>
         </li>
-        <li th:if="${username}"><a th:href="@{/meetings/create}" class="waves-effect btn light-blue accent-1">Создать
+        <li th:if="${username}"><a th:href="@{/meetings/create}"
+                                   class="waves-effect btn light-blue accent-1">Создать
             встречу</a></li>
     </ul>
     <nav class="grey darken-1 fixed">
@@ -67,11 +68,13 @@
             <!--/*@thymesVar id="currentLocation" type="1"*/-->
             <div class="col s12 m10 l10 offset-l1 offset-m1">
                 <div id="head" class="section">
-                    <h4 class="left-align" th:text="${currentLocation} == 'feed' ? 'Моя лента' : 'Все встречи'">Все встречи</h4>
+                    <h4 class="left-align"
+                        th:text="${currentLocation} == 'feed' ? 'Моя лента' : 'Все встречи'">Все
+                        встречи</h4>
                     <div class="divider"></div>
-                    <ul class="tabs"  th:unless="${currentLocation} == 'feed'">
+                    <ul class="tabs" th:unless="${currentLocation} == 'feed'">
                         <li class="tab col s4">
-                            
+
                             <a target="_self" th:href="|new|"
                                th:class="${currentLocation} == 'new' ? 'active black-text' :'black-text'">Новые</a>
                         </li>
@@ -170,7 +173,7 @@
 <script>
     $(".button-collapse").sideNav();
     $('.collapsible').collapsible();
-//    $('ul.tabs').tabs();
+    //    $('ul.tabs').tabs();
 </script>
 </body>
 </html>
