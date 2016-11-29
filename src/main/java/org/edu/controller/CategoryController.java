@@ -38,10 +38,10 @@ public class CategoryController {
         return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<CategoryDto>> getAllCategories() {
-        return new ResponseEntity<>(Converter.convert(categoryService.getAllCategories(), CategoryDto.class), HttpStatus.OK);
-    }
+//    @RequestMapping(method = RequestMethod.GET)
+//    public ResponseEntity<List<CategoryDto>> getAllCategories() {
+//        return new ResponseEntity<>(Converter.convert(categoryService.getAllCategories(), CategoryDto.class), HttpStatus.OK);
+//    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<GenericResponse> updateCategory(@RequestBody CategoryDto categoryDto, Principal principal, @PathVariable("id") long id) {
@@ -59,19 +59,19 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
-    public ResponseEntity<GenericResponse> subscribeUser(@RequestBody CategoryDto[] categoryDtos, Principal principal) {
+    public ResponseEntity<GenericResponse> subscribeUser(@RequestBody CategoryDto categoryDto, Principal principal) {
         if (principal == null)
             return new ResponseEntity<>(new GenericResponse("Please login"), HttpStatus.BAD_REQUEST);
-        List<CategoryDto> categories = new ArrayList<>(Arrays.asList(categoryDtos));
+        List<CategoryDto> categories = new ArrayList<>(Arrays.asList(categoryDto));
         categoryService.subscribeCategories(Converter.convert(categories, Category.class), principal);
         return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/unsubscribe", method = RequestMethod.POST)
-    public ResponseEntity<GenericResponse> unsubscribeUser(@RequestBody CategoryDto[] categoryDtos, Principal principal) {
+    public ResponseEntity<GenericResponse> unsubscribeUser(@RequestBody CategoryDto categoryDto, Principal principal) {
         if (principal == null)
             return new ResponseEntity<>(new GenericResponse("Please login"), HttpStatus.BAD_REQUEST);
-        List<CategoryDto> categories = new ArrayList<>(Arrays.asList(categoryDtos));
+        List<CategoryDto> categories = new ArrayList<>(Arrays.asList(categoryDto));
         categoryService.unsubscribeCategories(Converter.convert(categories, Category.class), principal);
         return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
     }
