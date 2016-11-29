@@ -1,6 +1,7 @@
 package org.edu.controller;
 
 import org.edu.converter.Converter;
+import org.edu.model.Category;
 import org.edu.model.User;
 import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.MeetingDto;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -71,11 +74,28 @@ public class ViewController {
     public String subscribedCategoryMeetings(Model model, Principal principal, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
         double pageCount = Math.ceil(meetingService.getFeedNumber(principal.getName()) / (double) meetingOnPageNum);
         setMainVariablesToPage(principal, pageNum, "feed", model, pageCount);
-        System.out.println(meetingService.getFeed(meetingOnPageNum, pageNum == null ? 1 : pageNum, principal.getName()));
+//        System.out.println(meetingService.getFeed(meetingOnPageNum, pageNum == null ? 1 : pageNum, principal.getName()));
+        meetingService.newUserOnFeed(principal.getName());
         model.addAttribute("meetings",
                 Converter.convert(meetingService.getFeed(meetingOnPageNum, pageNum == null ? 1 : pageNum, principal.getName()), MeetingDto.class));
-        return "home";
+        return "feed";
     }
+
+    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+    public String showAllCategories(Model model, Principal principal) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userService.getUserByEmail(email);
+            model.addAttribute("username", user.getName());
+            model.addAttribute("roles", user.getRoles());
+        }
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+        Set<Category> userCategories = userService.getUserByEmail(principal.getName()).getCategories();
+        model.addAttribute("userCategories", userCategories);
+        return "categories";
+    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {

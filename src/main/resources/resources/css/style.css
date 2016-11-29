@@ -82,3 +82,106 @@ header, main, footer {
 .active.pagination_item {
     background-color: #bdbdbd !important;
 }
+
+
+@media screen and (max-width: 480px) {
+
+    .main-col {
+        padding-right: 3% !important;
+    }
+    .tag-card {
+        width: 90%;
+        float: left;
+        margin: 0 1% 2%;
+        left: 5%;
+    }
+
+    .tag-card:first-of-type, .tag-card:nth-of-type(1n + 1) {
+        margin-left: 0;
+    }
+
+    .tag-card:last-of-type {
+        margin-right: 0;
+    }
+
+    /*#first-divider {*/
+    /*margin-right: 6%;*/
+    /*}*/
+}
+
+@media screen and (min-width: 480px) and (max-width: 714px){
+    .tag-card {
+        width: 48.5%;
+        float: left;
+        margin: 0 1% 2%;
+    }
+
+    .tag-card:first-of-type, .tag-card:nth-of-type(2n + 1) {
+        margin-left: 0;
+    }
+
+    .tag-card:last-of-type {
+        margin-right: 0;
+    }
+
+    #first-divider {
+        margin-right: 1%;
+    }
+}
+
+@media screen and (min-width: 714px) {
+    /*.tag-card {*/
+    /*width: 24%;*/
+    /*float: left;*/
+    /*}*/
+
+    /*.tag-card + .tag-card {*/
+    /*margin-left: 1.33%;*/
+    /*}*/
+
+    .tag-card {
+        width: 31.5%;
+        float: left;
+        margin: 1%;
+        display: table-cell;
+    }
+
+    .tag-card:first-of-type, .tag-card:nth-of-type(3n + 1) {
+        margin-left: 0;
+    }
+
+    .tag-card:last-of-type {
+        margin-right: 0;
+    }
+
+    .card-action > a {
+        font-size: 13px !important;
+        margin-right: 0 !important;
+    }
+
+    #main-content {
+        /*display: table-row;*/
+        width: 100% !important;
+    }
+
+    #first-divider {
+    margin-right: 2%;
+    }
+}
+
+.new-content-divider {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.new-content {
+    cursor: pointer;
+    display: none;
+}
+
+
+
+
+
+
+
