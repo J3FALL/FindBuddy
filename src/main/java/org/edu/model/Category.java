@@ -99,6 +99,7 @@ public class Category implements Serializable {
     public void addMeeting(Meeting meeting) { this.meetings.add(meeting);}
 
     public void deleteMeeting(Meeting meeting) {this.meetings.remove(meeting);}
+
     @Override
     public String toString() {
         return "Category{" +
@@ -106,5 +107,22 @@ public class Category implements Serializable {
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category)) return false;
+
+        Category category = (Category) o;
+
+        if (id != category.id) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        return result;
     }
 }
