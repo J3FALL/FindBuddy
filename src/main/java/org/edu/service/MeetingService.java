@@ -39,4 +39,8 @@ public interface MeetingService {
     long getPopularMeetingsNumber();
 
     long getFeedNumber(String userName);
+
+    List<Meeting> currentCreatedMeetings(String userName);
+
+    public void newUserOnFeed(String userName);
 }

@@ -135,7 +135,7 @@ public class MeetingDaoImpl extends AbstractHibernateDao<Meeting> implements Mee
                         "on category_users.user_id = users.id " +
                         "inner join meetings " +
                         "on categories.id = meetings.category_id " +
-                        "where users.name = :user_name and create_date between now() - interval '7 days' and now()")
+                        "where users.email = :user_name and create_date between now() - interval '7 days' and now()")
                 .setParameter("user_name", userName)
                 .addScalar("count", StandardBasicTypes.LONG)
                 .uniqueResult();

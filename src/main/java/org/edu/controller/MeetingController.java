@@ -125,4 +125,10 @@ public class MeetingController {
             return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);
         return new ResponseEntity<>(new GenericResponse("Fail."), HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping(value = "/new_meetings", method = RequestMethod.GET)
+    public ResponseEntity<List<MeetingDto>> getNewMeetings(Principal principal) {
+        List<Meeting> newMeetings =  meetingService.currentCreatedMeetings(principal.getName());
+        return new ResponseEntity<>(Converter.convert(newMeetings, MeetingDto.class), HttpStatus.OK);
+    }
 }

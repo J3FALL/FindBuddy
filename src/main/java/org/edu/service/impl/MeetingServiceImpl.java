@@ -17,7 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -35,6 +39,8 @@ public class MeetingServiceImpl implements MeetingService {
     @Autowired
     StationDao stationDao;
 
+    private Map<String, List<Meeting>> unshowedUsersMeetings = new HashMap<>();
+
     @Override
     public void createMeeting(Meeting meeting, Principal principal) {
         User user = userDao.findByEmail(principal.getName());
@@ -45,7 +51,29 @@ public class MeetingServiceImpl implements MeetingService {
         meeting.setCategory(category);
         //meeting.setCreateDate(Calendar.getInstance().getTime());
         meetingDao.create(meeting);
+        addToNewMeetings(meeting, category);
         System.out.println("Meeting has created");
+    }
+
+    private void addToNewMeetings(Meeting meeting, Category category) {
+        Set<User> subscribedUsers = category.getUsers();
+        for (User user : subscribedUsers) {
+            if (unshowedUsersMeetings.get(user.getEmail()) != null) {
+                unshowedUsersMeetings.get(user.getEmail()).add(meeting);
+            }
+        }
+    }
+
+    @Override
+    public void newUserOnFeed(String userName) {
+        unshowedUsersMeetings.put(userName, new ArrayList<>());
+    }
+
+    @Override
+    public List<Meeting> currentCreatedMeetings(String userName) {
+        List<Meeting> newMeetings = new ArrayList<>(unshowedUsersMeetings.get(userName));
+        unshowedUsersMeetings.get(userName).clear();
+        return newMeetings;
     }
 
     @Override
