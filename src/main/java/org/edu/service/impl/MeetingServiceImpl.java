@@ -39,7 +39,7 @@ public class MeetingServiceImpl implements MeetingService {
     @Autowired
     StationDao stationDao;
 
-    private Map<String, List<Meeting>> unshowedUsersMeetings = new HashMap<>();
+    private Map<String, List<Meeting>> waitingUsersNewMeetings = new HashMap<>();
 
     @Override
     public void createMeeting(Meeting meeting, Principal principal) {
@@ -58,22 +58,29 @@ public class MeetingServiceImpl implements MeetingService {
     private void addToNewMeetings(Meeting meeting, Category category) {
         Set<User> subscribedUsers = category.getUsers();
         for (User user : subscribedUsers) {
-            if (unshowedUsersMeetings.get(user.getEmail()) != null) {
-                unshowedUsersMeetings.get(user.getEmail()).add(meeting);
+            if (waitingUsersNewMeetings.get(user.getEmail()) != null) {
+                waitingUsersNewMeetings.get(user.getEmail()).add(meeting);
             }
         }
     }
 
     @Override
-    public void newUserOnFeed(String userName) {
-        unshowedUsersMeetings.put(userName, new ArrayList<>());
+    public void addUserToWaiting(String userName) {
+        waitingUsersNewMeetings.put(userName, new ArrayList<>());
     }
 
     @Override
-    public List<Meeting> currentCreatedMeetings(String userName) {
-        List<Meeting> newMeetings = new ArrayList<>(unshowedUsersMeetings.get(userName));
-        unshowedUsersMeetings.get(userName).clear();
+    public List<Meeting> getNewCreatedMeetings(String userName) {
+        if (waitingUsersNewMeetings.get(userName) == null)
+            return null;
+        List<Meeting> newMeetings = new ArrayList<>(waitingUsersNewMeetings.get(userName));
+        waitingUsersNewMeetings.get(userName).clear();
         return newMeetings;
+    }
+
+    @Override
+    public void removeUserFromWaiting(String userName) {
+        waitingUsersNewMeetings.remove(userName);
     }
 
     @Override

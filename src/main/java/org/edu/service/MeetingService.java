@@ -40,7 +40,9 @@ public interface MeetingService {
 
     long getFeedNumber(String userName);
 
-    List<Meeting> currentCreatedMeetings(String userName);
+    List<Meeting> getNewCreatedMeetings(String userName);
 
-    public void newUserOnFeed(String userName);
+    void addUserToWaiting(String userName);
+    
+    void removeUserFromWaiting(String userName);
 }

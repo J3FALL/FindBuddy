@@ -10,7 +10,7 @@ function getNewMeetings() {
                url: '/meetings/new_meetings'
            })
         .done(function (data) {
-            if (data.length != 0) {
+            if (data != null && data.length != 0) {
                 meetings.push.apply(meetings, data);
                 newContentBlock.show(600);
                 // drawNewMeetings(data);
@@ -30,7 +30,7 @@ var drawNewMeetings = function () {
     var source = $('#meeting-template').html();
     var template = Handlebars.compile(source);
     var main = $("#main-content");
-    meetings.forEach(function (meeting, i, arr) {
+    meetings.forEach(function (meeting) {
         // var meeting = $(this);
         var startDate = new Date(meeting.start_date);
         startDate.setUTCMinutes(startDate.getUTCMinutes() + startDate.getTimezoneOffset());
@@ -50,3 +50,10 @@ var drawNewMeetings = function () {
         $(html).hide().prependTo("#main-content").slideDown("slow");
     })
 };
+
+$(window).bind('beforeunload', function () {
+    $.ajax({
+               type: 'GET',
+               url: '/users/leave_feed'
+           })
+});
