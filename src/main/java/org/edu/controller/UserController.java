@@ -9,6 +9,7 @@ import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.CommentDto;
 import org.edu.model.dto.MeetingDto;
 import org.edu.model.dto.UserDto;
+import org.edu.service.MeetingService;
 import org.edu.service.UserService;
 import org.edu.util.GenericResponse;
 import org.modelmapper.ModelMapper;
@@ -32,6 +33,9 @@ public class UserController{
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    MeetingService meetingService;
 
     @Autowired
     ModelMapper modelMapper;
@@ -108,6 +112,11 @@ public class UserController{
         Set<Meeting> meetings = userService.getMeetingsByCategories(principal);
         List<MeetingDto> meetingDtos = Converter.convert(new ArrayList<>(meetings), MeetingDto.class);
         return new ResponseEntity<>(meetingDtos, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/leave_feed")
+    public void leaveFeed(Principal principal) {
+        meetingService.removeUserFromWaiting(principal.getName());
     }
 
 //    @RequestMapping(value = "/upload_image")
