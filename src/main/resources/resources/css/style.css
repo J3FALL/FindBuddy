@@ -83,7 +83,6 @@ header, main, footer {
     background-color: #bdbdbd !important;
 }
 
-
 @media screen and (max-width: 480px) {
 
     .main-col {
@@ -92,7 +91,7 @@ header, main, footer {
     .tag-card {
         width: 90%;
         float: left;
-        margin: 0 1% 2%;
+        margin: 0 1% 4%;
         left: 5%;
     }
 
@@ -178,6 +177,62 @@ header, main, footer {
     cursor: pointer;
     display: none;
 }
+
+#main-row {
+    height: 100%;
+}
+
+#main-col {
+    height: 100%;
+}
+
+.header-user {
+    margin-top: 5%;
+}
+
+.avatar {
+    width: 30%;
+    margin: auto;
+}
+
+a.inline {
+    /*margin: 0 5%;*/
+    display: inline-block;
+    width: 31%;
+    cursor: pointer;
+    /*border-right: solid 1px;*/
+}
+
+
+.user-info {
+    margin-top: 2%;
+}
+
+.user-info .inline{
+    display: inline-block;
+    /*height: 20%;*/
+}
+
+.bottom-part {
+    margin-top: 5%;
+}
+
+.dynamic-block {
+    text-overflow: ellipsis;
+}
+
+.description {
+    margin-top: 10px;
+}
+
+.card-action {
+    border-top: 0 !important;
+}
+
+p {
+    margin: 0;
+}
+
 
 
 
