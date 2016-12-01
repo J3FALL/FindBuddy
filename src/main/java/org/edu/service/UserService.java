@@ -5,6 +5,7 @@ import org.edu.model.Comment;
 import org.edu.model.Meeting;
 import org.edu.model.User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.Set;
@@ -28,4 +29,6 @@ public interface UserService {
     Set<Category> getUserCategories(long userID);
 
     Set<Meeting> getMeetingsByCategories(Principal principal);
+
+    void uploadPhoto(MultipartFile photo, Principal principal);
 }

@@ -119,15 +119,4 @@ public class UserController{
         meetingService.removeUserFromWaiting(principal.getName());
     }
 
-//    @RequestMapping(value = "/upload_image")
-//    public void uploadUserImage(Principal principal, @RequestParam("file")MultipartFile file) {
-////        ProfileImageDto profileImageDto = new ProfileImageDto();
-////        profileImageDto.setFile(file);
-////        try {
-////            imageUtil.processProfileImage(profileImageDto, principal.getName());
-////        } catch (IOException e) {
-////            e.printStackTrace();
-////        }
-//        fileStorageService.store(file);
-//    }
 }

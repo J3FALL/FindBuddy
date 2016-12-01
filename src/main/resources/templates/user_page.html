@@ -74,7 +74,7 @@
                     <!--/*@thymesVar id="meeting" type=""*/-->
                     <div class="head-part center">
                         <div class="avatar center">
-                            <img src="../resources/images/cool_pic.jpg"
+                            <img th:src="|/images/${photo}|"
                                  class="circle responsive-img"/>
                         </div>
                         <h4 th:text="${userName}">Ильнур Хафизов</h4>

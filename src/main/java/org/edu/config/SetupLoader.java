@@ -12,6 +12,7 @@ import org.edu.model.Privilege;
 import org.edu.model.Role;
 import org.edu.model.Station;
 import org.edu.model.User;
+import org.edu.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -53,6 +54,8 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    StorageService storageService;
 
 
 
@@ -113,6 +116,7 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
         station.setColor("blue");
         station.setName("Невский проспект");
         createIfNotFound(station);
+        storageService.init();
         alreadySetup = true;
     }
 

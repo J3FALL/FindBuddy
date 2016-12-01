@@ -87,6 +87,16 @@ public class ViewController {
         return "feed";
     }
 
+    private void setHeaderVariables(Model model, Principal principal) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userService.getUserByEmail(email);
+            model.addAttribute("username", user.getName());
+            model.addAttribute("roles", user.getRoles());
+            model.addAttribute("userId", user.getId());
+        }
+    }
+
     private void setMeetingVariables(Model model, List<MeetingDto> meetingDtos,
                                      Integer pageNum, String location, double pageCount) {
         if (pageNum == null) {
@@ -144,6 +154,7 @@ public class ViewController {
         model.addAttribute("userCommentsNum", userCommentsNum);
         model.addAttribute("userCategoriesNum", userCategoriesNum);
         model.addAttribute("userName", user.getName() + " " + user.getSurname());
+        model.addAttribute("photo", user.getPhoto());
         setHeaderVariables(model, principal);
         if (location == null)
             location = "info";
@@ -195,16 +206,6 @@ public class ViewController {
     @RequestMapping(value = "/admin")
     public String adminPage() {
         return "admin";
-    }
-
-    private void setHeaderVariables(Model model, Principal principal) {
-        if (principal != null) {
-            String email = principal.getName();
-            User user = userService.getUserByEmail(email);
-            model.addAttribute("username", user.getName());
-            model.addAttribute("roles", user.getRoles());
-            model.addAttribute("userId", user.getId());
-        }
     }
 
     @RequestMapping(value = "/meetings/create", method = RequestMethod.GET)

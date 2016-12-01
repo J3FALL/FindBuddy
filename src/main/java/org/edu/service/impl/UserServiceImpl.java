@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
 import java.util.Arrays;
@@ -41,6 +43,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     MeetingDao meetingDao;
+
+    @Autowired
+    FileStorageService storageService;
 
     @Override
     public User getUserByEmail(String email) {
@@ -135,5 +140,19 @@ public class UserServiceImpl implements UserService {
             meetingsByCategoryList.addAll(category.getMeetings());
         }
         return meetingsByCategoryList;
+    }
+
+    @Override
+    public void uploadPhoto(MultipartFile photo, Principal principal) {
+        User user = userDao.findByEmail(principal.getName());
+        String userPhotoPath = null;
+        try {
+            userPhotoPath = storageService.store(photo, user.getEmail());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(userPhotoPath);
+        user.setPhoto(userPhotoPath);
+        userDao.update(user);
     }
 }
