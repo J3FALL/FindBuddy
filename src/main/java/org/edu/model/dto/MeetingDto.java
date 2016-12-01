@@ -27,7 +27,7 @@ public class MeetingDto {
     private int subscribersNum;
 
     private static final String[] months = {"Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля",
-            "Августа", "Сентября", "Октября", "Ноября", "Дрекабря"};
+            "Августа", "Сентября", "Октября", "Ноября", "Дeкабря"};
 
     public long getId() {
         return id;
