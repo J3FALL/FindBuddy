@@ -26,7 +26,7 @@
                             class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a class="waves-effect" href="#">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/user/${userId}|">Профиль</a></li>
                             <li><a class="waves-effect" th:href="@{/logout}">Выход</a></li>
                         </ul>
                     </div>
@@ -78,7 +78,7 @@
                             <span class="card-title" th:text="${category.name}">Card Title</span>
                             <p></p>
                         </div>
-                        <div class="card-action center">
+                        <div th:if="${userCategories} != null" class="card-action center">
                             <a th:id="${category.id}" href="#" th:class="${userCategories.contains(category)} ?
                             'subscribed' : 'unsubscribed'" th:text="${userCategories.contains(category)} ?
                             'Вы подписаны' : 'Подписаться'"
@@ -86,89 +86,7 @@
                             <!--<a href="#">This is a link</a>-->
                         </div>
                     </div>
-
-                    <div class="card blue-grey darken-1 tag-card">
-                        <div class="card-content white-text center">
-                            <span class="card-title">Card Title</span>
-                            <p></p>
-                        </div>
-                        <div class="card-action center">
-                            <a href="#">Подписаться</a>
-                            <!--<a href="#">This is a link</a>-->
-                        </div>
-                    </div>
-                    <div class="card blue-grey darken-1 tag-card">
-                        <div class="card-content white-text center">
-                            <span class="card-title">Card Title</span>
-                            <p></p>
-                        </div>
-                        <div class="card-action center">
-                            <a href="#">Подписаться</a>
-                            <!--<a href="#">This is a link</a>-->
-                        </div>
-                    </div>
-                    <div class="card blue-grey darken-1 tag-card">
-                        <div class="card-content white-text center">
-                            <span class="card-title">Card Title</span>
-                            <p></p>
-                        </div>
-                        <div class="card-action center">
-                            <a href="#">Подписаться</a>
-                            <!--<a href="#">This is a link</a>-->
-                        </div>
-                    </div>
-                    <div class="card blue-grey darken-1 tag-card">
-                        <div class="card-content white-text center">
-                            <span class="card-title">Card Title</span>
-                            <p></p>
-                        </div>
-                        <div class="card-action center">
-                            <a href="#">Подписаться</a>
-                            <!--<a href="#">This is a link</a>-->
-                        </div>
-                    </div>
-                    <div class="card blue-grey darken-1 tag-card">
-                        <div class="card-content white-text center">
-                            <span class="card-title">Card Title</span>
-                            <p></p>
-                        </div>
-                        <div class="card-action center">
-                            <a href="#">Подписаться</a>
-                            <!--<a href="#">This is a link</a>-->
-                        </div>
-                    </div>
-                    <div class="card blue-grey darken-1 tag-card">
-                        <div class="card-content white-text center">
-                            <span class="card-title">Card Title</span>
-                            <p></p>
-                        </div>
-                        <div class="card-action center">
-                            <a href="#">Подписаться</a>
-                            <!--<a href="#">This is a link</a>-->
-                        </div>
-                    </div>
-                    <div class="card blue-grey darken-1 tag-card">
-                        <div class="card-content white-text center">
-                            <span class="card-title">Card Title</span>
-                            <p></p>
-                        </div>
-                        <div class="card-action center">
-                            <a href="#">Подписаться</a>
-                            <!--<a href="#">This is a link</a>-->
-                        </div>
-                    </div>
-                    <div class="card blue-grey darken-1 tag-card">
-                        <div class="card-content white-text center">
-                            <span class="card-title">Card Title</span>
-                            <p></p>
-                        </div>
-                        <div class="card-action center">
-                            <a href="#">Подписаться</a>
-                            <!--<a href="#">This is a link</a>-->
-                        </div>
-                    </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -26,7 +26,7 @@
                             class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a class="waves-effect" href="#">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/user/${userId}|">Профиль</a></li>
                             <li><a class="waves-effect" th:href="@{/logout}">Выход</a></li>
                         </ul>
                     </div>
@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <!--/*@thymesVar id="pageNum" type=""*/-->
-                <ul th:if="${pageNum} > 0" class="pagination center" id="alo">
+                <ul th:if="${pageNum} > 1" class="pagination center" id="alo">
                     <!--/*@thymesVar id="leftArrowDisabled" type=""*/-->
                     <li th:if="${leftArrowDisabled}" class="disabled">
                         <a href="#!">

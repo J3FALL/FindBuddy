@@ -26,7 +26,7 @@
                             class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a class="waves-effect" href="#">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/user/${userId}|">Профиль</a></li>
                             <li><a class="waves-effect" th:href="@{/logout}">Выход</a></li>
                         </ul>
                     </div>
@@ -89,8 +89,8 @@
                     </ul>
                     <div class="divider"></div>
                 </div>
-                <div class="new-content center">
-                    <a id="show-new-meetings-link" onclick="showNewContent()">Показать новые
+                <div class="new-content center" onclick="showNewContent()">
+                    <a id="show-new-meetings-link">Показать новые
                         записи</a>
                     <div class="divider new-content-divider"></div>
                 </div>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
                 <!--/*@thymesVar id="pageNum" type=""*/-->
-                <ul th:if="${pageNum} > 0" class="pagination center" id="alo">
+                <ul th:if="${pageNum} > 1" class="pagination center" id="alo">
                     <!--/*@thymesVar id="leftArrowDisabled" type=""*/-->
                     <li th:if="${leftArrowDisabled}" class="disabled">
                         <a href="#!">
@@ -177,6 +177,11 @@
 <script type="text/javascript" src="../resources/js/materialize.js"></script>
 <script type="text/javascript" src="../resources/js/handlebars-v4.0.5.js"></script>
 <script type="text/javascript" src="../resources/js/feed_auto_update.js"></script>
+<script type="text/javascript">
+    $(window).bind('beforeunload', function () {
+
+    })
+</script>
 <script>
     $(".button-collapse").sideNav();
     $('.collapsible').collapsible();
