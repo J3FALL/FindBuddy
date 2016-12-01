@@ -17,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -178,5 +177,24 @@ public class Meeting implements Serializable {
                 "}";
 
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Meeting)) return false;
+
+        Meeting meeting = (Meeting) o;
+
+        if (id != meeting.id) return false;
+        return title != null ? title.equals(meeting.title) : meeting.title == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        return result;
     }
 }
