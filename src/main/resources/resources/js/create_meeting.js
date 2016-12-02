@@ -50,3 +50,12 @@ $("#publish-button").click(function () {
         console.log("fail");
     });
 });
+
+$(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+});
+
+$("#location_input").click(function () {
+    $('#modal1').modal('open');
+})

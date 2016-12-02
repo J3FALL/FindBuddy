@@ -8,6 +8,10 @@
 
 }
 
+#location_input {
+    border-bottom: 1px solid #9e9e9e !important;
+}
+
 .label-field {
      left: 0 !important;
  }

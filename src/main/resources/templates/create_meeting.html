@@ -163,13 +163,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s6 custom-input-field" id="date">
+                        <div class="input-field col s12 m6 l3 custom-input-field" id="date">
                             <label class="label-field" for="datepicker">Дата</label>
                             <input type="date" class="datepicker" id="datepicker" name="date"/>
                         </div>
-                        <div class="input-field col s6 custom-input-field" id="time">
+                        <div class="input-field col s12 m6 l3 custom-input-field" id="time">
                             <label class="label-field" for="timepicker">Время</label>
-                            <input id="timepicker" class="timepicker" type="time" name="time"/>
+                            <input id="timepicker" class="timepicker" type="time" name="location"/>
+                        </div>
+                        <div class="input-field col s12 m6 l3 custom-input-field" id="location">
+                            <label class="label-field" for="location">Место на карте</label>
+                            <input id="location_input" type="text" name="location" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="row">
@@ -189,6 +193,17 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
         </div>
     </div>
 </main>
