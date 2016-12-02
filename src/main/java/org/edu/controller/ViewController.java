@@ -214,6 +214,7 @@ public class ViewController {
                 Converter.convert(categoryService.getAllCategories(), CategoryDto.class));
         model.addAttribute("stations",
                 Converter.convert(stationService.getAllStations(), StationDto.class));
+        setHeaderVariables(model, principal);
         return "create_meeting";
     }
 }
