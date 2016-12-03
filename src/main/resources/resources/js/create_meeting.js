@@ -51,11 +51,23 @@ $("#publish-button").click(function () {
     });
 });
 
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+    });
+}
+
 $(document).ready(function(){
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal').modal();
+    $('.modal').modal({
+        ready: function (modal, trigger) {
+            //map needs to resize because of modal
+            google.maps.event.trigger(map, "resize");
+        }
+                      });
 });
 
 $("#location_input").click(function () {
     $('#modal1').modal('open');
-})
+});
