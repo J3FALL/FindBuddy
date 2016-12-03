@@ -12,6 +12,9 @@
     border-bottom: 1px solid #9e9e9e !important;
 }
 
+#map {
+    height: 100%;
+}
 .label-field {
      left: 0 !important;
  }
