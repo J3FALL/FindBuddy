@@ -10,6 +10,7 @@
 
 #location_input {
     border-bottom: 1px solid #9e9e9e !important;
+    color: rgba(0,0,0,0.87) !important;
 }
 
 #map {
