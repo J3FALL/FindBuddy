@@ -8,7 +8,9 @@ import org.edu.util.LocalDateDeserializer;
 import org.edu.util.LocalDateSerializer;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 public class UserDto {
@@ -99,6 +101,13 @@ public class UserDto {
 
     public void setCreatedMeetings(Set<MeetingDto> createdMeetings) {
         this.createdMeetings = createdMeetings;
+    }
+
+    public String convertDate() {
+        return DateTimeFormatter
+                .ofPattern("dd LLLL, yyyy")
+                .withLocale(new Locale("ru"))
+                .format(this.birthday);
     }
 
     @Override

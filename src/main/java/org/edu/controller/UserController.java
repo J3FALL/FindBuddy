@@ -64,7 +64,8 @@ public class UserController{
             return new ResponseEntity<>(new GenericResponse("Please login."), HttpStatus.BAD_REQUEST);
         }
         User user = Converter.convert(userDto, User.class);
-        user.setId(id);
+        if (id != 0)
+            user.setId(id);
         boolean isSuccess = userService.updateUser(user, principal);
         if (isSuccess)
             return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.OK);

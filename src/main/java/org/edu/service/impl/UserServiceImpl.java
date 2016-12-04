@@ -79,6 +79,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUser(User user, Principal principal) {
+        if (user.getId() == 0) {
+            user.setId(userDao.findByEmail(principal.getName()).getId());
+        }
         User checkingUser = userDao.findOne(user.getId());
         User principalUser = userDao.findByEmail(principal.getName());
         if (checkingUser != null && principalUser.getId() == user.getId()) {
@@ -143,7 +146,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void uploadPhoto(MultipartFile photo, Principal principal) {
+    public String uploadPhoto(MultipartFile photo, Principal principal) {
         User user = userDao.findByEmail(principal.getName());
         String userPhotoPath = null;
         try {
@@ -151,8 +154,22 @@ public class UserServiceImpl implements UserService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(userPhotoPath);
+        if (userPhotoPath == null) {
+            return null;
+        }
         user.setPhoto(userPhotoPath);
         userDao.update(user);
+        return userPhotoPath;
+    }
+
+    @Override
+    public boolean deletePhoto(Principal principal) {
+        boolean isSuccess = storageService.delete(principal.getName());
+        if (isSuccess) {
+            User user = userDao.findByEmail(principal.getName());
+            user.setPhoto(null);
+            return true;
+        }
+        return false;
     }
 }

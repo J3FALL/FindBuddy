@@ -12,4 +12,5 @@ public interface StorageService {
 
     String store(MultipartFile file, String userName) throws IOException;
 
+    boolean delete(String userName);
 }

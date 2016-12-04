@@ -30,5 +30,7 @@ public interface UserService {
 
     Set<Meeting> getMeetingsByCategories(Principal principal);
 
-    void uploadPhoto(MultipartFile photo, Principal principal);
+    String uploadPhoto(MultipartFile photo, Principal principal);
+
+    boolean deletePhoto(Principal principal);
 }

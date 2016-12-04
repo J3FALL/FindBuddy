@@ -1,8 +1,9 @@
 package org.edu.service.impl;
 
-import org.edu.StorageProperties;
 import org.edu.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,13 +16,14 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 
 @Service
+@PropertySource("classpath:storage.properties")
 public class FileStorageService implements StorageService {
 
     private final String imagesLocation;
 
     @Autowired
-    public FileStorageService(StorageProperties storageProperties) {
-        this.imagesLocation = storageProperties.getImagesLocation();
+    public FileStorageService(Environment env) {
+        imagesLocation = env.getProperty("image.location");
     }
 
     @Override
@@ -36,6 +38,9 @@ public class FileStorageService implements StorageService {
     @Override
     public String store(MultipartFile photo, String userName) throws IOException {
         BufferedImage bufferedProfileImage = cropImage(photo);
+        if (bufferedProfileImage == null) {
+            return null;
+        }
         File imageDestination = new File(imagesLocation + File.separator + userName.hashCode() + ".png");
         ImageIO.write(bufferedProfileImage, "png", imageDestination);
         return imageDestination.getName();
@@ -43,6 +48,9 @@ public class FileStorageService implements StorageService {
 
     private BufferedImage cropImage(MultipartFile photo) throws IOException {
         BufferedImage bufferedProfileImage = ImageIO.read(photo.getInputStream());
+        if (bufferedProfileImage == null) {
+            return null;
+        }
         int height = bufferedProfileImage.getHeight();
         int width = bufferedProfileImage.getWidth();
         BufferedImage out;
@@ -55,5 +63,12 @@ public class FileStorageService implements StorageService {
             out = bufferedProfileImage;
         }
         return out;
+    }
+
+    @Override
+    public boolean delete(String userName) {
+        int userNameHash = userName.hashCode();
+        File file = new File(imagesLocation + File.separator + userNameHash + ".png");
+        return file.delete();
     }
 }

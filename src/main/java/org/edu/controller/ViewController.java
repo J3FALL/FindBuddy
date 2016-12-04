@@ -7,6 +7,7 @@ import org.edu.model.User;
 import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.MeetingDto;
 import org.edu.model.dto.StationDto;
+import org.edu.model.dto.UserDto;
 import org.edu.service.CategoryService;
 import org.edu.service.MeetingService;
 import org.edu.service.StationService;
@@ -93,7 +94,6 @@ public class ViewController {
             User user = userService.getUserByEmail(email);
             model.addAttribute("username", user.getName());
             model.addAttribute("roles", user.getRoles());
-            model.addAttribute("userId", user.getId());
         }
     }
 
@@ -145,7 +145,11 @@ public class ViewController {
     public String showUserPage(Model model, Principal principal, @PathVariable("id") long id,
                                @RequestParam(value = "location", required = false) String location,
                                @RequestParam(value = "pageNum", required = false) Integer pageNum) {
-        User user = userService.getUserById(id);
+        User user;
+        if (id != 0)
+            user = userService.getUserById(id);
+        else
+            user = userService.getUserByEmail(principal.getName());
         model.addAttribute("id", id);
         int userMeetingsNum = user.getCreatedMeetings().size();
         int userCommentsNum = user.getComments().size();
@@ -154,7 +158,7 @@ public class ViewController {
         model.addAttribute("userCommentsNum", userCommentsNum);
         model.addAttribute("userCategoriesNum", userCategoriesNum);
         model.addAttribute("userName", user.getName() + " " + user.getSurname());
-        model.addAttribute("photo", user.getPhoto());
+        model.addAttribute("photo", user.getPhoto() == null ? "no_photo.png" : user.getPhoto());
         setHeaderVariables(model, principal);
         if (location == null)
             location = "info";
@@ -167,18 +171,16 @@ public class ViewController {
                 if (pageNum == null)
                     pageNum = 1;
                 List<Meeting> userMeetings = new ArrayList<>(user.getCreatedMeetings());
-                double pageCount = Math.ceil(userMeetings.size() / (double) meetingOnPageNum);
+                double pageCount = Math.ceil(userMeetingsNum / (double) meetingOnPageNum);
                 List<MeetingDto> userMeetingsDtos;
-                if ((pageNum - 1) * meetingOnPageNum >= userMeetings.size()) {
+                if ((pageNum - 1) * meetingOnPageNum >= userMeetingsNum) {
                     userMeetingsDtos = new ArrayList<>();
-                }
-                else if ((pageNum - 1) * meetingOnPageNum + meetingOnPageNum >= userMeetings.size()) {
-                    userMeetingsDtos =  Converter.convert(userMeetings.subList((pageNum - 1) * meetingOnPageNum,
+                } else if ((pageNum - 1) * meetingOnPageNum + meetingOnPageNum >= userMeetingsNum) {
+                    userMeetingsDtos = Converter.convert(userMeetings.subList((pageNum - 1) * meetingOnPageNum,
                             userMeetings.size()), MeetingDto.class);
-                }
-                else {
-                    userMeetingsDtos = Converter.convert(userMeetings.subList(pageNum - 1,
-                            pageNum + meetingOnPageNum), MeetingDto.class);
+                } else {
+                    userMeetingsDtos = Converter.convert(userMeetings.subList((pageNum - 1) * meetingOnPageNum,
+                            (pageNum - 1) * meetingOnPageNum + meetingOnPageNum), MeetingDto.class);
                 }
                 setMeetingVariables(model, userMeetingsDtos, pageNum, location, pageCount);
                 break;
@@ -217,5 +219,14 @@ public class ViewController {
                 Converter.convert(stationService.getAllStations(), StationDto.class));
         setHeaderVariables(model, principal);
         return "create_meeting";
+    }
+
+    @RequestMapping(value = "/settings", method = RequestMethod.GET)
+    public String uploadPage(Model model, Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        setHeaderVariables(model, principal);
+        model.addAttribute("photo", user.getPhoto() == null ? "no_photo.png" : user.getPhoto());
+        model.addAttribute("user", Converter.convert(user, UserDto.class));
+        return "settings";
     }
 }
