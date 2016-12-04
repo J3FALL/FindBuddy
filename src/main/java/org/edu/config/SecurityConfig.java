@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin**", "/categories/new", "/roles")
                 .access("hasAuthority('WRITE_PRIVILEGE')")
-                .antMatchers("/login**","/registration","/perform_login")
+                .antMatchers("/login**","/registration", "/perform_login")
                 .permitAll()
                 .and()
                 .formLogin()
@@ -66,7 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/**");
-    }
+	web.ignoring().antMatchers("/images/**"); 
+ }
 
 
     @Bean

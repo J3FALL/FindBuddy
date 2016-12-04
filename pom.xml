@@ -16,7 +16,7 @@
         <spring.version>4.3.2.RELEASE</spring.version>
         <hibernate.version>5.2.4.Final</hibernate.version>
         <guava.version>17.0</guava.version>
-        <spring.security.version>4.0.1.RELEASE</spring.security.version>
+        <spring.security.version>4.2.0.RELEASE</spring.security.version>
     </properties>
 
     <parent>
