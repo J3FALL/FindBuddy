@@ -64,36 +64,49 @@
 
 <main>
     <div class="parallax-container">
-        <div class="row" id="main-row">
-            <!--/*@thymesVar id="currentLocation" type="1"*/-->
-            <div class="col s12 m10 l10 offset-l1 offset-m1 main-col" style="padding-right: 0">
-                <div id="head" class="section">
-                    <h4 class="left-align">Встреча</h4>
+        <div id="main-content">
+            <div class="row" id="main-row">
+                <!--/*@thymesVar id="currentLocation" type="1"*/-->
+                <div class="col s12 m10 l10 offset-l1 offset-m1 main-col" style="padding-right: 0">
+                    <div id="head" class="section">
+                        <h4 class="left-align">Встреча</h4>
+                        <div class="divider" id="first-divider"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col s8"><span class="flow-text">Описание </span></div>
+                        <div class="col s4"><span class="flow-text">Автор </span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6 offset-s8">Дата проведения</div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6 offset-s8">Создана</div>
+                    </div>
+                    <div class="row">
+                        <div class="col s4 ">Метро</div>
+                        <div class="col s4 ">Категории</div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6"><span class="flow-text">Подписчики </span></div>
+                    </div>
                     <div class="divider" id="first-divider"></div>
-                </div>
-                <div class="row">
-                    <div class="col s4">Фото</div>
-                    <div class="col s8">Описание</div>
-                </div>
-                <div class="row">
-                    <div class="col s6">Подписчики</div>
-                </div>
-                <div class="divider" id="first-divider"></div>
-                <div class="row">
-                    <form class="col s12">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <i class="material-icons prefix">mode_edit</i>
-                                <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-                                <label for="icon_prefix2">Комментарии</label>
+                    <div class="row">
+                        <div class="col s6 offset-s4"><h5>Карта</h5></div>
+                    </div>
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6 offset-s2" >
+                                    <i class="material-icons prefix">mode_edit</i>
+                                    <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                                    <label for="icon_prefix2">Комментарии</label>
+                                </div>
+                                <button class="btn waves-effect waves-light " type="submit" name="action">Отправить
+                                    <i class="material-icons right">send</i>
+                                </button>
                             </div>
-                        </div>
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Отправить
-                            <i class="material-icons right">send</i>
-                        </button>
-                    </form>
-                </div>
-                <div id="main-content">
+                        </form>
+                    </div>
 
                 </div>
             </div>
