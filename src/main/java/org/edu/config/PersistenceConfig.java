@@ -37,8 +37,8 @@ public class PersistenceConfig {
     @Bean
     public DataSource restDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        String dbUrl = System.getenv("LOCAL_DATABASE_URL"); //get db url from environment variables
-//        String dbUrl = System.getenv("DATABASE_URL");
+        String dbUrl = System.getenv("DATABASE_URL");
+//        String dbUrl = System.getenv("DATABASE_URL"); //get db url from environment variables
         /*
         dataSource.setUrl(env.getProperty("jdbc.url"));
         dataSource.setUsername(env.getProperty("jdbc.user"));
@@ -51,7 +51,6 @@ public class PersistenceConfig {
         String path = dbUrl.split("/")[3];
         String username = dbUrl.split("/")[2].split(":")[0];
         String password = dbUrl.split("/")[2].split("@")[0].split(":")[1];
-
         dataSource.setUrl("jdbc:postgresql://" + host + ":" + port +
                 "/" + path +
                 "");
