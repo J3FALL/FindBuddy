@@ -38,6 +38,7 @@ function uploadFile() {
                 return;
             }
             var newPhoto = '/images/' + data;
+            userPhoto.attr("src", "");
             userPhoto.attr("src", newPhoto);
         });
     $("#file-input").val("");
