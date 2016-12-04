@@ -26,7 +26,8 @@
                             class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a class="waves-effect" th:href="|/user/${userId}|">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/user/0|">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/settings|">Настройки</a></li>
                             <li><a class="waves-effect" th:href="@{/logout}">Выход</a></li>
                         </ul>
                     </div>
@@ -79,7 +80,7 @@
                         </div>
                         <h4 th:text="${userName}">Ильнур Хафизов</h4>
                         <div class="user-info">
-                            <div class="user-info-wrap">
+                            <div class="user-info-wrap" style="display: none">
                                 <a class="inline black-text"
                                    th:href="|/user/${id}?location=meetings|">
                                     <!--/*@thymesVar id="userMeetingsNum" type=""*/-->
@@ -123,7 +124,7 @@
                         </ul>
                         <div class="divider"></div>
                         <div th:if="${currentLocation} == 'info'" class="description col s12">
-                            <p>Описание:</p>
+                            <p><strong>Обо мне:</strong></p>
                             <p th:text="${user.getDescription()}"></p>
                         </div>
                         <div th:if="${currentLocation} == 'meetings'" class="description col s12">
@@ -227,12 +228,15 @@
     </div>
 </main>
 <script type="text/javascript" src="../resources/js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="../resources/js/materialize.js"></script>
+<script type="text/javascript" src="../resources/js/materialize.min.js"></script>
 <script type="text/javascript" src="../resources/js/handlebars-v4.0.5.js"></script>
 <script type="text/javascript" src="../resources/js/subscribe_categories.js"></script>
 <script>
     $(".button-collapse").sideNav();
     $('.collapsible').collapsible();
+    $(".user-info-wrap").fadeIn();
+//    $(".avatar").fadeIn();
+//    $(".bottom-part").fadeIn();
     //    $('ul.tabs').tabs();
 </script>
 <script id="meeting-template" type="text/x-handlebars-template">

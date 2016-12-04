@@ -230,9 +230,48 @@ a.inline {
 }
 
 p {
+    overflow-wrap: break-word;
     margin: 0;
 }
 
+.buttons {
+    margin-top: 10px;
+}
+
+#input-btn {
+    margin-right: 10px;
+}
+
+#size-error {
+    color: red;
+    display: none;
+}
+
+#error {
+    color: red;
+    display: none;
+}
+
+
+.input-field.col.s12 > input {
+    margin: 0;
+}
+
+#user-about {
+    float: none;
+}
+
+#registration-form label.left-align {
+    margin: 0 !important;
+}
+
+#user-info-inputs {
+    margin-top: 20px;
+}
+
+.row.margin {
+    width: 85%;
+}
 
 
 

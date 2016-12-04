@@ -18,7 +18,7 @@
 <div id="login-page" class="row">
     <div class="col s12 z-depth-6 card-panel">
         <form class="login-form" id="registration-form">
-            <div class="row">
+            <div class="row margin">
                 <div class="input-field col s12 center">
                     <!--<img width="35%" src="http://www.jeraldsaddle.com/wp-content/uploads/2015/06/Buddy-Logo.gif" alt="" class="responsive-img valign profile-image-login">-->
                     <h4 class="indigo-text">Регистрация</h4>
@@ -26,47 +26,41 @@
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
-                    <i class="mdi-social-person-outline prefix"></i>
                     <input class="validate" id="name" type="text"/>
                     <label for="name" class="left-align">Имя</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
-                    <i class="mdi-social-person-outline prefix"></i>
                     <input class="validate" id="surname" type="text"/>
                     <label for="surname" class="left-align">Фамилия</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
-                    <i class="mdi-communication-email prefix"></i>
                     <input id="email" type="email"/>
                     <label for="email" class="left-align">Email</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
-                    <i class="mdi-action-lock-outline prefix"></i>
                     <input id="password" type="password"/>
                     <label class="left-align" for="password">Пароль (больше 6 символов)</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
-                    <i class="mdi-action-lock-outline prefix"></i>
                     <input id="password-again" type="password"/>
                     <label class="left-align" for="password-again">Повторите пароль</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12 center">
-                    <i class="mdi-action-lock-outline prefix"></i>
                     <input class="datepicker" id="birthday" type="date" name="birthday"/>
                     <label class="left-align" for="birthday">День рождения</label>
                 </div>
             </div>
-            <div class="row">
+            <div class="row margin">
                 <div class="input-field col s12">
                     <a id="registration-button"
                        class="btn waves-effect waves-light col s12">Регистрация</a>
@@ -80,7 +74,7 @@
     </div>
 </div>
 <script type="text/javascript" src="../resources/js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="../resources/js/materialize.js"></script>
+<script type="text/javascript" src="../resources/js/materialize.min.js"></script>
 <script type="text/javascript" src="../resources/js/registration.js"></script>
 <script>
     $('.datepicker').pickadate({
