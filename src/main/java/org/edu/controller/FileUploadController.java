@@ -26,7 +26,7 @@ public class FileUploadController {
         if (path == null) {
             return "Not valid image";
         }
-        return userService.uploadPhoto(photo, principal);
+        return path;
     }
 
     @RequestMapping(value = "/delete_image", method = RequestMethod.DELETE)

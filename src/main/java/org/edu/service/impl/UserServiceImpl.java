@@ -150,6 +150,7 @@ public class UserServiceImpl implements UserService {
         User user = userDao.findByEmail(principal.getName());
         String userPhotoPath = null;
         try {
+            storageService.delete(user);
             userPhotoPath = storageService.store(photo, user.getEmail());
         } catch (IOException e) {
             e.printStackTrace();
@@ -164,7 +165,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deletePhoto(Principal principal) {
-        boolean isSuccess = storageService.delete(principal.getName());
+        boolean isSuccess = storageService.delete(userDao.findByEmail(principal.getName()));
         if (isSuccess) {
             User user = userDao.findByEmail(principal.getName());
             user.setPhoto(null);

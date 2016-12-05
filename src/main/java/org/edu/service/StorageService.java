@@ -1,5 +1,6 @@
 package org.edu.service;
 
+import org.edu.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,5 +13,5 @@ public interface StorageService {
 
     String store(MultipartFile file, String userName) throws IOException;
 
-    boolean delete(String userName);
+    boolean delete(User user);
 }

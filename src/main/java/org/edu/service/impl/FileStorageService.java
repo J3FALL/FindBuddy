@@ -1,5 +1,6 @@
 package org.edu.service.impl;
 
+import org.edu.model.User;
 import org.edu.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 
 import javax.imageio.ImageIO;
 
@@ -41,7 +43,7 @@ public class FileStorageService implements StorageService {
         if (bufferedProfileImage == null) {
             return null;
         }
-        File imageDestination = new File(imagesLocation + File.separator + userName.hashCode() + ".png");
+        File imageDestination = new File(imagesLocation + File.separator + LocalDateTime.now().hashCode() + ".png");
         ImageIO.write(bufferedProfileImage, "png", imageDestination);
         return imageDestination.getName();
     }
@@ -66,9 +68,11 @@ public class FileStorageService implements StorageService {
     }
 
     @Override
-    public boolean delete(String userName) {
-        int userNameHash = userName.hashCode();
-        File file = new File(imagesLocation + File.separator + userNameHash + ".png");
-        return file.delete();
+    public boolean delete(User user) {
+        if (user.getPhoto() != null) {
+            File file = new File(imagesLocation + File.separator + user.getPhoto());
+            return file.delete();
+        }
+        return false;
     }
 }
