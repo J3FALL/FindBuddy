@@ -2,16 +2,14 @@ package org.edu.controller;
 
 import org.edu.converter.Converter;
 import org.edu.model.Category;
+import org.edu.model.Comment;
 import org.edu.model.Meeting;
 import org.edu.model.User;
 import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.MeetingDto;
 import org.edu.model.dto.StationDto;
 import org.edu.model.dto.UserDto;
-import org.edu.service.CategoryService;
-import org.edu.service.MeetingService;
-import org.edu.service.StationService;
-import org.edu.service.UserService;
+import org.edu.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -46,6 +44,9 @@ public class ViewController {
 
     @Autowired
     private StationService stationService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping(value = {"/new", "/"}, method = RequestMethod.GET)
     public String homePage(Model model, Principal principal, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
@@ -229,4 +230,13 @@ public class ViewController {
         model.addAttribute("user", Converter.convert(user, UserDto.class));
         return "settings";
     }
+    @RequestMapping(value="/meeting/{id}", method = RequestMethod.GET)
+    public String getMeetingPage(Model model, @PathVariable(value = "id") long id, Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        Meeting meeting = meetingService.getMeetingById(id);
+        model.addAttribute("meeting", Converter.convert(meeting, MeetingDto.class));
+        model.addAttribute("user", Converter.convert(user, UserDto.class));
+        return "meeting";
+    }
+
 }
