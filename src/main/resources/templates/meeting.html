@@ -95,7 +95,7 @@
                                 </li>
                                 <li class="">
                                     <a href="#" class="grey-text"
-                                       th:text="|${meeting.author}|">Автор: </a>
+                                       th:text="|${meeting.authorName}|">Автор: </a>
                                 </li>
                                 <li class="">
                                     <a class="grey-text"></a>
@@ -110,27 +110,26 @@
                         </h5>
                     </div>
 
+                    <div class="bottom-part">
+                        <div class="divider"></div>
 
-                    <br><br/>
-                    <div class="divider"></div>
+                        <ul class="tabs" th:unless="${currentLocation} == 'feed'">
+                            <li class="tab col s4">
 
-                    <ul class="tabs" th:unless="${currentLocation} == 'feed'">
-                        <li class="tab col s4">
-
-                            <a target="_self" th:href="|comments|"
-                               th:class="${currentLocation} == 'new' ? 'active black-text' :'black-text'">Комментарии</a>
-                        </li>
-                        <li class="tab col s4">
-                            <a target="_self" th:href="|subscribers|"
-                               th:class="${currentLocation} == 'nearest' ? 'active black-text' :'black-text'">Подписчики</a>
-                        </li>
-                        <li class="tab col s4">
-                            <a target="_self" th:href="|map|"
-                               th:class="${currentLocation} == 'popular' ? 'active black-text' :'black-text'">Расположение</a>
-                        </li>
-                    </ul>
-                    <div class="divider"></div>
-
+                                <a target="_self" th:href="|comments|"
+                                   th:class="${currentLocation} == 'new' ? 'active black-text' :'black-text'">Комментарии</a>
+                            </li>
+                            <li class="tab col s4">
+                                <a target="_self" th:href="|subscribers|"
+                                   th:class="${currentLocation} == 'nearest' ? 'active black-text' :'black-text'">Подписчики</a>
+                            </li>
+                            <li class="tab col s4">
+                                <a target="_self" th:href="|map|"
+                                   th:class="${currentLocation} == 'popular' ? 'active black-text' :'black-text'">Расположение</a>
+                            </li>
+                        </ul>
+                        <div class="divider"></div>
+                    </div>
                 </div>
             </div>
         </div>

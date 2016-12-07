@@ -232,10 +232,10 @@ public class ViewController {
     }
     @RequestMapping(value="/meeting/{id}", method = RequestMethod.GET)
     public String getMeetingPage(Model model, @PathVariable(value = "id") long id, Principal principal) {
-        User user = userService.getUserByEmail(principal.getName());
+        //User user = userService.getUserByEmail(principal.getName());
         Meeting meeting = meetingService.getMeetingById(id);
         model.addAttribute("meeting", Converter.convert(meeting, MeetingDto.class));
-        model.addAttribute("user", Converter.convert(user, UserDto.class));
+        //model.addAttribute("user", Converter.convert(user, UserDto.class));
         return "meeting";
     }
 
