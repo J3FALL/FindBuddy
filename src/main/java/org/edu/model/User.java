@@ -170,7 +170,7 @@ public class User implements Serializable {
     }
 
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author")
     public Set<Meeting> getCreatedMeetings() {
         return createdMeetings;
     }

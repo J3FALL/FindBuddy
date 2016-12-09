@@ -113,7 +113,7 @@ public class Meeting implements Serializable {
         this.latitude = latitude;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     public User getAuthor() {
         return author;
