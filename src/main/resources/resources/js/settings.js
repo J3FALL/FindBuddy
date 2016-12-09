@@ -19,3 +19,16 @@ function sendUserInfo() {
             document.location.href = '/user/0'
         })
 }
+
+function deleteUserProfile() {
+    $.ajax({
+        url: "/users/0",
+        contentType: "application/json",
+        method: "DELETE"
+           })
+        .done(function (data) {
+            if (data.message == "Successful." && data.error == null) {
+                window.location.replace("/logout");
+            }
+        })
+}
