@@ -99,18 +99,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteUser(long id, Principal principal) {
-        User checkingUser = userDao.findOne(id);
-        User principalUser = userDao.findByEmail(principal.getName());
-        if (checkingUser != null && id == principalUser.getId()) {
+        User checkingUser;
+        if (id == 0)
+            checkingUser = userDao.findByEmail(principal.getName());
+        else
+            checkingUser = userDao.findOne(id);
+//        User principalUser = userDao.findByEmail(principal.getName());
+        if (checkingUser != null && id == 0) {
             checkingUser.getRoles().clear();
             checkingUser.getComments().clear();
-            checkingUser.getCreatedMeetings().clear();
+            for (Meeting meeting : checkingUser.getCreatedMeetings()) {
+                meeting.setAuthor(null);
+            }
             for (Category category : checkingUser.getCategories()) {
                 category.deleteUser(checkingUser);
             }
             for (Meeting subscribedMeeting : checkingUser.getSubscribedMeetings()) {
                 subscribedMeeting.deleteUser(checkingUser);
             }
+            checkingUser.getCreatedMeetings().clear();
             userDao.delete(checkingUser);
             return true;
         }
@@ -139,7 +146,7 @@ public class UserServiceImpl implements UserService {
         User user = userDao.findByEmail(principal.getName());
         Set<Category> userSubscribedCategories = user.getCategories();
         Set<Meeting> meetingsByCategoryList = new HashSet<>();
-        for (Category category : userSubscribedCategories){
+        for (Category category : userSubscribedCategories) {
             meetingsByCategoryList.addAll(category.getMeetings());
         }
         return meetingsByCategoryList;
