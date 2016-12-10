@@ -37,10 +37,13 @@ $("#publish-button").click(function () {
     values = values.filter(function (obj) {
         return obj.name != 'location';
     });
-    var lat = markers[0].getPosition().lat();
-    var lng = markers[0].getPosition().lng();
-    values.push({name: 'latitude', value: lat});
-    values.push({name: 'longitude', value: lng});
+
+    if (markers[0] != null) {
+        var lat = markers[0].getPosition().lat();
+        var lng = markers[0].getPosition().lng();
+        values.push({name: 'latitude', value: lat});
+        values.push({name: 'longitude', value: lng});
+    }
     var array = {};
     //convert array of object to object
     for (var i=0; i<values.length; i++) {
@@ -116,17 +119,20 @@ $(document).ready(function(){
             google.maps.event.trigger(map, "resize");
         },
         complete: function () {
-            $.ajax({
-                url: "http://maps.googleapis.com/maps/api/geocode/json",
-                type: 'GET',
-                data: {latlng: markers[0].getPosition().lat()+","+ markers[0].getPosition().lng(), sensor: true},
-                success: function (response) {
-                    setAddress(response);
-                },
-                error: function (xhr) {
-                    console.log(xhr);
-                }
-                   });
+            if (markers[0] != null) {
+                $.ajax({
+                           url: "http://maps.googleapis.com/maps/api/geocode/json",
+                           type: 'GET',
+                           data: {latlng: markers[0].getPosition().lat()+","+ markers[0].getPosition().lng(), sensor: true},
+                           success: function (response) {
+                               setAddress(response);
+                           },
+                           error: function (xhr) {
+                               console.log(xhr);
+                           }
+                       });
+            }
+
         }
                       });
 });
@@ -137,6 +143,6 @@ function setAddress(response) {
     Materialize.updateTextFields();
 };
 
-$("#location_input").click(function () {
+$("#location").click(function () {
     $('#modal1').modal('open');
 });
