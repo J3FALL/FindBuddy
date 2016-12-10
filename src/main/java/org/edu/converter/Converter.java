@@ -61,6 +61,7 @@ public class Converter {
                 .field("station.name", "stationName")
                 .field("category.id", "categoryId")
                 .field("category.name", "categoryName")
+                .field("author.photo", "authorPhoto")
                 .customize(
                         new CustomMapper<Meeting, MeetingDto>() {
 
@@ -83,7 +84,22 @@ public class Converter {
         mapperFactory.classMap(Comment.class, CommentDto.class)
                 .byDefault()
                 .field("author.id", "authorId")
-                .field("author.name", "authorName")
+                .field("author.photo", "authorPhoto")
+                .field("meeting.id", "meetingId")
+                .customize(
+                        new CustomMapper<Comment, CommentDto>() {
+
+                            @Override
+                            public void mapAtoB(Comment comment, CommentDto commentDto, MappingContext context) {
+                                StringBuilder stringBuilder = new StringBuilder();
+                                stringBuilder
+                                        .append(comment.getAuthor().getName())
+                                        .append(" ")
+                                        .append(comment.getAuthor().getSurname());
+                                commentDto.setAuthorName(stringBuilder.toString());
+                            }
+                        }
+                )
                 .register();
 
         mapperFactory.classMap(Category.class, CategoryDto.class)

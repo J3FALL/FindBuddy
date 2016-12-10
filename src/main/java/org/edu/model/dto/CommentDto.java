@@ -8,6 +8,8 @@ import org.edu.util.LocalDateTimeDeserializer;
 import org.edu.util.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class CommentDto {
 
@@ -16,6 +18,8 @@ public class CommentDto {
     private String text;
     private String authorName;
     private long authorId;
+    private String authorPhoto;
+    private String meetingId;
 
     public CommentDto() {
     }
@@ -69,6 +73,30 @@ public class CommentDto {
     public void setAuthorId(long authorId) {
         this.authorId = authorId;
     }
+
+    public String getAuthorPhoto() {
+        return authorPhoto;
+    }
+
+    public void setAuthorPhoto(String authorPhoto) {
+        this.authorPhoto = authorPhoto;
+    }
+
+    public String getMeetingId() {
+        return meetingId;
+    }
+
+    public void setMeetingId(String meetingId) {
+        this.meetingId = meetingId;
+    }
+
+    public String convertDate() {
+        return DateTimeFormatter
+                .ofPattern("d MMM. HH:mm")
+                .withLocale(new Locale("ru"))
+                .format(this.date);
+    }
+
 
     @Override
     public String toString() {
