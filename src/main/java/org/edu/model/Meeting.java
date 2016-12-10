@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -35,6 +36,7 @@ public class Meeting implements Serializable {
     private Set<User> subscribedUsers = new HashSet<>();
     private Station station;
     private Category category;
+    private Set<Comment> comments;
 
     public Meeting() {
 
@@ -161,6 +163,15 @@ public class Meeting implements Serializable {
 
     public void deleteUser(User user) {
         this.subscribedUsers.remove(user);
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "meeting")
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

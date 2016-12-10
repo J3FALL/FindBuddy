@@ -2,6 +2,8 @@ package org.edu.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +24,7 @@ public class Comment implements Serializable {
     private LocalDateTime date;
     private String text;
     private User author;
-//    private Meeting meeting;
+    private Meeting meeting;
 
     public Comment() {
     }
@@ -76,6 +78,16 @@ public class Comment implements Serializable {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "meeting_id")
+    public Meeting getMeeting() {
+        return meeting;
+    }
+
+    public void setMeeting(Meeting meeting) {
+        this.meeting = meeting;
     }
 
     @Override
