@@ -3,8 +3,10 @@
  */
 var map;
 var markers = [];
+
 $("#publish-button").click(function () {
 
+    //validate();
     var values = [];
 
     //get fields with values from html-form
@@ -38,7 +40,7 @@ $("#publish-button").click(function () {
         return obj.name != 'location';
     });
 
-    if (markers[0] != null) {
+    if (markers[0] !== null) {
         var lat = markers[0].getPosition().lat();
         var lng = markers[0].getPosition().lng();
         values.push({name: 'latitude', value: lat});
@@ -119,7 +121,7 @@ $(document).ready(function(){
             google.maps.event.trigger(map, "resize");
         },
         complete: function () {
-            if (markers[0] != null) {
+            if (markers[0] !== null) {
                 $.ajax({
                            url: "http://maps.googleapis.com/maps/api/geocode/json",
                            type: 'GET',
@@ -135,6 +137,29 @@ $(document).ready(function(){
 
         }
                       });
+
+    $.validator.setDefaults({
+                                errorClass: 'invalid',
+                                validClass: "valid",
+                                errorPlacement: function (error, element) {
+                                    $(element)
+                                        .closest("form")
+                                        .find("label[for='" + element.attr("id") + "']")
+                                        .attr('data-error', error.text());
+                                },
+                                submitHandler: function (form) {
+                                    console.log('form ok');
+                                }
+                            });
+
+    $("#create-meeting-form").validate({
+                            rules: {
+                                dateField: {
+                                    date: true
+                                }
+                            }
+                        });
+
 });
 
 function setAddress(response) {
@@ -146,3 +171,4 @@ function setAddress(response) {
 $("#location").click(function () {
     $('#modal1').modal('open');
 });
+

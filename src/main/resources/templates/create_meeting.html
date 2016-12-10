@@ -133,7 +133,7 @@
 <main>
     <div class="parallax-container">
         <div class="row" id="main-row">
-            <form class="create-meeting-form" id="create-meeting-form">
+            <form class="create-meeting-form" id="create-meeting-form" novalidate="novalidate">
                 <div class="col s12 m10 110">
                     <div class="row">
                         <h4 class="meeting-header col s8 l9 flow-text black-text">
@@ -142,17 +142,17 @@
                     </div>
                     <div class="row" id="title-row">
                         <div class="input-field col s6 custom-input-field">
-                            <input id="title" type="text" class="validate" name="title"/>
-                            <label class="label-field validate" for="title">Заголовок встречи</label>
+                            <input id="title" type="text" placeholder="" name="title" required="" aria-required="true"/>
+                            <label for="title" class="label-field" >Заголовок встречи</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6 custom-input-field">
-                            <select id="category" name="category_id">
+                            <select id="category" name="category_id" required="required" aria-required="true">
                                 <option value="0" disabled="disabled" selected="selected">Выберите категорию</option>
                                 <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
                             </select>
-                            <label class="label-field">Категория</label>
+                            <label class="label-field" for="category">Категория</label>
                         </div>
                         <div class="input-field col s6 custom-input-field">
                             <select id ="station" name="station_id">
@@ -164,8 +164,8 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12 m6 l3 custom-input-field" id="date">
-                            <label class="label-field" for="datepicker">Дата</label>
-                            <input type="date" class="datepicker" id="datepicker" name="date"/>
+                            <input type="date" class="datepicker validate" id="datepicker" name="date"/>
+                            <label class="label-field validate" for="datepicker" data-error="Заполните поле">Дата</label>
                         </div>
                         <div class="input-field col s12 m6 l3 custom-input-field" id="time">
                             <label class="label-field" for="timepicker">Время</label>
@@ -187,7 +187,7 @@
                         <button class="btn waves-effect waves-light" type="submit" name="action" id="publish-button">Опубликовать
                             <i class="material-icons right">send</i>
                         </button>
-                        <button class="btn waves-effect waves-light red" type="submit" name="action" onclick="history.go(-1)">Отмена
+                        <button class="btn waves-effect waves-light red" name="action" onclick="history.go(-1)">Отмена
                             <i class="material-icons right">cancel</i>
                         </button>
                     </div>
@@ -210,6 +210,7 @@
 <script type="text/javascript" src="../resources/js/materialize.min.js"></script>
 <script type="text/javascript" src="../resources/js/materialize.clockpicker.js"></script>
 <script type="text/javascript" src="../resources/js/create_meeting.js"></script>
+<script type="text/javascript" src="../resources/js/jquery.validate.js"></script>
 <script>
     $(".button-collapse").sideNav();
     $('.collapsible').collapsible();
