@@ -20,6 +20,7 @@ public class MeetingDto {
     private LocalDateTime startDate;
     private Long authorId;
     private String authorName;
+    private String authorPhoto;
     private Long stationId;
     private String stationName;
     private Long categoryId;
@@ -148,6 +149,14 @@ public class MeetingDto {
 
     public void setSubscribersNum(int subscribersNum) {
         this.subscribersNum = subscribersNum;
+    }
+
+    public String getAuthorPhoto() {
+        return authorPhoto;
+    }
+
+    public void setAuthorPhoto(String authorPhoto) {
+        this.authorPhoto = authorPhoto;
     }
 
     public String convertDate() {
