@@ -20,6 +20,9 @@
      left: 0 !important;
  }
 
+label[data-error]:after {
+    white-space: nowrap;
+}
 .custom-input-field {
     padding-left: 0 !important;
 }

@@ -141,18 +141,20 @@
                         </h4>
                     </div>
                     <div class="row" id="title-row">
-                        <div class="input-field col s6 custom-input-field">
-                            <input id="title" type="text" placeholder="" name="title" required="" aria-required="true"/>
-                            <label for="title" class="label-field" >Заголовок встречи</label>
+                        <div class="row">
+                            <div class="input-field col s6 custom-input-field">
+                                <input id="title" type="text" name="title" required="" aria-required="true" />
+                                <label for="title" class="label-field" data-error="test">Заголовок встречи</label>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6 custom-input-field">
-                            <select id="category" name="category_id" required="required" aria-required="true">
-                                <option value="0" disabled="disabled" selected="selected">Выберите категорию</option>
+                            <select id="category" name="category_id" required="required">
+                                <option value="" disabled="disabled" selected="selected">Выберите категорию</option>
                                 <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
                             </select>
-                            <label class="label-field" for="category">Категория</label>
+                            <label for="category" class="label-field" >Категория</label>
                         </div>
                         <div class="input-field col s6 custom-input-field">
                             <select id ="station" name="station_id">
@@ -164,12 +166,12 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12 m6 l3 custom-input-field" id="date">
-                            <input type="date" class="datepicker validate" id="datepicker" name="date"/>
-                            <label class="label-field validate" for="datepicker" data-error="Заполните поле">Дата</label>
+                            <input type="date" class="datepicker" id="datepicker" name="date" required="" aria-required="true"/>
+                            <label for="datepicker" class="label-field">Дата</label>
                         </div>
                         <div class="input-field col s12 m6 l3 custom-input-field" id="time">
                             <label class="label-field" for="timepicker">Время</label>
-                            <input id="timepicker" class="timepicker" type="time" name="time"/>
+                            <input id="timepicker" class="timepicker" type="time" name="time" required="" aria-required="true"/>
                         </div>
                         <div class="input-field col s12 m6 l6 custom-input-field" id="location">
                             <label class="label-field" for="location">Место на карте</label>
@@ -177,9 +179,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12 custom-input-field ">
-                            <textarea id="description" class="materialize-textarea custom-text-area" name="description"></textarea>
-                            <label class="label-field" for="description">Описание</label>
+                        <div class="row">
+                            <div class="input-field col s12 custom-input-field ">
+                                <textarea id="description" class="materialize-textarea custom-text-area" name="description"></textarea>
+                                <label class="label-field" for="description">Описание</label>
+                            </div>
                         </div>
                     </div>
 
@@ -202,7 +206,7 @@
             <div id="map"></div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Ок</a>
         </div>
     </div>
 </main>
@@ -211,22 +215,33 @@
 <script type="text/javascript" src="../resources/js/materialize.clockpicker.js"></script>
 <script type="text/javascript" src="../resources/js/create_meeting.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.validate.js"></script>
+<script type="text/javascript" src="../resources/js/moment.js"></script>
 <script>
     $(".button-collapse").sideNav();
     $('.collapsible').collapsible();
     $('ul.tabs').tabs();
     $('select').material_select();
     $('.datepicker').pickadate({
-                                   selectMonths: true, // Creates a dropdown to control month
-                                   selectYears: 15,
-                                   // Creates a dropdown of 15 years to control year
+        selectMonth: true,
+        selectYears: 1,
+        monthsFull: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
+                    'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        monthsShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
+                                                 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        weekdaysFull: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+        weekdaysShort: ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'],
+        today: "Сегодня",
+        clear: "",
+        close: "Закрыть",
+        min : new Date()
                                });
     $('#description').trigger('autoresize');
 </script>
 <script>
     $('#timepicker').pickatime({
-                                   autoclose: false,
-                                   twelvehour: false
+        autoclose: false,
+        twelvehour: false,
+        donetext: "Готово"
                                });
 </script>
 <script async="async" defer="defer"

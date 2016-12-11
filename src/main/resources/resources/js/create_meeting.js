@@ -3,66 +3,86 @@
  */
 var map;
 var markers = [];
+var lang = {};
+lang["Январь"] = "January";
+lang["Февраль"] = "February";
+lang["Март"] = "March";
+lang["Апрель"] = "April";
+lang["Май"] = "May";
+lang["Июнь"] = "June";
+lang["Июль"] = "July";
+lang["Август"] = "August";
+lang["Сентябрь"] = "September";
+lang["Октябрь"] = "October";
+lang["Ноябрь"] = "November";
+lang["Декабрь"] = "December";
 
 $("#publish-button").click(function () {
-
     //validate();
-    var values = [];
+    if ($("#create-meeting-form").valid() === false) {
+        return;
+    } else {
+        var values = [];
 
-    //get fields with values from html-form
-    $("#create-meeting-form").each(function () {
-        values = $(this).serializeArray();
-        event.preventDefault();
-    });
-    //get date-value pair
-    var result = $.grep(values, function (e) {
-        return e.name == "date";
-    });
-    var d = new Date(result[0].value);
-    var date = d.toISOString().slice(0, 10);
+        //get fields with values from html-form
+        $("#create-meeting-form").each(function () {
+            values = $(this).serializeArray();
+            event.preventDefault();
+        });
+        //get date-value pair
+        var result = $.grep(values, function (e) {
+            return e.name == "date";
+        });
+        //here comes some shit code
+        var str = result[0].value.split(" ");
+        str[1] = lang[str[1].replace(",", "")];
+        var d = new Date(str);
+        var date = d.toISOString().slice(0, 10);
 
-    //get time-value pair
-    result = $.grep(values, function (e) {
-        return e.name == "time";
-    })
-    var time = result[0].value;
+        //get time-value pair
+        result = $.grep(values, function (e) {
+            return e.name == "time";
+        })
+        var time = result[0].value;
 
-    //remove date & time objects from values
-    values = values.filter(function( obj ) {
-        return obj.name !== 'date' && obj.name !== 'time';
-    });
+        //remove date & time objects from values
+        values = values.filter(function( obj ) {
+            return obj.name !== 'date' && obj.name !== 'time';
+        });
 
-    //add startDate field to json
-    var startDate = date + "T" + time + ":00";
-    values.push({name: 'start_date', value: startDate});
+        //add startDate field to json
+        var startDate = date + "T" + time + ":00";
+        values.push({name: 'start_date', value: startDate});
 
-    values = values.filter(function (obj) {
-        return obj.name != 'location';
-    });
+        values = values.filter(function (obj) {
+            return obj.name != 'location';
+        });
 
-    if (markers[0] !== null) {
-        var lat = markers[0].getPosition().lat();
-        var lng = markers[0].getPosition().lng();
-        values.push({name: 'latitude', value: lat});
-        values.push({name: 'longitude', value: lng});
+        if (markers[0] != undefined && markers[0] !== null) {
+            var lat = markers[0].getPosition().lat();
+            var lng = markers[0].getPosition().lng();
+            values.push({name: 'latitude', value: lat});
+            values.push({name: 'longitude', value: lng});
+        }
+        var array = {};
+        //convert array of object to object
+        for (var i=0; i<values.length; i++) {
+            array[values[i].name] = values[i].value;
+        }
+        $.ajax({
+                   type: 'POST',
+                   url: '/meetings',
+                   contentType: "application/json",
+                   data: JSON.stringify(array),
+               }).done(function (result) {
+            console.log(result);
+            window.location.replace("/");
+        }).fail(function (result) {
+            console.log(result);
+            console.log("fail");
+        });
     }
-    var array = {};
-    //convert array of object to object
-    for (var i=0; i<values.length; i++) {
-        array[values[i].name] = values[i].value;
-    }
-    $.ajax({
-                type: 'POST',
-                url: '/meetings',
-                contentType: "application/json",
-                data: JSON.stringify(array),
-           }).done(function (result) {
-        console.log(result);
-        window.location.replace("/");
-    }).fail(function (result) {
-        console.log(result);
-        console.log("fail");
-    });
+
 });
 
 
@@ -121,7 +141,7 @@ $(document).ready(function(){
             google.maps.event.trigger(map, "resize");
         },
         complete: function () {
-            if (markers[0] !== null) {
+            if (markers[0] != undefined && markers[0] != null) {
                 $.ajax({
                            url: "http://maps.googleapis.com/maps/api/geocode/json",
                            type: 'GET',
@@ -138,9 +158,14 @@ $(document).ready(function(){
         }
                       });
 
+    jQuery.extend(jQuery.validator.messages, {
+        required: 'Недопустимое значение',
+        remote: 'Недопустимое значение'
+    });
     $.validator.setDefaults({
                                 errorClass: 'invalid',
                                 validClass: "valid",
+                                ignore: [],
                                 errorPlacement: function (error, element) {
                                     $(element)
                                         .closest("form")
@@ -148,17 +173,8 @@ $(document).ready(function(){
                                         .attr('data-error', error.text());
                                 },
                                 submitHandler: function (form) {
-                                    console.log('form ok');
                                 }
                             });
-
-    $("#create-meeting-form").validate({
-                            rules: {
-                                dateField: {
-                                    date: true
-                                }
-                            }
-                        });
 
 });
 
