@@ -104,24 +104,27 @@
                             <div th:class="'chip'" th:text="${meeting.categoryName}">
                                 <!--<img src="images/yuna.jpg" alt="Contact Person">-->
                             </div>
-                            <div style="margin-bottom: 0">
-                                <a href="#" class="col l9" style="padding-left: 0">
-                                    <h5 class="meeting-header col s8 l9 flow-text black-text"
-                                        th:text="${meeting.title}">
+                            <div class="meeting-heading">
+                                <a th:href="|/meeting/${meeting.id}|">
+                                    <h5 class="meeting-header black-text flow-text"
+                                        th:text="${meeting.title}"
+                                    >
                                     </h5>
                                 </a>
-                            </div>
-                            <div class="meeting-date col l3 s4 m3 right">
-                                <h5 class="center flow-text"
-                                    th:text="${meeting.convertDate()}"></h5>
-                                <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
-                                <h5 class="flow-text center" style="margin-top: 0;"
-                                    th:text="${meeting.convertTime()}"></h5>
+                                <div class="meeting-date">
+                                    <div class="date-wrapper">
+                                        <p class="center flow-text"
+                                           th:text="${meeting.convertDate()}">Дата</p>
+                                        <p class="center flow-text" style="margin-top: 0;"
+                                           th:text="${meeting.convertTime()}">Время</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="meeting-bottom col s8 left" style="padding-left: 0">
                                 <ul class="meeting-info">
                                     <li class="">
-                                        <a class="grey-text" th:text="|м.${meeting.stationName}|">м.
+                                        <a class="grey-text"
+                                           th:text="|м.${meeting.stationName}|">м.
                                             Автово</a>
                                     </li>
                                     <li class="">
@@ -195,17 +198,19 @@
             <div class="chip">
                 {{categoryName}}
             </div>
-            <div style="margin-bottom: 0">
-                <a href="#" class="col l9" style="padding-left: 0">
-                    <h5 class="meeting-header col s8 l9 flow-text black-text">
+            <div class="meeting-heading">
+                <a href="{{meetingLink}}">
+                    <h5 class="meeting-header black-text flow-text">
                         {{title}}
                     </h5>
                 </a>
-            </div>
-            <div class="meeting-date col l3 s4 m3 right">
-                <h5 class="center flow-text">{{startDate}}</h5>
-                <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
-                <h5 class="flow-text center" style="margin-top: 0;">{{startTime}}</h5>
+                <div class="meeting-date">
+                    <div class="date-wrapper">
+                        <p class="center flow-text">{{startDate}}</p>
+                        <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
+                        <p class="flow-text center" style="margin-top: 0;">{{startTime}}</p>
+                    </div>
+                </div>
             </div>
             <div class="meeting-bottom col s8 left" style="padding-left: 0">
                 <ul class="meeting-info">

@@ -4,6 +4,7 @@ var timeOption = {hour: '2-digit', minute: '2-digit'};
 var meetings = [];
 var newContentBlock = $(".new-content");
 setTimeout(getNewMeetings, 5000);
+
 function getNewMeetings() {
     $.ajax({
                type: 'GET',
@@ -39,6 +40,7 @@ var drawNewMeetings = function () {
         console.log(time);
         var context = {
             id : meeting.id,
+            meetingLink: "/meeting/" + meeting.id,
             categoryName: meeting.category_name,
             title: meeting.title,
             startDate: date,
