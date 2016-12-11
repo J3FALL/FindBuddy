@@ -1,7 +1,7 @@
 function sendUserInfo() {
     var inputs = $(".user-detailed-info").serializeArray();
 
-    // moment.locale("ru");
+    moment.locale("ru");
     var date = moment($("#birthday").val(), "DD MMMM, YYYY").utcOffset(0, true).toISOString().slice(0, -5);
     var data = {};
     inputs.forEach(function (e) {
