@@ -95,8 +95,8 @@
                 <div id="main-content">
                     <!--/*@thymesVar id="meetings" type=""*/-->
                     <!--/*@thymesVar id="meeting" type=""*/-->
-                    <div th:each="meeting : ${meetings}" style="margin-bottom: 2%">
-                        <div th:id="${meeting.id}" style="margin-bottom: 2px" class="row">
+                    <div th:each="meeting : ${meetings}" style="margin-bottom: 1rem">
+                        <div th:id="${meeting.id}" style="margin-bottom: 1rem" class="row">
                             <!--/*@thymesVar id="categoryName" type=""*/-->
                             <div th:class="'chip'" th:text="${meeting.categoryName}">
                                 <!--<img src="images/yuna.jpg" alt="Contact Person">-->
@@ -189,8 +189,8 @@
     //    $('ul.tabs').tabs();
 </script>
 <script id="meeting-template" type="text/x-handlebars-template">
-    <div style="margin-bottom: 2%">
-        <div id="{{id}}" style="margin-bottom: 2px" class="row">
+    <div style="margin-bottom: 1rem">
+        <div id="{{id}}" style="margin-bottom: 1rem" class="row">
             <!--/*@thymesVar id="categoryName" type=""*/-->
             <div class="chip">
                 {{categoryName}}
