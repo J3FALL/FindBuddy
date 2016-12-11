@@ -220,6 +220,33 @@
                                 </div>
                             </div>
                         </div>
+                        <div th:if="${currentLocation} == 'comments'"
+                             class="comment-container col s12"
+                             style="margin: 1% 0;padding-left: 0">
+                            <div th:if="${comments}" th:each="comment : ${comments}" class="comment"
+                                 style="margin-top: 2%">
+                                <div class="comment-author">
+                                    <a th:href="|/user/${comment.authorId}|">
+                                        <img th:src="${comment.authorPhoto} != null ?
+                                    |/images/${comment.authorPhoto}| : |/images/no_photo.png|"
+                                             class="author-avatar responsive-img circle"
+                                             style="vertical-align:middle"/>
+                                    <span class="black-text author-link"
+                                          style="margin-left: 1%" th:text="${comment.authorName}">
+                                      </span>
+                                    </a>
+                                </div>
+                                <div class="comment-message"
+                                     style="margin-left: calc(38px + 1%)">
+                                    <p th:text="${comment.text}"></p>
+                                    <div class="comment-time" style="margin: 0.3rem 0">
+                                        <a class="grey-text"
+                                           th:text="${comment.convertDate()}"></a>
+                                    </div>
+                                </div>
+                                <div class="divider" style="margin-top: 2%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!--/*@thymesVar id="pageNum" type=""*/-->
@@ -235,8 +262,8 @@
     $(".button-collapse").sideNav();
     $('.collapsible').collapsible();
     $(".user-info-wrap").fadeIn();
-//    $(".avatar").fadeIn();
-//    $(".bottom-part").fadeIn();
+    //    $(".avatar").fadeIn();
+    //    $(".bottom-part").fadeIn();
     //    $('ul.tabs').tabs();
 </script>
 <script id="meeting-template" type="text/x-handlebars-template">
