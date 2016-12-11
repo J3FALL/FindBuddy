@@ -91,6 +91,25 @@ public class Comment implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Comment)) return false;
+
+        Comment comment = (Comment) o;
+
+        if (id != comment.id) return false;
+        return author != null ? author.equals(comment.author) : comment.author == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (author != null ? author.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
