@@ -8,6 +8,8 @@ import org.edu.util.LocalDateTimeDeserializer;
 import org.edu.util.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class MeetingDto {
 
@@ -157,6 +159,19 @@ public class MeetingDto {
 
     public void setAuthorPhoto(String authorPhoto) {
         this.authorPhoto = authorPhoto;
+    }
+
+    public String convertDateToPickerFormat() {
+        return DateTimeFormatter
+                .ofPattern("dd LLL, yyyy")
+                .withLocale(new Locale("ru"))
+                .format(this.startDate);
+    }
+
+    public String convertTimeToPickerFormat() {
+        return DateTimeFormatter
+                .ofPattern("HH:mm")
+                .format(this.startDate);
     }
 
     public String convertDate() {
