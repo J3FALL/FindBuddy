@@ -36,9 +36,8 @@ $("#registration-button").click(function () {
     if (!isAllValid) {
         return;
     }
-    var date = new Date(values['birthday']);
-    date.setUTCMinutes(date.getUTCMinutes() - date.getTimezoneOffset());
-    values['birthday'] = date.toISOString().slice(0, -1);
+    moment.locale("ru");
+    values['birthday'] = moment(values['birthday'], "DD MMMM, YYYY").utcOffset(0, true).toISOString().slice(0, -5);
     values = JSON.stringify(values);
     $.ajax({
                type: 'POST',
@@ -49,6 +48,12 @@ $("#registration-button").click(function () {
         console.log(result);
         window.location.replace("/login");
     }).fail(function (result) {
+        var responseText = JSON.parse(result.responseText);
+        console.log(responseText.error);
+        if ('UserAlreadyExist' == responseText.error) {
+            $("#email-label").text(responseText.message).show();
+            $("#email").removeClass("valid").addClass("invalid");
+        }
         console.log(result);
         console.log("fail")
     });
@@ -62,18 +67,10 @@ function validateInputs(values) {
             $('#' + key).addClass("invalid");
             isAllValid = false;
         }
+        else {
+            $('#' + key).removeClass("invalid");
+        }
     });
-    var timestamp = Date.parse(values['birthday']);
-    var birthday = $("#birthday");
-    if (isNaN(timestamp) == true) {
-        birthday.removeClass("valid");
-        birthday.addClass("invalid");
-        isAllValid = false;
-    }
-    else {
-        birthday.removeClass("invalid");
-        birthday.addClass("valid");
-    }
     if (values['password'].localeCompare(values['password-again']) != 0 || values['password'].length < 6) {
         password.removeClass("valid");
         password.addClass("invalid");
@@ -86,6 +83,7 @@ function validateInputs(values) {
     else {
         email.addClass("valid");
         email.removeClass("invalid");
+        $("#email-label").hide();
     }
     return isAllValid;
 }
