@@ -97,7 +97,7 @@
                             class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a class="waves-effect" href="#!">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/user/0|">Профиль</a></li>
                             <li><a class="waves-effect" href="/logout">Выход</a></li>
                         </ul>
                     </div>
@@ -105,10 +105,10 @@
             </ul>
         </li>
         <li th:unless="${username}"><a href="/login" class="waves-effect">Войти</a></li>
-        <li th:if="${username}"><a href="#!" class="waves-effect">Моя
+        <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
             лента</a></li>
-        <li><a href="#!" class="waves-effect">Все встречи</a></li>
-        <li><a href="#!" class="waves-effect" onclick="">Все теги</a></li>
+        <li><a href="/" class="waves-effect">Все встречи</a></li>
+        <li><a href="/categories" class="waves-effect" onclick="">Все теги</a></li>
         <li>
             <div class="divider"></div>
         </li>
@@ -151,15 +151,16 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s6 custom-input-field">
-                            <select id="category" name="category_id" required="required">
-                                <option value="" disabled="disabled" selected="selected" th:value="${meeting.categoryId}" th:text="${meeting.categoryName}">Выберите категорию</option>
-                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
+                            <select id="category" name="category_id">
+                                <option value="" disabled="disabled">Выберите категорию</option>
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
+                                        th:selected="${meeting.categoryId} == ${category.id} ? 'true' : 'false'">Category</option>
                             </select>
-                            <label for="category" class="label-field" >Категория</label>
+                            <label class="label-field" >Категория</label>
                         </div>
                         <div class="input-field col s6 custom-input-field">
-                            <select id ="station" name="station_id">
-                                <option value="0" disabled="disabled" selected="selected" th:value="${meeting.stationId}" th:text="${meeting.stationName}">Выберите метро</option>
+                            <select id ="station" name="station_id" th:selected="${meeting.stationId}">
+                                <option value="" disabled="disabled">Выберите метро</option>
                                 <option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}">Station</option>
                             </select>
                             <label class="label-field">Метро</label>
@@ -189,13 +190,12 @@
                     </div>
 
                     <div class="row">
-                        <button class="btn waves-effect waves-light" type="submit" name="action" id="publish-button">
-                            Сохранить
+                        <button class="btn waves-effect waves-light" type="submit" name="action" id="publish-button" th:attr="meeting=${meeting.id}">Опубликовать
                             <i class="material-icons right">send</i>
                         </button>
-                        <button class="btn waves-effect waves-light red" name="action" onclick="history.go(-1)">Отмена
+                        <a class="btn waves-effect waves-light red" name="action" id="cancel-button">Отмена
                             <i class="material-icons right">cancel</i>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </form>
@@ -215,7 +215,7 @@
 <script type="text/javascript" src="/resources/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/materialize.min.js"></script>
 <script type="text/javascript" src="/resources/js/materialize.clockpicker.js"></script>
-<script type="text/javascript" src="/resources/js/create_meeting.js"></script>
+<script type="text/javascript" src="/resources/js/meeting_settings.js"></script>
 <script type="text/javascript" src="/resources/js/jquery.validate.js"></script>
 <script type="text/javascript" src="/resources/js/moment.js"></script>
 <script>
