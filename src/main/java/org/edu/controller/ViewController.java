@@ -154,6 +154,7 @@ public class ViewController {
     public String showUserPage(Model model, Principal principal, @PathVariable("id") long id,
                                @RequestParam(value = "location", required = false) String location,
                                @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+        setHeaderVariables(model, principal);
         User user;
         if (id != 0)
             user = userService.getUserById(id);
@@ -168,9 +169,9 @@ public class ViewController {
         model.addAttribute("userCategoriesNum", userCategoriesNum);
         model.addAttribute("userName", user.getName() + " " + user.getSurname());
         model.addAttribute("photo", user.getPhoto() == null ? "no_photo.png" : user.getPhoto());
-        setHeaderVariables(model, principal);
         if (location == null)
             location = "info";
+        model.addAttribute("currentLocation", location);
         switch (location) {
             case "categories":
                 List<Category> userCategories = new ArrayList<>(user.getCategories());
@@ -195,12 +196,11 @@ public class ViewController {
                 break;
             case "info":
                 model.addAttribute("user", user);
-                model.addAttribute("currentLocation", "info");
                 break;
             case "comments":
                 List<Comment> comments = new ArrayList<>(user.getComments());
-                model.addAttribute("currentLocation", "comments");
                 model.addAttribute("comments", Converter.convert(comments, CommentDto.class));
+                break;
         }
         return "user_page";
     }
