@@ -191,7 +191,7 @@ header, main, footer {
 }
 
 .avatar {
-    width: 30%;
+    width: 25%;
     margin: auto;
 }
 
@@ -277,8 +277,32 @@ p {
     margin-left: 5%;
 }
 
+.author-avatar {
+    width: 34px;
+}
 
+span.author-link:hover {
+    text-decoration: underline;
+}
 
+.meeting-author {
+    margin-bottom: 1.5%
+}
 
+.meeting-header.black-text {
+    margin: 1% 0;
+    display: inline-block;
+    width: 70%;
+    vertical-align: middle
+}
 
+.meeting-date {
+    display: inline-block;
+    vertical-align: middle;
+    width: 28%;
+}
+
+.date-wrapper {
+    float: right
+}
 

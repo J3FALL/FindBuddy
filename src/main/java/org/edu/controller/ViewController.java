@@ -6,10 +6,15 @@ import org.edu.model.Comment;
 import org.edu.model.Meeting;
 import org.edu.model.User;
 import org.edu.model.dto.CategoryDto;
+import org.edu.model.dto.CommentDto;
 import org.edu.model.dto.MeetingDto;
 import org.edu.model.dto.StationDto;
 import org.edu.model.dto.UserDto;
-import org.edu.service.*;
+import org.edu.service.CategoryService;
+import org.edu.service.CommentService;
+import org.edu.service.MeetingService;
+import org.edu.service.StationService;
+import org.edu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -230,11 +236,24 @@ public class ViewController {
         model.addAttribute("user", Converter.convert(user, UserDto.class));
         return "settings";
     }
-    @RequestMapping(value="/meeting/{id}", method = RequestMethod.GET)
-    public String getMeetingPage(Model model, @PathVariable(value = "id") long id, Principal principal) {
+
+    @RequestMapping(value = "/meeting/{id}", method = RequestMethod.GET)
+    public String getMeetingPage(Model model, @PathVariable(value = "id") long id,
+                                 @RequestParam(required = false) String currentLocation,
+                                 Principal principal) {
         //User user = userService.getUserByEmail(principal.getName());
+        setHeaderVariables(model, principal);
+        if (currentLocation == null)
+            currentLocation = "comments";
         Meeting meeting = meetingService.getMeetingById(id);
+        switch (currentLocation) {
+            case "comments":
+                List<Comment> meetingComments = new ArrayList<>(meeting.getComments());
+                Collections.sort(meetingComments, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+                model.addAttribute("comments", Converter.convert(meetingComments, CommentDto.class));
+        }
         model.addAttribute("meeting", Converter.convert(meeting, MeetingDto.class));
+        model.addAttribute("currentLocation", currentLocation);
         //model.addAttribute("user", Converter.convert(user, UserDto.class));
         return "meeting";
     }
