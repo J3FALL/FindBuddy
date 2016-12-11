@@ -32,13 +32,14 @@ public class CommentController {
     ModelMapper modelMapper;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<GenericResponse> createComment(Principal principal, @RequestBody CommentDto commentDto) {
+    public ResponseEntity<CommentDto> createComment(Principal principal, @RequestBody CommentDto commentDto) {
         if (principal == null) {
-            return new ResponseEntity<>(new GenericResponse("Please login."), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Comment comment = Converter.convert(commentDto, Comment.class);
-        commentService.createComment(comment, principal);
-        return new ResponseEntity<>(new GenericResponse("Successful."), HttpStatus.CREATED);
+        CommentDto createdCommentDto =
+                Converter.convert(commentService.createComment(comment, principal), CommentDto.class);
+        return new ResponseEntity<>(createdCommentDto, HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET)

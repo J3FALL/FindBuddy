@@ -1,6 +1,7 @@
 package org.edu.service.impl;
 
 import org.edu.dao.CommentDao;
+import org.edu.dao.MeetingDao;
 import org.edu.dao.UserDao;
 import org.edu.model.Comment;
 import org.edu.model.User;
@@ -24,12 +25,17 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    MeetingDao meetingDao;
+
     @Override
-    public void createComment(Comment comment, Principal principal) {
+    public Comment createComment(Comment comment, Principal principal) {
         User author = userDao.findByEmail(principal.getName());
         comment.setAuthor(author);
         comment.setDate(LocalDateTime.now());
+        comment.setMeeting(meetingDao.findOne(comment.getMeeting().getId()));
         commentDao.create(comment);
+        return comment;
     }
 
     @Override
@@ -70,5 +76,8 @@ public class CommentServiceImpl implements CommentService {
         return false;
     }
 
-
+//    @Override
+//    public List<Comment> getCommentByMeeting(Meeting meeting) {
+//
+//    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Transactional
 public interface CommentService {
 
-    void createComment(Comment comment, Principal principal);
+    Comment createComment(Comment comment, Principal principal);
 
     List<Comment> getAllComments();
 
@@ -20,7 +20,6 @@ public interface CommentService {
     boolean updateComment(Comment comment, Principal principal);
 
     boolean removeComment(long id, Principal principal);
-
 
 //    List<Comment> getCommentByMeeting(Meeting meeting);
 }
