@@ -1,0 +1,8 @@
+html, body, main, map, .parallax-container, #main-content, #main-row,
+.col.s12.m10.l10.offset-l1.offset-m1, .map-container {
+    height: 100%;
+}
+
+.bottom-part {
+    height: 60%;
+}
