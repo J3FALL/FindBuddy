@@ -33,25 +33,28 @@ $("#publish-button").click(function () {
         var result = $.grep(values, function (e) {
             return e.name == "date";
         });
+
+        moment.locale("ru");
+        var date = moment(result[0].value, "DD MMMM, YYYY").utcOffset(0, true).toISOString().slice(0, -5);
+        console.log(date);
+        /*
         //here comes some shit code
         var str = result[0].value.split(" ");
         str[1] = lang[str[1].replace(",", "")];
         var d = new Date(str);
-        var date = d.toISOString().slice(0, 10);
+        var date = d.toISOString().slice(0, 10);*/
 
         //get time-value pair
         result = $.grep(values, function (e) {
             return e.name == "time";
         })
         var time = result[0].value;
-
         //remove date & time objects from values
         values = values.filter(function( obj ) {
             return obj.name !== 'date' && obj.name !== 'time';
         });
-
         //add startDate field to json
-        var startDate = date + "T" + time + ":00";
+        var startDate = date.toString().slice(0, 10) + "T" + time + ":00";
         values.push({name: 'start_date', value: startDate});
 
         values = values.filter(function (obj) {
@@ -188,3 +191,7 @@ $("#location").click(function () {
     $('#modal1').modal('open');
 });
 
+$("#cancel-button").click(function () {
+    console.log("!");
+    window.location.assign('/');
+});

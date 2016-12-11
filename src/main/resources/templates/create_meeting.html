@@ -97,7 +97,7 @@
                             class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a class="waves-effect" href="#!">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/user/0|">Профиль</a></li>
                             <li><a class="waves-effect" href="/logout">Выход</a></li>
                         </ul>
                     </div>
@@ -105,10 +105,10 @@
             </ul>
         </li>
         <li th:unless="${username}"><a href="/login" class="waves-effect">Войти</a></li>
-        <li th:if="${username}"><a href="#!" class="waves-effect">Моя
+        <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
             лента</a></li>
-        <li><a href="#!" class="waves-effect">Все встречи</a></li>
-        <li><a href="#!" class="waves-effect" onclick="">Все теги</a></li>
+        <li><a href="/" class="waves-effect">Все встречи</a></li>
+        <li><a href="/categories" class="waves-effect" onclick="">Все категории</a></li>
         <li>
             <div class="divider"></div>
         </li>
@@ -191,9 +191,9 @@
                         <button class="btn waves-effect waves-light" type="submit" name="action" id="publish-button">Опубликовать
                             <i class="material-icons right">send</i>
                         </button>
-                        <button class="btn waves-effect waves-light red" name="action" onclick="history.go(-1)">Отмена
+                        <a class="btn waves-effect waves-light red" name="action" id="cancel-button">Отмена
                             <i class="material-icons right">cancel</i>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </form>
@@ -206,7 +206,7 @@
             <div id="map"></div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Ок</a>
+            <a class="modal-action modal-close waves-effect waves-green btn-flat ">Ок</a>
         </div>
     </div>
 </main>
