@@ -56,7 +56,6 @@ public class Converter {
         mapperFactory.classMap(Meeting.class, MeetingDto.class)
                 .byDefault()
                 .field("author.id", "authorId")
-                .field("author.name", "authorName")
                 .field("station.id", "stationId")
                 .field("station.name", "stationName")
                 .field("category.id", "categoryId")
@@ -67,6 +66,11 @@ public class Converter {
 
                             @Override
                             public void mapAtoB(Meeting meeting, MeetingDto meetingDto, MappingContext context) {
+                                if (meeting.getAuthor() != null) {
+                                    String fullName = meeting.getAuthor().getName() + " " +
+                                            meeting.getAuthor().getSurname();
+                                            meetingDto.setAuthorName(fullName);
+                                }
                                 meetingDto.setSubscribersNum(meeting.getSubscribedUsers().size());
                             }
                         }
@@ -91,12 +95,10 @@ public class Converter {
 
                             @Override
                             public void mapAtoB(Comment comment, CommentDto commentDto, MappingContext context) {
-                                StringBuilder stringBuilder = new StringBuilder();
-                                stringBuilder
-                                        .append(comment.getAuthor().getName())
-                                        .append(" ")
-                                        .append(comment.getAuthor().getSurname());
-                                commentDto.setAuthorName(stringBuilder.toString());
+                                String fullName = comment.getAuthor().getName() +
+                                        " " +
+                                        comment.getAuthor().getSurname();
+                                commentDto.setAuthorName(fullName);
                             }
                         }
                 )
