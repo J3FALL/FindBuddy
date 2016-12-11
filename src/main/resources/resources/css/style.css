@@ -215,6 +215,7 @@ a.inline {
 
 .bottom-part {
     margin-top: 5%;
+    min-height: 300px;
 }
 
 .dynamic-block {
@@ -305,4 +306,44 @@ span.author-link:hover {
 .date-wrapper {
     float: right
 }
+
+.subscriber {
+    width: 19%;
+    margin: 1.5% 2.5%;
+    display: inline-block;
+}
+
+.subscriber:nth-of-type(3n + 1) {
+    margin-right: 0
+}
+
+.subscriber:first-of-type, .subscriber:nth-of-type(4n + 1) {
+    margin-left: 0;
+    margin-right: 2.5%;
+}
+
+.tag-card:last-of-type {
+    margin-right: 0;
+}
+
+.subscriber-photo {
+
+}
+
+.subscriber-link {
+    text-align: center;
+}
+
+.subscribers-container {
+    text-align: justify;
+}
+
+#subscribe-meeting-button {
+    margin-top: 3%;
+}
+
+.meeting-heading {
+    margin-bottom: 1%;
+}
+
 

@@ -26,7 +26,8 @@
                             class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a class="waves-effect" th:href="|/user/${userId}|">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/user/0|">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/settings|">Настройки</a></li>
                             <li><a class="waves-effect" th:href="@{/logout}">Выход</a></li>
                         </ul>
                     </div>
@@ -37,7 +38,7 @@
         <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
             лента</a></li>
         <li><a href="/" class="waves-effect">Все встречи</a></li>
-        <li><a href="#" class="waves-effect">Все категории</a></li>
+        <li><a href="/categories" class="waves-effect">Все категории</a></li>
         <li>
             <div class="divider"></div>
         </li>
@@ -68,14 +69,21 @@
             <div class="row" id="main-row" style="margin-bottom: 0">
                 <div class="col s12 m10 l10 offset-l1 offset-m1">
                     <div class="meeting-author row">
-                        <a th:href="|/user/${meeting.authorId}|">
+                        <a th:if="${meeting.authorId}" th:href="|/user/${meeting.authorId}|">
                             <img th:src="${meeting.authorPhoto} != null ? |/images/${meeting.authorPhoto}|
                              : |/images/no_photo.png|"
                                  class="author-avatar responsive-img circle"
                                  style="vertical-align:middle"/>
                               <span class="black-text author-link"
-                                    style="margin-left: 1%">
-                                Ильнур Хафизов
+                                    style="margin-left: 1%" th:text="${meeting.authorName}">
+                              </span>
+                        </a>
+                        <a th:unless="${meeting.authorId}">
+                            <img th:src="|/images/no_photo.png|"
+                                 class="author-avatar responsive-img circle"
+                                 style="vertical-align:middle"/>
+                              <span class="black-text"
+                                    style="margin-left: 1%" th:text="'Имя автора неизесно'">
                               </span>
                         </a>
                     </div>
@@ -84,14 +92,14 @@
                         <div th:class="'chip row'" th:text="${meeting.categoryName}">
                         </div>
                         <div class="meeting-heading row">
-                            <h5 class="meeting-header black-text" th:text="${meeting.title}"></h5>
+                            <h5 class="meeting-header black-text flow-text" th:text="${meeting.title}"></h5>
                             <div class="meeting-date">
                                 <div class="date-wrapper">
                                     <p class="center flow-text"
-                                        th:text="${meeting.convertDate()}">Дата</p>
+                                       th:text="${meeting.convertDate()}">Дата</p>
                                     <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
                                     <p class="center flow-text" style="margin-top: 0;"
-                                        th:text="${meeting.convertTime()}">Время</p>
+                                       th:text="${meeting.convertTime()}">Время</p>
                                 </div>
                             </div>
                         </div>
@@ -100,33 +108,41 @@
                             <p th:text="${meeting.description}"></p>
                         </div>
                         <div class="meeting-bottom col s8 left" style="padding-left: 0;
-                        margin-top: 2%">
+                        margin-top: 1%">
                             <ul class="meeting-info">
                                 <li class="">
                                     <a class="grey-text" th:text="|м.${meeting.stationName}|">м.
                                         Автово</a>
                                 </li>
-                                <li class="">
-                                    <a href="#" class="grey-text"
-                                       th:text="|Подписчиков: ${meeting.subscribersNum}|">5
-                                        подписчиков</a>
-                                </li>
-                                <li class="">
-                                    <a class="grey-text"></a>
-                                </li>
+                                <!--<li class="">-->
+                                    <!--<a href="#" class="grey-text"-->
+                                       <!--th:text="|Подписчиков: ${meeting.subscribersNum}|">5-->
+                                        <!--подписчиков</a>-->
+                                <!--</li>-->
+                                <!--<li class="">-->
+                                    <!--<a class="grey-text"></a>-->
+                                <!--</li>-->
                             </ul>
+                            <a th:if="${username}" class="waves-effect waves-light btn"
+                               id="subscribe-meeting-button"
+                               th:text="${alreadySubscribed} ? 'Вы подписаны' : 'Подписаться'"
+                               th:attr="data-meeting=${meeting.id}, data-subscribed=${alreadySubscribed}"
+                            >
+                            </a>
                         </div>
                     </div>
                     <div class="bottom-part" style="margin-top: 0;min-height: 300px">
                         <div class="divider"></div>
                         <ul class="tabs">
                             <li class="tab col s4">
-                                <a target="_self" th:href="|comments|"
+                                <a target="_self"
+                                   th:href="|/meeting/${meeting.id}?location=comments|"
                                    th:class="${currentLocation} == 'comments' ? 'active black-text' :'black-text'">Комментарии</a>
                             </li>
                             <li class="tab col s4">
-                                <a target="_self" th:href="|subscribers|"
-                                   th:class="${currentLocation} == 'nearest' ? 'active black-text' :'black-text'">Подписчики</a>
+                                <a target="_self"
+                                   th:href="|/meeting/${meeting.id}?location=subscribers||"
+                                   th:class="${currentLocation} == 'subscribers' ? 'active black-text' :'black-text'">Подписчики</a>
                             </li>
                             <li class="tab col s4">
                                 <a target="_self" th:href="|map|"
@@ -134,45 +150,69 @@
                             </li>
                         </ul>
                         <div class="divider"></div>
-                        <div th:if="${currentLocation} == 'comments'"
-                             class="comment-container col s12" style="margin: 1% 0;padding-left: 0">
-                            <div th:each="comment : ${comments}" class="comment"
-                                 style="margin-top: 2%">
-                                <div class="comment-author">
-                                    <a th:href="|/user/${comment.authorId}|">
-                                        <img th:src="${comment.authorPhoto} != null ?
+                        <div th:if="${currentLocation} == 'comments'">
+                            <div class="comment-container col s12"
+                                 style="margin: 1% 0;padding-left: 0">
+                                <div th:each="comment : ${comments}" class="comment"
+                                     style="margin-top: 2%">
+                                    <div class="comment-author">
+                                        <a th:href="|/user/${comment.authorId}|">
+                                            <img th:src="${comment.authorPhoto} != null ?
                                     |/images/${comment.authorPhoto}| : |/images/no_photo.png|"
-                                                class="author-avatar responsive-img circle"
-                                                style="vertical-align:middle"/>
+                                                 class="author-avatar responsive-img circle"
+                                                 style="vertical-align:middle"/>
                                     <span class="black-text author-link"
                                           style="margin-left: 1%" th:text="${comment.authorName}">
                                       </span>
-                                    </a>
-                                </div>
-                                <div class="comment-message" style="margin-left: calc(38px + 1%)">
-                                    <p th:text="${comment.text}"></p>
-                                    <div class="comment-time" style="margin: 0.3rem 0">
-                                        <a class="grey-text" th:text="${comment.convertDate()}"></a>
+                                        </a>
                                     </div>
+                                    <div class="comment-message"
+                                         style="margin-left: calc(38px + 1%)">
+                                        <p th:text="${comment.text}"></p>
+                                        <div class="comment-time" style="margin: 0.3rem 0">
+                                            <a class="grey-text"
+                                               th:text="${comment.convertDate()}"></a>
+                                        </div>
+                                    </div>
+                                    <div class="divider" style="margin-top: 2%"></div>
                                 </div>
-                                <div class="divider" style="margin-top: 2%"></div>
                             </div>
-                        </div>
-                        <div th:if="${username}" class="row comment-form">
-                            <form class="col s12">
-                                <div class="row new-comment" style="padding: 0;">
-                                    <div class="input-field col s12" style="padding: 0;">
-                                        <i class="material-icons prefix">mode_edit</i>
+                            <div th:if="${username}" class="row comment-form">
+                                <form class="col s12">
+                                    <div class="row new-comment" style="padding: 0;">
+                                        <div class="input-field col s12" style="padding: 0;">
+                                            <i class="material-icons prefix">mode_edit</i>
                                         <textarea id="new-comment-text" class="materialize-textarea"
                                                   style="width: calc(100%-3rem)"></textarea>
-                                        <label for="new-comment-text">Написать комментарий</label>
+                                            <label for="new-comment-text">Написать
+                                                комментарий</label>
+                                        </div>
+                                        <a class="send-comment waves-effect waves-light btn right"
+                                           th:attr="data-meeting=${meeting.id}">
+                                            Отправить
+                                        </a>
                                     </div>
-                                    <a class="send-comment waves-effect waves-light btn right"
-                                       th:attr="data-meeting=${meeting.id}">
-                                        Отправить
-                                    </a>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+                        </div>
+                        <div th:if="${currentLocation} == 'subscribers'"
+                             class="subscribers-container">
+                            <div th:each="subscriber : ${subscribers}" class="subscriber">
+                                <a th:href="|/user/${subscriber.id}|">
+                                    <img th:src="${subscriber.photo} != null
+                                    ? |/images/${subscriber.photo}|
+                                    : |/images/no_photo.png|"
+                                         class="subscriber-photo responsive-img circle"/>
+                                    <p class="subscriber-link black-text"
+                                       th:href="|/user/${subscriber.id}|"
+                                       th:text="|${subscriber.name}|">
+                                    </p>
+                                    <p class="subscriber-link black-text"
+                                       th:href="|/user/${subscriber.id}|"
+                                       th:text="|${subscriber.surname}|">
+                                    </p>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -185,9 +225,10 @@
 <script type="text/javascript" src="../resources/js/send_comment.js"></script>
 <script type="text/javascript" src="../resources/js/handlebars-v4.0.5.js"></script>
 <script type="text/javascript" src="../resources/js/moment.js"></script>
+<script type="text/javascript" src="../resources/js/subscribe_meeting.js"></script>
 <script id="comment-template" type="text/x-handlebars-template">
     <div class="comment"
-         style="margin: 0 0">
+         style="margin-top: 2%">
         <div class="comment-author">
             <a href="{{authorLink}}"><img src="{{authorPhoto}}"
                                           class="author-avatar responsive-img circle"

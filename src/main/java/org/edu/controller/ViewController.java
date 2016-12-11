@@ -99,8 +99,10 @@ public class ViewController {
         if (principal != null) {
             String email = principal.getName();
             User user = userService.getUserByEmail(email);
-            model.addAttribute("username", user.getName());
-            model.addAttribute("roles", user.getRoles());
+            if (user != null) {
+                model.addAttribute("username", user.getName());
+                model.addAttribute("roles", user.getRoles());
+            }
         }
     }
 
@@ -239,21 +241,30 @@ public class ViewController {
 
     @RequestMapping(value = "/meeting/{id}", method = RequestMethod.GET)
     public String getMeetingPage(Model model, @PathVariable(value = "id") long id,
-                                 @RequestParam(required = false) String currentLocation,
+                                 @RequestParam(required = false, name = "location") String currentLocation,
                                  Principal principal) {
-        //User user = userService.getUserByEmail(principal.getName());
         setHeaderVariables(model, principal);
         if (currentLocation == null)
             currentLocation = "comments";
+        boolean alreadySubscribed = false;
         Meeting meeting = meetingService.getMeetingById(id);
+        if (principal != null) {
+            User user = userService.getUserByEmail(principal.getName());
+            alreadySubscribed = meeting.getSubscribedUsers().contains(user);
+        }
         switch (currentLocation) {
             case "comments":
                 List<Comment> meetingComments = new ArrayList<>(meeting.getComments());
                 Collections.sort(meetingComments, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
                 model.addAttribute("comments", Converter.convert(meetingComments, CommentDto.class));
+                break;
+            case "subscribers":
+                List<User> meetingSubscribers = new ArrayList<>(meeting.getSubscribedUsers());
+                model.addAttribute("subscribers", Converter.convert(meetingSubscribers, UserDto.class));
         }
         model.addAttribute("meeting", Converter.convert(meeting, MeetingDto.class));
         model.addAttribute("currentLocation", currentLocation);
+        model.addAttribute("alreadySubscribed", alreadySubscribed);
         //model.addAttribute("user", Converter.convert(user, UserDto.class));
         return "meeting";
     }
