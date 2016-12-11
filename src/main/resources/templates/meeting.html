@@ -219,7 +219,7 @@
                             </div>
                         </div>
                         <div th:if="${currentLocation} == 'map'" class="map-container">
-                            <div id="map"></div>
+                            <div id="map" th:attr="lat=${meeting.latitude}, lng=${meeting.longitude}"></div>
                         </div>
                     </div>
                 </div>

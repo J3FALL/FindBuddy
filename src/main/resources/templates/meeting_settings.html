@@ -205,10 +205,10 @@
     <!-- Modal Structure -->
     <div id="modal1" class="modal modal-fixed-footer">
         <div class="modal-content">
-            <div id="map"></div>
+            <div id="map" th:attr="lat=${meeting.latitude}, lng=${meeting.longitude}"></div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Ок</a>
+            <a class="modal-action modal-close waves-effect waves-green btn-flat ">Ок</a>
         </div>
     </div>
 </main>

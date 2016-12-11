@@ -79,7 +79,7 @@ $("#publish-button").click(function () {
                    type: 'PUT',
                    url: '/meetings/' + id,
                    contentType: "application/json",
-                   data: JSON.stringify(array),
+                   data: JSON.stringify(array)
                }).done(function (result) {
             console.log(result);
             window.location.replace("/");
@@ -93,18 +93,25 @@ $("#publish-button").click(function () {
 
 
 function initMap() {
-
-    var myLatLng = {lat: 59.935946, lng: 30.321581};
+    var defaultLatLng = {lat: 59.935946, lng: 30.321581};
+    var lat = $("#map").attr("lat");
+    var lng = $("#map").attr("lng");
+    console.log(lat);
+    var myLatLng = {lat: parseFloat(lat), lng: parseFloat(lng)};
     console.log(myLatLng);
     map = new google.maps.Map(document.getElementById('map'), {
         center: myLatLng,
-        zoom: 15
+        zoom: 14
     });
-
+    addMarker(myLatLng);
+    getAddress();
+    setAddress();
     map.addListener('click', function(e) {
         deleteMarkers();
         addMarker(e.latLng);
     });
+
+    map.setCenter(myLatLng);
 }
 
 // Adds a marker to the map and push to the array.
@@ -140,6 +147,8 @@ function deleteMarkers() {
     clearMarkers();
     markers = [];
 }
+
+
 $(document).ready(function(){
     Materialize.updateTextFields();
     $('.modal').modal({
@@ -161,7 +170,6 @@ $(document).ready(function(){
                                              }
                                          });
                               }
-
                           }
                       });
 
@@ -199,3 +207,19 @@ $("#cancel-button").click(function () {
     console.log("!");
     window.location.assign('/');
 });
+
+function getAddress() {
+    if (markers[0] != undefined && markers[0] != null) {
+        $.ajax({
+                   url: "http://maps.googleapis.com/maps/api/geocode/json",
+                   type: 'GET',
+                   data: {latlng: markers[0].getPosition().lat()+","+ markers[0].getPosition().lng(), sensor: true},
+                   success: function (response) {
+                       setAddress(response);
+                   },
+                   error: function (xhr) {
+                       console.log(xhr);
+                   }
+               });
+    }
+}
