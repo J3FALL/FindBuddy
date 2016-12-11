@@ -3,6 +3,8 @@
 *.iml
 *.iws
 
+#logs
+logs/
 #Heroku local
 .env
 
