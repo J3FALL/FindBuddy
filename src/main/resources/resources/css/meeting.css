@@ -1,3 +1,14 @@
 #main-row {
     padding-top: 2%;
 }
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+.map-container{
+    position: fixed;
+    min-height: 100%;
+    min-width: 100%;
+}

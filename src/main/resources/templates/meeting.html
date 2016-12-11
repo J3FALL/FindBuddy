@@ -131,7 +131,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="bottom-part" style="margin-top: 0;min-height: 300px">
+                    <div class="bottom-part" style="margin-top: 0;min-height: 300px;">
                         <div class="divider"></div>
                         <ul class="tabs">
                             <li class="tab col s4">
@@ -145,8 +145,8 @@
                                    th:class="${currentLocation} == 'subscribers' ? 'active black-text' :'black-text'">Подписчики</a>
                             </li>
                             <li class="tab col s4">
-                                <a target="_self" th:href="|map|"
-                                   th:class="${currentLocation} == 'popular' ? 'active black-text' :'black-text'">Расположение</a>
+                                <a target="_self" th:href="|/meeting/${meeting.id}?location=map|"
+                                   th:class="${currentLocation} == 'map' ? 'active black-text' :'black-text'">Расположение</a>
                             </li>
                         </ul>
                         <div class="divider"></div>
@@ -214,6 +214,9 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="map-container">
+                            <div id="map"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -226,6 +229,9 @@
 <script type="text/javascript" src="../resources/js/handlebars-v4.0.5.js"></script>
 <script type="text/javascript" src="../resources/js/moment.js"></script>
 <script type="text/javascript" src="../resources/js/subscribe_meeting.js"></script>
+<script type="text/javascript" src="../resources/js/meeting.js"></script>
+
+
 <script id="comment-template" type="text/x-handlebars-template">
     <div class="comment"
          style="margin-top: 2%">
@@ -253,5 +259,10 @@
     $('.collapsible').collapsible();
     //    $('ul.tabs').tabs();
 </script>
+
+<script async="async" defer="defer"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsEM2yT9W6NrpKA8HEkDG3VLaa1K12A34&amp;callback=initMap">
+</script>
+
 </body>
 </html>
