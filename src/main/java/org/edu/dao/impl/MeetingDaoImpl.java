@@ -59,7 +59,7 @@ public class MeetingDaoImpl extends AbstractHibernateDao<Meeting> implements Mee
                                 "(select meeting_id, count(user_id) as users_num from meeting_user group by meeting_id) as count_user " +
                                 "on meetings.id = count_user.meeting_id " +
                                 "where create_date between now() - interval '7 days' and now() " +
-                                "order by count_user.users_num")
+                                "order by count_user.users_num desc nulls last")
                 .addEntity(Meeting.class)
                 .setMaxResults(num)
                 .setFirstResult((pageNum - 1) * num)
