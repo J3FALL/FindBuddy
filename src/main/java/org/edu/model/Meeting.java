@@ -30,8 +30,8 @@ public class Meeting implements Serializable {
     private String description;
     private LocalDateTime createDate;
     private LocalDateTime startDate;
-    private long longitude;
-    private long latitude;
+    private Float longitude;
+    private Float latitude;
     private User author;
     private Set<User> subscribedUsers = new HashSet<>();
     private Station station;
@@ -98,20 +98,20 @@ public class Meeting implements Serializable {
     }
 
     @Column(name = "longitude")
-    public long getLongitude() {
+    public Float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 
     @Column(name = "latitude")
-    public long getLatitude() {
+    public Float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
 

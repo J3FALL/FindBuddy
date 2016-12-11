@@ -16,8 +16,8 @@ public class MeetingDto {
     private long id;
     private String title;
     private String description;
-    private long longitude;
-    private long latitude;
+    private Float longitude;
+    private Float latitude;
     private LocalDateTime createDate;
     private LocalDateTime startDate;
     private Long authorId;
@@ -56,19 +56,19 @@ public class MeetingDto {
         this.description = description;
     }
 
-    public long getLongitude() {
+    public Float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 
-    public long getLatitude() {
+    public Float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
 
