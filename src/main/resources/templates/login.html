@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
@@ -21,6 +21,7 @@
                 <div class="input-field col s12 center">
                     <!--<img width="35%" src="https://pbs.twimg.com/profile_images/516299379699748864/7fHIsrhF.png" alt="" class="responsive-img valign profile-image-login">-->
                     <h4 class="indigo-text">Вход</h4>
+                    <p class="center" th:if="${error}" id="login-error" style="color: #F44336;">Неправильный логин или пароль</p>
                     <!--<p class="center login-form-text">Please, login into your account</p>-->
                 </div>
             </div>
@@ -29,7 +30,7 @@
             </div>
             <div class="row margin">
                 <div class="input-field col s12">
-                    <input class="validate" id="email" type="email" name="email" placeholder=""/>
+                    <input id="email" type="email" name="email" placeholder=""/>
                     <label for="email" data-error="wrong" data-success="right" class="left-align">Email</label>
                 </div>
             </div>
@@ -52,13 +53,9 @@
             </div>
             <div class="row">
                 <div class="input-field col s6 m6 l6">
-                    <p class="margin medium-small"><a href="/registration">Register Now!</a></p>
-                </div>
-                <div class="input-field col s6 m6 l6">
-                    <p class="margin right-align medium-small"><a href="forgot-password.html">Forgot password?</a></p>
+                    <p class="margin medium-small"><a href="/registration">Зарегестрироваться</a></p>
                 </div>
             </div>
-
         </form>
     </div>
 </div>
