@@ -62,7 +62,6 @@
         </div>
     </nav>
 </header>
-
 <main>
     <div class="parallax-container">
         <div id="main-content">
@@ -78,6 +77,9 @@
                                     style="margin-left: 1%" th:text="${meeting.authorName}">
                               </span>
                         </a>
+                        <a th:if="${isAuthor}" th:href="|/meeting/${meeting.id}/settings|">
+                            <i class="small material-icons right black-text">settings</i>
+                        </a>
                         <a th:unless="${meeting.authorId}">
                             <img th:src="|/images/no_photo.png|"
                                  class="author-avatar responsive-img circle"
@@ -92,7 +94,8 @@
                         <div th:class="'chip row'" th:text="${meeting.categoryName}">
                         </div>
                         <div class="meeting-heading row">
-                            <h5 class="meeting-header black-text flow-text" th:text="${meeting.title}"></h5>
+                            <h5 class="meeting-header black-text flow-text"
+                                th:text="${meeting.title}"></h5>
                             <div class="meeting-date">
                                 <div class="date-wrapper">
                                     <p class="center flow-text"
@@ -115,12 +118,12 @@
                                         Автово</a>
                                 </li>
                                 <!--<li class="">-->
-                                    <!--<a href="#" class="grey-text"-->
-                                       <!--th:text="|Подписчиков: ${meeting.subscribersNum}|">5-->
-                                        <!--подписчиков</a>-->
+                                <!--<a href="#" class="grey-text"-->
+                                <!--th:text="|Подписчиков: ${meeting.subscribersNum}|">5-->
+                                <!--подписчиков</a>-->
                                 <!--</li>-->
                                 <!--<li class="">-->
-                                    <!--<a class="grey-text"></a>-->
+                                <!--<a class="grey-text"></a>-->
                                 <!--</li>-->
                             </ul>
                             <a th:if="${username}" class="waves-effect waves-light btn"
