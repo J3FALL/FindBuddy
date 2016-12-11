@@ -1,6 +1,7 @@
 package org.edu.controller;
 
 import org.edu.converter.Converter;
+import org.edu.error.UserAlreadyExist;
 import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.Meeting;
@@ -43,7 +44,11 @@ public class UserController{
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<GenericResponse> registerUser(@RequestBody UserDto newUser) {
         User user = Converter.convert(newUser, User.class);
-        user = userService.createUser(user);
+        try {
+            user = userService.createUser(user);
+        } catch (UserAlreadyExist e) {
+            return new ResponseEntity<>(new GenericResponse(e.getMessage(), e.getClass().getSimpleName()), HttpStatus.BAD_REQUEST);
+        }
         if (user == null)
             return new ResponseEntity<>(new GenericResponse("Fail."), HttpStatus.BAD_REQUEST);
         else

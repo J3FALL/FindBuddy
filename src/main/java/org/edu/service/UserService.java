@@ -1,5 +1,6 @@
 package org.edu.service;
 
+import org.edu.error.UserAlreadyExist;
 import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.Meeting;
@@ -18,7 +19,7 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
-    User createUser(User newUser);
+    User createUser(User newUser) throws UserAlreadyExist;
 
     boolean updateUser(User user, Principal principal);
 

@@ -6,6 +6,7 @@ import org.edu.dao.CommentDao;
 import org.edu.dao.MeetingDao;
 import org.edu.dao.RoleDao;
 import org.edu.dao.UserDao;
+import org.edu.error.UserAlreadyExist;
 import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.Meeting;
@@ -58,9 +59,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User newUser) {
+    public User createUser(User newUser) throws UserAlreadyExist {
         if (existEmail(newUser.getEmail())) {
-            return null;
+            throw new UserAlreadyExist("Пользователь с такой почтой уже существует.");
         }
         User user = new User();
         user.setBirthday(newUser.getBirthday());
