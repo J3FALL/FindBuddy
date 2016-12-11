@@ -57,9 +57,10 @@ public class PersistenceConfig {
                 "");
         dataSource.setUsername(username);
         dataSource.setPassword(password);
-
-        System.out.println("jdbc:postgresql://" + host + ":" + port +
-        "/" + path);
+        dataSource.setInitialSize(8);
+        dataSource.setMaxActive(20);
+        dataSource.setMaxIdle(20);
+        dataSource.setMinIdle(0);
         return dataSource;
     }
 
@@ -83,7 +84,6 @@ public class PersistenceConfig {
                 setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
                 setProperty("hibernate.globally_quoted_identifiers", "true");
                 setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-                setProperty("hibernate.dbcp.maxActive", "20");
             }
         };
     }
