@@ -37,9 +37,15 @@ public class PersistenceConfig {
     @Bean
     public DataSource restDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        String dbUrl = System.getenv("DATABASE_URL"); //get db url from environment variables
+
+        String dbUrl = System.getenv("LOCAL_DB"); //get db url from environment variables
 //        String dbUrl = System.getenv("LOCAL_DATABASE_URL"); //get db url from environment variables
         //String dbUrl = System.getenv("LOCAL_DB_URL");
+//=======
+//        String dbUrl = System.getenv("LOCAL_DB");
+////        String dbUrl = System.getenv("DATABASE_URL"); //get db url from environment variables
+//>>>>>>> Stashed changes
+
         /*
         dataSource.setUrl(env.getProperty("jdbc.url"));
         dataSource.setUsername(env.getProperty("jdbc.user"));
