@@ -198,14 +198,17 @@ public class ViewController {
                 model.addAttribute("currentLocation", "info");
                 break;
             case "comments":
+                List<Comment> comments = new ArrayList<>(user.getComments());
                 model.addAttribute("currentLocation", "comments");
-                setHeaderVariables(model, principal);
+                model.addAttribute("comments", Converter.convert(comments, CommentDto.class));
         }
         return "user_page";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage() {
+    public String loginPage(Model model,@RequestParam(required = false) String error) {
+        if (error != null)
+            model.addAttribute("error", true);
         return "login";
     }
 
@@ -246,11 +249,16 @@ public class ViewController {
         setHeaderVariables(model, principal);
         if (currentLocation == null)
             currentLocation = "comments";
-        boolean alreadySubscribed = false;
         Meeting meeting = meetingService.getMeetingById(id);
+        if (meeting == null)
+            return "access_denied";
+        boolean alreadySubscribed = false;
+        boolean isAuthor = false;
+        boolean meetingHasAuthor = meeting.getAuthor() != null;
         if (principal != null) {
             User user = userService.getUserByEmail(principal.getName());
             alreadySubscribed = meeting.getSubscribedUsers().contains(user);
+            isAuthor = meetingHasAuthor && meeting.getAuthor().equals(user);
         }
         switch (currentLocation) {
             case "comments":
@@ -265,8 +273,23 @@ public class ViewController {
         model.addAttribute("meeting", Converter.convert(meeting, MeetingDto.class));
         model.addAttribute("currentLocation", currentLocation);
         model.addAttribute("alreadySubscribed", alreadySubscribed);
+        model.addAttribute("isAuthor", isAuthor);
         //model.addAttribute("user", Converter.convert(user, UserDto.class));
         return "meeting";
+    }
+
+    @RequestMapping(value = "/meeting/{id}/settings", method = RequestMethod.GET)
+    public String meetingSettingPage(Model model, Principal principal, @PathVariable("id") Long id) {
+        setHeaderVariables(model, principal);
+        Meeting meeting = meetingService.getMeetingById(id);
+        if (meeting != null) {
+            if (principal.getName() != null && meeting.getAuthor().equals(userService.getUserByEmail(principal.getName())))
+                model.addAttribute("meeting", Converter.convert(meeting, MeetingDto.class));
+            else return "access_denied";
+        }
+        model.addAttribute("stations", stationService.getAllStations());
+        model.addAttribute("categories", categoryService.getAllCategories());
+        return "meeting_settings";
     }
 
 }
