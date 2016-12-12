@@ -1,1 +1,13 @@
+# Intellij
 .idea/
+*.iml
+*.iws
+
+#logs
+logs/
+#Heroku local
+.env
+
+# Maven
+log/
+target/

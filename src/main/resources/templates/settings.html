@@ -1,0 +1,175 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../resources/css/materialize.min.css"
+          media="screen,projection"/>
+    <link rel="stylesheet" href="../resources/css/style.css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<header>
+    <ul id="slide-out" class="side-nav fixed grey lighten-4">
+        <nav class="nav-wrapper center hide-on-med-and-down grey darken-1" href="#">
+            <a class="brand-logo hide-on-med-and-down center valign-wrapper" id="logo" href="/">FindBuddy</a>
+        </nav>
+        <!--/*@thymesVar id="username" type=""*/-->
+        <li th:if="${username}" class="no-padding" id="username">
+            <ul class="collapsible collapsible-accordion">
+                <li>
+                    <a class="collapsible-header waves-effect"><i class="material-icons">perm_identity</i><span
+                            th:text="${username}"></span><i
+                            class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="waves-effect" th:href="|/user/${0}|">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/settings|">Настройки</a></li>
+                            <li><a class="waves-effect" th:href="@{/logout}">Выход</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li th:unless="${username}"><a th:href="@{/login}" class="waves-effect">Войти</a></li>
+        <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
+            лента</a></li>
+        <li><a href="/" class="waves-effect">Все встречи</a></li>
+        <li><a href="categories" class="waves-effect">Все категории</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li th:if="${username}"><a th:href="@{/meetings/create}"
+                                   class="waves-effect btn light-blue accent-1">Создать
+            встречу</a></li>
+    </ul>
+    <nav class="grey darken-1 fixed">
+        <div class="nav-wrapper">
+            <form class="row" id="search-form">
+                <a href="#" data-activates="slide-out" class="button-collapse" id="btn-collapse"><i
+                        class="material-icons">menu</i></a>
+                <div id="search-field" class="input-field col l12"
+                     style="padding-left: 0;padding-right: 0">
+                    <input class="" id="search" type="search" placeholder=""/>
+                    <label for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="parallax-container">
+        <div class="row" id="main-row">
+            <!--/*@thymesVar id="currentLocation" type="1"*/-->
+            <div class="col s12 m10 l10 offset-l1 offset-m1" id="main-col">
+                <div class="header-user">
+                </div>
+                <div id="main-content">
+                    <div class="head-part">
+                        <div class="avatar center">
+                            <img th:src="|/images/${photo}|"
+                                 class="circle responsive-img"
+                                 id="user-photo"/>
+                            <span id="size-error">Файл больше 2Мб</span>
+                            <span id="error">Файл больше 2Мб</span>
+                        </div>
+                        <div class="center buttons">
+                            <a class="btn waves-effect" id="input-btn">
+                                Загрузить
+                            </a>
+                            <a class="btn waves-effect red" id="delete-button"
+                               onclick="deleteFile()">Удалить</a>
+                        </div>
+                        <input id="file-input" onchange="uploadFile()" type="file"
+                               style="display: none"/>
+                        <div id="user-info-inputs">
+                            <form class="user-detailed-info">
+                                <div class="row center">
+                                    <div class="input-field col s12 ">
+                                        <i class="mdi-social-person-outline prefix"></i>
+                                        <div>
+                                            <input placeholder="" class="validate" id="name" name="name" type="text"
+                                                   th:value="${user.name}"/>
+                                            <label for="name" class="left-align">Имя</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row center">
+                                    <div class="input-field col s12 ">
+                                        <i class="mdi-social-person-outline prefix"></i>
+                                        <div>
+                                            <input placeholder="" class="validate" name="surname" id="surname" type="text"
+                                            th:value="${user.surname}"/>
+                                            <label for="surname" class="left-align">Фамилия</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row center">
+                                    <div class="input-field col s12 ">
+                                        <i class="mdi-action-lock-outline prefix"></i>
+                                        <div>
+                                            <input placeholder="" class="datepicker" id="birthday" type="date"
+                                                   name="birthday" th:value="${user.convertDate()}"/>
+                                            <label class="left-align" for="birthday">День
+                                                рождения</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row center">
+                                    <div class="input-field col s12" id="user-about"
+                                         style="margin: auto">
+                                        <div class="center">
+                                        <textarea placeholder="" id="textarea1"
+                                                  class="materialize-textarea"
+                                        th:text="${user.description}" name="description"></textarea>
+                                            <label for="textarea1">О себе</label>
+                                        </div>
+                                    </div>
+                                    <a id="registration-button"
+                                       class="btn waves-effect waves-light col s4" onclick="sendUserInfo()">Отправить</a>
+                                    <a
+                                       class="btn waves-effect waves-light red col s4" id="delete-profile-button" onclick="deleteUserProfile()">Удалить Профиль</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script type="text/javascript" src="../resources/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../resources/js/materialize.min.js"></script>
+<script type="text/javascript" src="../resources/js/upload_photo.js"></script>
+<script type="text/javascript" src="../resources/js/settings.js"></script>
+<script type="text/javascript" src="../resources/js/search.js"></script>
+<script type="text/javascript" src="../resources/js/moment.js"></script>
+<script>
+    $(".button-collapse").sideNav();
+    $('.collapsible').collapsible();
+    $('.datepicker').pickadate({
+                                   selectMonths: true, // Creates a dropdown to control month
+                                   selectYears: 70,
+                                   max: new Date(),
+                                   monthsFull: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май',
+                                                'Июнь', 'Июль', 'Август',
+                                                'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                                   monthsShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май',
+                                                 'Июнь', 'Июль', 'Август',
+                                                 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                                   weekdaysFull: ['Понедельник', 'Вторник', 'Среда', 'Четверг',
+                                                  'Пятница', 'Суббота', 'Воскресенье'],
+                                   weekdaysShort: ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'],
+                                   today: "",
+                                   clear: "",
+                                   close: "Закрыть"
+                               });
+    //    $('ul.tabs').tabs();
+</script>
+
+</body>
+</html>

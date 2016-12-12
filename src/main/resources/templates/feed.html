@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../resources/css/materialize.min.css"
+          media="screen,projection"/>
+    <link rel="stylesheet" href="../resources/css/style.css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<header>
+    <ul id="slide-out" class="side-nav fixed grey lighten-4">
+        <nav class="nav-wrapper center hide-on-med-and-down grey darken-1" href="#">
+            <a class="brand-logo hide-on-med-and-down center valign-wrapper" id="logo" href="/">FindBuddy</a>
+        </nav>
+        <!--/*@thymesVar id="username" type=""*/-->
+        <li th:if="${username}" class="no-padding" id="username">
+            <ul class="collapsible collapsible-accordion">
+                <li>
+                    <a class="collapsible-header waves-effect"><i class="material-icons">perm_identity</i><span
+                            th:text="${username}"></span><i
+                            class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="waves-effect" th:href="|/user/0|">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/settings|">Настройки</a></li>
+                            <li><a class="waves-effect" th:href="@{/logout}">Выход</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li th:unless="${username}"><a th:href="@{/login}" class="waves-effect">Войти</a></li>
+        <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
+            лента</a></li>
+        <li><a href="/" class="waves-effect">Все встречи</a></li>
+        <li><a href="categories" class="waves-effect">Все категории</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li th:if="${username}"><a th:href="@{/meetings/create}"
+                                   class="waves-effect btn light-blue accent-1">Создать
+            встречу</a></li>
+    </ul>
+    <nav class="grey darken-1 fixed">
+        <div class="nav-wrapper">
+            <form class="row" id="search-form">
+                <a href="#" data-activates="slide-out" class="button-collapse" id="btn-collapse"><i
+                        class="material-icons">menu</i></a>
+                <div id="search-field" class="input-field col l12"
+                     style="padding-left: 0;padding-right: 0">
+                    <input class="" id="search" type="search" placeholder=""/>
+                    <label for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="parallax-container">
+        <div class="row" id="main-row">
+            <!--/*@thymesVar id="currentLocation" type="1"*/-->
+            <div class="col s12 m10 l10 offset-l1 offset-m1">
+                <div id="head" class="section">
+                    <h4 class="left-align"
+                        th:text="${currentLocation} == 'feed' ? 'Моя лента' : 'Все встречи'"></h4>
+                    <ul class="tabs" th:unless="${currentLocation} == 'feed'">
+                        <li class="tab col s4">
+                            <a target="_self" th:href="|new|"
+                               th:class="${currentLocation} == 'new' ? 'active black-text' :'black-text'">Новые</a>
+                        </li>
+                        <li class="tab col s4">
+                            <a target="_self" th:href="|nearest|"
+                               th:class="${currentLocation} == 'nearest' ? 'active black-text' :'black-text'">Ближайшие</a>
+                        </li>
+                        <li class="tab col s4">
+                            <a target="_self" th:href="|popular|"
+                               th:class="${currentLocation} == 'popular' ? 'active black-text' :'black-text'">Популярные</a>
+                        </li>
+                    </ul>
+                    <div class="divider"></div>
+                </div>
+                <div class="new-content center" onclick="showNewContent()">
+                    <a id="show-new-meetings-link">Показать новые
+                        записи</a>
+                    <div class="divider new-content-divider"></div>
+                </div>
+                <div id="main-content">
+                    <!--/*@thymesVar id="meetings" type=""*/-->
+                    <!--/*@thymesVar id="meeting" type=""*/-->
+                    <div th:each="meeting : ${meetings}" style="margin-bottom: 1rem">
+                        <div th:id="${meeting.id}" style="margin-bottom: 1rem" class="row">
+                            <!--/*@thymesVar id="categoryName" type=""*/-->
+                            <div th:class="'chip'" th:text="${meeting.categoryName}">
+                                <!--<img src="images/yuna.jpg" alt="Contact Person">-->
+                            </div>
+                            <div class="meeting-heading">
+                                <a th:href="|/meeting/${meeting.id}|">
+                                    <h5 class="meeting-header black-text flow-text"
+                                        th:text="${meeting.title}"
+                                    >
+                                    </h5>
+                                </a>
+                                <div class="meeting-date">
+                                    <div class="date-wrapper">
+                                        <p class="center flow-text"
+                                           th:text="${meeting.convertDate()}">Дата</p>
+                                        <p class="center flow-text" style="margin-top: 0;"
+                                           th:text="${meeting.convertTime()}">Время</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="meeting-bottom col s8 left" style="padding-left: 0">
+                                <ul class="meeting-info">
+                                    <li class="">
+                                        <a class="grey-text"
+                                           th:text="|м.${meeting.stationName}|">м.
+                                            Автово</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" class="grey-text"
+                                           th:text="|Подписчиков: ${meeting.subscribersNum}|">5
+                                            подписчиков</a>
+                                    </li>
+                                    <li class="">
+                                        <a class="grey-text"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                    </div>
+                </div>
+                <!--/*@thymesVar id="pageNum" type=""*/-->
+                <ul th:if="${pageNum} > 1" class="pagination center" id="alo">
+                    <!--/*@thymesVar id="leftArrowDisabled" type=""*/-->
+                    <li th:if="${leftArrowDisabled}" class="disabled">
+                        <a href="#!">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    </li>
+                    <!--/*@thymesVar id="leftArrowDisabled" type=""*/-->
+                    <li th:unless="${leftArrowDisabled}" class="waves-effect">
+                        <a th:href="|${currentLocation}?pageNum=| + (${currentPageNum} - 1)">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    </li>
+                    <!--/*@thymesVar id="active" type=""*/-->
+                    <li th:each="i : ${#numbers.sequence(1, pageNum)}"
+                        th:class="${active} == ${i} ? 'active waves-effect pagination_item' :  'waves-effect pagination_item'">
+                        <a th:href="|${currentLocation}?pageNum=| + (${i})" th:text="${i}"></a>
+                    </li>
+                    <!--/*@thymesVar id="rightArrowDisabled" type=""*/-->
+                    <li th:if="${rightArrowDisabled}" class="disabled">
+                        <a href="#!">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </li>
+                    <!--/*@thymesVar id="rightArrowDisabled" type=""*/-->
+                    <li th:unless="${rightArrowDisabled}" class="waves-effect">
+                        <a th:href="|${currentLocation}?pageNum=| + (${currentPageNum} + 1)">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+<script type="text/javascript" src="../resources/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../resources/js/materialize.min.js"></script>
+<script type="text/javascript" src="../resources/js/handlebars-v4.0.5.js"></script>
+<script type="text/javascript" src="../resources/js/search.js"></script>
+<script type="text/javascript" src="../resources/js/feed_auto_update.js"></script>
+<script>
+    $(".button-collapse").sideNav();
+    $('.collapsible').collapsible();
+    //    $('ul.tabs').tabs();
+</script>
+<script id="meeting-template" type="text/x-handlebars-template">
+    <div style="margin-bottom: 1rem">
+        <div id="{{id}}" style="margin-bottom: 1rem" class="row">
+            <!--/*@thymesVar id="categoryName" type=""*/-->
+            <div class="chip">
+                {{categoryName}}
+            </div>
+            <div class="meeting-heading">
+                <a href="{{meetingLink}}">
+                    <h5 class="meeting-header black-text flow-text">
+                        {{title}}
+                    </h5>
+                </a>
+                <div class="meeting-date">
+                    <div class="date-wrapper">
+                        <p class="center flow-text">{{startDate}}</p>
+                        <!--<h5 class="right-align" style="margin: 0">октября</h5>-->
+                        <p class="flow-text center" style="margin-top: 0;">{{startTime}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="meeting-bottom col s8 left" style="padding-left: 0">
+                <ul class="meeting-info">
+                    <li class="">
+                        <a class="grey-text">м. {{stationName}}</a>
+                    </li>
+                    <li class="">
+                        <a href="#" class="grey-text">Подписчики: {{subscribersNum}}</a>
+                    </li>
+                    <li class="">
+                        <a class="grey-text"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="divider"></div>
+    </div>
+</script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../resources/css/materialize.min.css"
+          media="screen,projection"/>
+    <link rel="stylesheet" href="../resources/css/style.css"/>
+    <link rel="stylesheet" href="../resources/css/create_meeting.css"/>
+    <link rel="stylesheet" href="../resources/css/materialize.clockpicker.css"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<style>
+    @media screen and (max-width: 992px) {
+        #btn-collapse {
+            width: 3%;
+            margin-left: 4%;
+            margin-right: 3%;
+        }
+
+        #search-field {
+            width: 90%;
+        }
+    }
+
+    @media screen and (max-width: 370px) {
+        #btn-collapse {
+            width: 8%;
+            margin-left: 4%;
+            margin-right: 3%;
+        }
+
+        #search-field {
+            width: 85%;
+        }
+    }
+
+    .chip {
+        margin-bottom: 0;
+    }
+
+    .tabs .indicator {
+        color: #bdbdbd;
+        background-color: #bdbdbd !important;
+    }
+
+    #logo {
+        margin-top: 1%;
+        color: inherit;
+        font-size: 280%
+
+    }
+
+    #logo:hover {
+        color: inherit;
+        background-color: inherit;
+    }
+
+    .meeting-info li {
+        display: inline;
+        margin-right: 2%;
+    }
+
+    .meeting-info {
+        margin: 0 !important;
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .meeting-header {
+        padding-left: 0 !important;
+    }
+
+    .meeting-bottom {
+        margin-bottom: 0;
+    }
+
+    .parallax-container {
+        overflow: inherit !important;
+    }
+
+</style>
+<body>
+<header>
+    <ul id="slide-out" class="side-nav fixed grey lighten-4">
+        <nav class="nav-wrapper center hide-on-med-and-down grey darken-1" href="#">
+            <a class="brand-logo hide-on-med-and-down center valign-wrapper" id="logo" href="/">FindBuddy</a>
+        </nav>
+        <li th:if="${username}" class="no-padding" id="username">
+            <ul class="collapsible collapsible-accordion">
+                <li>
+                    <a class="collapsible-header waves-effect"><i class="material-icons">perm_identity</i><span
+                            th:text="${username}"></span><i
+                            class="material-icons right" style="margin-right: 0">arrow_drop_down</i></a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a class="waves-effect" th:href="|/user/0|">Профиль</a></li>
+                            <li><a class="waves-effect" href="/logout">Выход</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li th:unless="${username}"><a href="/login" class="waves-effect">Войти</a></li>
+        <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
+            лента</a></li>
+        <li><a href="/" class="waves-effect">Все встречи</a></li>
+        <li><a href="/categories" class="waves-effect" onclick="">Все категории</a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+    </ul>
+    <nav class="#d7ccc8 grey darken-1 fixed">
+        <div class="nav-wrapper">
+            <form class="row" id="search-form">
+                <a href="#" data-activates="slide-out" class="button-collapse" id="btn-collapse"><i
+                        class="material-icons">menu</i></a>
+                <div id="search-field" class="input-field col l12"
+                     style="padding-left: 0;padding-right: 0">
+                    <input class="" id="search" type="search" placeholder=""/>
+                    <label for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="parallax-container">
+        <div class="row" id="main-row">
+            <form class="create-meeting-form" id="create-meeting-form" novalidate="novalidate">
+                <div class="col s12 m10 110">
+                    <div class="row">
+                        <h4 class="meeting-header col s8 l9 flow-text black-text">
+                            Новая встреча
+                        </h4>
+                    </div>
+                    <div class="row" id="title-row">
+                        <div class="row">
+                            <div class="input-field col s6 custom-input-field">
+                                <input id="title" type="text" name="title" required="" aria-required="true" />
+                                <label for="title" class="label-field" data-error="test">Заголовок встречи</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6 custom-input-field">
+                            <select id="category" name="category_id" required="required">
+                                <option value="" disabled="disabled" selected="selected">Выберите категорию</option>
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
+                            </select>
+                            <label for="category" class="label-field" >Категория</label>
+                        </div>
+                        <div class="input-field col s6 custom-input-field">
+                            <select id ="station" name="station_id">
+                                <option value="0" disabled="disabled" selected="selected">Выберите метро</option>
+                                <option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}">Station</option>
+                            </select>
+                            <label class="label-field">Метро</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 m6 l3 custom-input-field" id="date">
+                            <input type="date" class="datepicker" id="datepicker" name="date" required="" aria-required="true"/>
+                            <label for="datepicker" class="label-field">Дата</label>
+                        </div>
+                        <div class="input-field col s12 m6 l3 custom-input-field" id="time">
+                            <label class="label-field" for="timepicker">Время</label>
+                            <input id="timepicker" class="timepicker" type="time" name="time" required="" aria-required="true"/>
+                        </div>
+                        <div class="input-field col s12 m6 l6 custom-input-field" id="location">
+                            <label class="label-field" for="location">Место на карте</label>
+                            <input id="location_input" type="text" name="location" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row">
+                            <div class="input-field col s12 custom-input-field ">
+                                <textarea id="description" class="materialize-textarea custom-text-area" name="description"></textarea>
+                                <label class="label-field" for="description">Описание</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <button class="btn waves-effect waves-light" type="submit" name="action" id="publish-button">Опубликовать
+                            <i class="material-icons right">send</i>
+                        </button>
+                        <a class="btn waves-effect waves-light red" name="action" id="cancel-button">Отмена
+                            <i class="material-icons right">cancel</i>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <div id="map"></div>
+        </div>
+        <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect waves-green btn-flat ">Ок</a>
+        </div>
+    </div>
+</main>
+<script type="text/javascript" src="../resources/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../resources/js/materialize.min.js"></script>
+<script type="text/javascript" src="../resources/js/materialize.clockpicker.js"></script>
+<script type="text/javascript" src="../resources/js/create_meeting.js"></script>
+<script type="text/javascript" src="../resources/js/jquery.validate.js"></script>
+<script type="text/javascript" src="../resources/js/moment.js"></script>
+<script type="text/javascript" src="../resources/js/search.js"></script>
+<script>
+    $(".button-collapse").sideNav();
+    $('.collapsible').collapsible();
+    $('ul.tabs').tabs();
+    $('select').material_select();
+    $('.datepicker').pickadate({
+        selectMonth: true,
+        selectYears: 1,
+        monthsFull: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
+                    'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        monthsShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
+                                                 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        weekdaysFull: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+        weekdaysShort: ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'],
+        today: "Сегодня",
+        clear: "",
+        close: "Закрыть",
+        min : new Date()
+                               });
+    $('#description').trigger('autoresize');
+</script>
+<script>
+    $('#timepicker').pickatime({
+        autoclose: false,
+        twelvehour: false,
+        donetext: "Готово"
+                               });
+</script>
+<script async="async" defer="defer"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsEM2yT9W6NrpKA8HEkDG3VLaa1K12A34&amp;callback=initMap">
+</script>
+</body>
+</html>

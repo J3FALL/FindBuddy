@@ -1,0 +1,350 @@
+header, main, footer {
+    padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+@media screen and (max-width: 992px) {
+    #btn-collapse {
+        width: 3%;
+        margin-left: 4%;
+        margin-right: 3%;
+    }
+
+    #search-field {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    #btn-collapse {
+        width: 8%;
+        margin-left: 4%;
+        margin-right: 3%;
+    }
+
+    #search-field {
+        width: 85%;
+    }
+}
+
+.chip {
+    margin-bottom: 0;
+}
+
+.tabs .indicator {
+    color: #bdbdbd;
+    background-color: #bdbdbd !important;
+}
+
+#logo {
+    margin-top: 1%;
+    color: inherit;
+    font-size: 280%
+
+}
+
+#logo:hover {
+    color: inherit;
+    background-color: inherit;
+}
+
+.meeting-info li {
+    display: inline;
+    margin-right: 2%;
+}
+
+.meeting-info {
+    margin: 0 !important;
+    list-style-type: none;
+    padding: 0;
+}
+
+.meeting-header {
+    padding-left: 0 !important;
+}
+
+.meeting-bottom {
+    margin-bottom: 0;
+}
+
+.parallax-container {
+    overflow: inherit !important;
+}
+
+.pagination_item {
+    background-color: white;
+}
+
+.active.pagination_item {
+    background-color: #bdbdbd !important;
+}
+
+@media screen and (max-width: 480px) {
+
+    .main-col {
+        padding-right: 3% !important;
+    }
+    .tag-card {
+        width: 90%;
+        float: left;
+        margin: 0 1% 4%;
+        left: 5%;
+    }
+
+    .tag-card:first-of-type, .tag-card:nth-of-type(1n + 1) {
+        margin-left: 0;
+    }
+
+    .tag-card:last-of-type {
+        margin-right: 0;
+    }
+
+    /*#first-divider {*/
+    /*margin-right: 6%;*/
+    /*}*/
+}
+
+@media screen and (min-width: 480px) and (max-width: 714px){
+    .tag-card {
+        width: 48.5%;
+        float: left;
+        margin: 0 1% 2%;
+    }
+
+    .tag-card:first-of-type, .tag-card:nth-of-type(2n + 1) {
+        margin-left: 0;
+    }
+
+    .tag-card:last-of-type {
+        margin-right: 0;
+    }
+
+    #first-divider {
+        margin-right: 1%;
+    }
+}
+
+@media screen and (min-width: 714px) {
+    /*.tag-card {*/
+    /*width: 24%;*/
+    /*float: left;*/
+    /*}*/
+
+    /*.tag-card + .tag-card {*/
+    /*margin-left: 1.33%;*/
+    /*}*/
+
+    .tag-card {
+        width: 31.5%;
+        float: left;
+        margin: 1%;
+        display: table-cell;
+    }
+
+    .tag-card:first-of-type, .tag-card:nth-of-type(3n + 1) {
+        margin-left: 0;
+    }
+
+    .tag-card:last-of-type {
+        margin-right: 0;
+    }
+
+    .card-action > a {
+        font-size: 13px !important;
+        margin-right: 0 !important;
+    }
+
+    #main-content {
+        /*display: table-row;*/
+        width: 100% !important;
+    }
+
+    #first-divider {
+    margin-right: 2%;
+    }
+}
+
+.new-content-divider {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.new-content {
+    cursor: pointer;
+    display: none;
+}
+
+#main-row {
+    height: 100%;
+}
+
+#main-col {
+    height: 100%;
+}
+
+.header-user {
+    margin-top: 5%;
+}
+
+.avatar {
+    width: 25%;
+    margin: auto;
+}
+
+a.inline {
+    /*margin: 0 5%;*/
+    display: inline-block;
+    width: 31%;
+    cursor: pointer;
+    /*border-right: solid 1px;*/
+}
+
+
+.user-info {
+    margin-top: 2%;
+}
+
+.user-info .inline{
+    display: inline-block;
+    /*height: 20%;*/
+}
+
+.bottom-part {
+    margin-top: 5%;
+    min-height: 300px;
+}
+
+.dynamic-block {
+    text-overflow: ellipsis;
+}
+
+.description {
+    margin-top: 10px;
+}
+
+.card-action {
+    border-top: 0 !important;
+}
+
+p {
+    overflow-wrap: break-word;
+    margin: 0;
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+#input-btn {
+    margin-right: 10px;
+}
+
+#size-error {
+    color: red;
+    display: none;
+}
+
+#error {
+    color: red;
+    display: none;
+}
+
+
+.input-field.col.s12 > input {
+    margin: 0;
+}
+
+#user-about {
+    float: none;
+}
+
+#registration-form label.left-align {
+    margin: 0 !important;
+}
+
+#user-info-inputs {
+    margin-top: 20px;
+}
+
+.row.margin {
+    width: 85%;
+}
+
+#delete-profile-button {
+    margin-left: 5%;
+}
+
+.author-avatar {
+    width: 34px;
+}
+
+span.author-link:hover {
+    text-decoration: underline;
+}
+
+.meeting-author {
+    margin-top: 1.5%;
+    margin-bottom: 1.5%
+}
+
+.meeting-header.black-text {
+    margin: 1% 0;
+    display: inline-block;
+    width: 70%;
+    vertical-align: middle
+}
+
+.meeting-date {
+    display: inline-block;
+    vertical-align: middle;
+    width: 28%;
+}
+
+.date-wrapper {
+    float: right
+}
+
+.subscriber {
+    width: 19%;
+    margin: 1.5% 2.5%;
+    display: inline-block;
+}
+
+.subscriber:nth-of-type(3n + 1) {
+    margin-right: 0
+}
+
+.subscriber:first-of-type, .subscriber:nth-of-type(4n + 1) {
+    margin-left: 0;
+    margin-right: 2.5%;
+}
+
+.tag-card:last-of-type {
+    margin-right: 0;
+}
+
+.subscriber-photo {
+
+}
+
+.subscriber-link {
+    text-align: center;
+}
+
+.subscribers-container {
+    text-align: justify;
+}
+
+#subscribe-meeting-button {
+    margin-top: 3%;
+}
+
+.meeting-heading {
+    margin-bottom: 1%;
+}
+
+
