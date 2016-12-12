@@ -198,4 +198,14 @@ public class MeetingServiceImpl implements MeetingService {
     public long getFeedNumber(String userName) {
         return meetingDao.findSubscribedCategoryMeetingsNumber(userName);
     }
+
+    @Override
+    public List<Meeting> getMeetingBySearchString(String searchString, int pagenNum, int num) {
+        return meetingDao.findMeetingBySearchString(searchString, pagenNum, num);
+    }
+
+    @Override
+    public Long getMeetingBySearchStringNum(String searchString, int pageNum, int num) {
+        return meetingDao.findMeetingBySearchStringNum(searchString, pageNum, num);
+    }
 }

@@ -45,4 +45,8 @@ public interface MeetingService {
     void addUserToWaiting(String userName);
     
     void removeUserFromWaiting(String userName);
+
+    List<Meeting> getMeetingBySearchString(String searchString, int pageNum, int num);
+
+    Long getMeetingBySearchStringNum(String searchString, int pageNum, int num);
 }

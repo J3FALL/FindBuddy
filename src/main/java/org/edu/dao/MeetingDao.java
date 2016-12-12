@@ -22,4 +22,8 @@ public interface MeetingDao extends IOperations<Meeting> {
     long findPopularMeetingsNumber();
 
     long findSubscribedCategoryMeetingsNumber(String userName);
+
+    List<Meeting> findMeetingBySearchString(String searchString, int pageNum, int num);
+
+    Long findMeetingBySearchStringNum(String searchString, int pageNum, int num);
 }
