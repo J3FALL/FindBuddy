@@ -98,9 +98,10 @@ function initMap() {
     var lng = $("#map").attr("lng");
     console.log(lat);
     var myLatLng = {lat: parseFloat(lat), lng: parseFloat(lng)};
+    var myLatLngCenter = {lat: parseFloat(lat) + 0.008,  lng: parseFloat(lng) - 0.02};
     console.log(myLatLng);
     map = new google.maps.Map(document.getElementById('map'), {
-        center: myLatLng,
+        center: myLatLngCenter,
         zoom: 14
     });
     addMarker(myLatLng);
