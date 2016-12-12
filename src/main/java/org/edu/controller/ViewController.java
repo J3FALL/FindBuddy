@@ -195,7 +195,7 @@ public class ViewController {
                 setMeetingVariables(model, userMeetingsDtos, pageNum, location, pageCount);
                 break;
             case "info":
-                model.addAttribute("user", user);
+                model.addAttribute("user", Converter.convert(user, UserDto.class));
                 break;
             case "comments":
                 List<Comment> comments = new ArrayList<>(user.getComments());
@@ -290,6 +290,24 @@ public class ViewController {
         model.addAttribute("stations", stationService.getAllStations());
         model.addAttribute("categories", categoryService.getAllCategories());
         return "meeting_settings";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String searchMeeting(Model model, @RequestParam(name = "searchString", required = false) String searchString,
+                              @RequestParam(name = "pageNum",required = false) Integer pageNum,
+                                Principal principal) {
+        setHeaderVariables(model, principal);
+        if (pageNum == null)
+            pageNum = 1;
+        List<Meeting> meetings = meetingService.getMeetingBySearchString(searchString, pageNum, meetingOnPageNum);
+        double pageCount =
+                Math.ceil(meetingService.getMeetingBySearchStringNum(searchString, pageNum, meetingOnPageNum) / (double) meetingOnPageNum);
+        if (meetings != null) {
+            setMeetingVariables(model, Converter.convert(meetings, MeetingDto.class), pageNum, "search", pageCount);
+            System.out.println(pageCount);
+        }
+        model.addAttribute("searchString", searchString);
+        return "search_result";
     }
 
 }
