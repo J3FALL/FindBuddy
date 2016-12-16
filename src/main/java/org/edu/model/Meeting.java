@@ -33,20 +33,13 @@ public class Meeting implements Serializable {
     private Float longitude;
     private Float latitude;
     private User author;
+    private String station;
     private Set<User> subscribedUsers = new HashSet<>();
-    private Station station;
     private Category category;
     private Set<Comment> comments;
 
     public Meeting() {
 
-    }
-
-    public Meeting(String title, String description, Station station) {
-        this.title = title;
-        this.description = description;
-        this.createDate = LocalDateTime.now();
-        this.station = station;
     }
 
     @Id
@@ -125,13 +118,12 @@ public class Meeting implements Serializable {
         this.author = author;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "station")
-    public Station getStation() {
+    @Column
+    public String getStation() {
         return station;
     }
 
-    public void setStation(Station station) {
+    public void setStation(String station) {
         this.station = station;
     }
 
@@ -174,6 +166,7 @@ public class Meeting implements Serializable {
         this.comments = comments;
     }
 
+
     @Override
     public String toString() {
         return "Meeting {" +
@@ -184,6 +177,7 @@ public class Meeting implements Serializable {
                 ", start_date = " + startDate +
                 ", longitude = " + longitude +
                 ", latitude = " + latitude +
+                ", station = " + station +
 //                ", author = " + author +
                 "}";
 

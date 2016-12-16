@@ -23,8 +23,7 @@ public class MeetingDto {
     private Long authorId;
     private String authorName;
     private String authorPhoto;
-    private Long stationId;
-    private String stationName;
+    private String station;
     private Long categoryId;
     private String categoryName;
     private int subscribersNum;
@@ -109,22 +108,13 @@ public class MeetingDto {
         this.authorName = author;
     }
 
-    @JsonProperty("station_id")
-    public Long getStationId() {
-        return stationId;
+    @JsonProperty("station")
+    public String getStation() {
+        return station;
     }
 
-    public void setStationId(Long stationId) {
-        this.stationId = stationId;
-    }
-
-    @JsonProperty("station_name")
-    public String getStationName() {
-        return stationName;
-    }
-
-    public void setStationName(String stationName) {
-        this.stationName = stationName;
+    public void setStation(String stationName) {
+        this.station = stationName;
     }
 
     @JsonProperty("category_id")
@@ -205,11 +195,10 @@ public class MeetingDto {
                 ", startDate=" + startDate +
                 ", authorId=" + authorId +
                 ", authorName='" + authorName + '\'' +
-                ", stationId=" + stationId +
-                ", stationName='" + stationName + '\'' +
                 ", categoryId=" + categoryId +
                 ", categoryName='" + categoryName + '\'' +
                 ", subscribersNum=" + subscribersNum +
+                ", station = " + station +
                 '}';
     }
 }
