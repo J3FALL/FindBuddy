@@ -246,6 +246,7 @@ $(document).ready(function () {
 function setAddress(response) {
     var address = response.results[0]['formatted_address'].split(',');
     $("#location").val(address[0] + address[1] + ", " + address[2]);
+    Materialize.updateTextFields();
 }
 
 $("#location").click(function () {
