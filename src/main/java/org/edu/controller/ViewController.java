@@ -314,7 +314,7 @@ public class ViewController {
         double pageCount =
                 Math.ceil(meetingService.getMeetingByCategoryNum(categoryId, pageNum, meetingOnPageNum) / (double) meetingOnPageNum);
         if (meetings != null) {
-            setMeetingVariables(model, Converter.convert(meetings, MeetingDto.class), pageNum, "category", pageCount);
+            setMeetingVariables(model, Converter.convert(meetings, MeetingDto.class), pageNum, "meetings_category", pageCount);
         }
         model.addAttribute("category", categoryId);
         model.addAttribute("categoryName", category.getName());

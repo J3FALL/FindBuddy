@@ -49,3 +49,6 @@ label[data-error]:after {
         margin-top: 3%;
     }
 }
+.category-label {
+    left: 0 !important;
+}
