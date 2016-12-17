@@ -302,4 +302,22 @@ public class ViewController {
         return "search_result";
     }
 
+    @RequestMapping(value = "/meetings_category", method = RequestMethod.GET)
+    public String getMeetingsByCategory(Model model, @RequestParam(name = "category", required = false) Long categoryId,
+                                        @RequestParam(name = "pageNum", required = false) Integer pageNum,
+                                        Principal principal) {
+        setHeaderVariables(model, principal);
+        Category category = categoryService.getCategoryById(categoryId);
+        if (pageNum == null)
+            pageNum = 1;
+        List<Meeting> meetings = meetingService.getMeetingByCategory(categoryId, pageNum, meetingOnPageNum);
+        double pageCount =
+                Math.ceil(meetingService.getMeetingByCategoryNum(categoryId, pageNum, meetingOnPageNum) / (double) meetingOnPageNum);
+        if (meetings != null) {
+            setMeetingVariables(model, Converter.convert(meetings, MeetingDto.class), pageNum, "category", pageCount);
+        }
+        model.addAttribute("category", categoryId);
+        model.addAttribute("categoryName", category.getName());
+        return "meetings_category";
+    }
 }
