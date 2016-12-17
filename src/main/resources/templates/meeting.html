@@ -38,6 +38,7 @@
         <li th:unless="${username}"><a th:href="@{/login}" class="waves-effect">Войти</a></li>
         <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
             лента</a></li>
+        <li th:if="${username}"><a href="subscriptions" class="waves-effect">Мои подписки</a></li>
         <li><a href="/" class="waves-effect">Все встречи</a></li>
         <li><a href="/categories" class="waves-effect">Все категории</a></li>
         <li>
