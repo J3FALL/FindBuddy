@@ -1,5 +1,7 @@
 package org.edu.service.impl;
 
+import net.coobird.thumbnailator.Thumbnails;
+
 import org.edu.model.User;
 import org.edu.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,20 +41,16 @@ public class FileStorageService implements StorageService {
 
     @Override
     public String store(MultipartFile photo, String userName) throws IOException {
-        BufferedImage bufferedProfileImage = cropImage(photo);
-        if (bufferedProfileImage == null) {
-            return null;
-        }
-        File imageDestination = new File(imagesLocation + File.separator + LocalDateTime.now().hashCode() + ".png");
-        ImageIO.write(bufferedProfileImage, "png", imageDestination);
-        return imageDestination.getName();
-    }
-
-    private BufferedImage cropImage(MultipartFile photo) throws IOException {
+        File imageDestination = new File(imagesLocation + File.separator + LocalDateTime.now().hashCode() + ".jpg");
         BufferedImage bufferedProfileImage = ImageIO.read(photo.getInputStream());
         if (bufferedProfileImage == null) {
             return null;
         }
+        cropAndWriteImage(bufferedProfileImage, imageDestination);
+        return imageDestination.getName();
+    }
+
+    private void cropAndWriteImage(BufferedImage bufferedProfileImage, File destFile) throws IOException {
         int height = bufferedProfileImage.getHeight();
         int width = bufferedProfileImage.getWidth();
         BufferedImage out;
@@ -64,8 +62,13 @@ public class FileStorageService implements StorageService {
         } else {
             out = bufferedProfileImage;
         }
-        return out;
+        Thumbnails.of(out)
+                .outputQuality(0.7)
+                .size(out.getWidth(), out.getHeight())
+                .outputFormat("jpg")
+                .toFile(destFile);
     }
+
 
     @Override
     public boolean delete(User user) {
