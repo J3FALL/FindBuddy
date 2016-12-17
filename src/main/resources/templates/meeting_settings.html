@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/resources/css/style.css"/>
     <link rel="stylesheet" href="/resources/css/create_meeting.css"/>
     <link rel="stylesheet" href="/resources/css/materialize.clockpicker.css"/>
-
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -148,10 +147,10 @@
                     <div class="row" id="title-row">
                         <div class="row">
                             <div class="input-field col s6 custom-input-field">
-                                <input id="title" type="text" name="title"
-                                       th:value="${meeting.title}"/>
-                                <label for="title" class="label-field">Заголовок
+                                <label class="label-field active">Заголовок
                                     встречи</label>
+                                <input id="title" type="text" name="title"
+                                       th:value="${meeting.title}" placeholder=""/>
                             </div>
                         </div>
                     </div>
@@ -165,28 +164,29 @@
                                     Category
                                 </option>
                             </select>
-                            <label class="label-field">Категория</label>
+                            <label class="category-label">Категория</label>
                         </div>
                         <div class="input-field col s12 m6 l6 custom-input-field">
-                            <label class="label-field" for="location">Место на карте</label>
+                            <label class="label-field active" for="location">Место на карте</label>
                             <input id="location" type="text" name="location"
-                                   readonly="readonly"/>
+                                   readonly="readonly" placeholder=""/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 m6 l3 custom-input-field" id="date">
                             <input type="date" class="datepicker" id="datepicker" name="date"
-                                   th:value="${meeting.convertDateToPickerFormat()}"/>
-                            <label for="datepicker" class="label-field">Дата</label>
+                                   th:value="${meeting.convertDateToPickerFormat()}" placeholder=""/>
+                            <label for="datepicker" class="label-field active">Дата</label>
                         </div>
                         <div class="input-field col s12 m6 l3 custom-input-field" id="time">
-                            <label class="label-field" for="timepicker">Время</label>
+                            <label class="label-field active" for="timepicker">Время</label>
                             <input id="timepicker" class="timepicker" type="time" name="time"
-                                   th:value="${meeting.convertTimeToPickerFormat()}"/>
+                                   th:value="${meeting.convertTimeToPickerFormat()}" placeholder=""/>
                         </div>
                         <div class="input-field col s6 custom-input-field">
-                            <input th:value="${meeting.station}" id="station" type="text" name="station" disabled="disabled" readonly="readonly"/>
-                            <label class="label-field">Метро</label>
+                            <input th:value="${meeting.station}" id="station" type="text"
+                                   name="station" disabled="disabled" readonly="readonly" placeholder=""/>
+                            <label class="label-field active">Метро</label>
                         </div>
                     </div>
                     <div class="row">
@@ -195,8 +195,9 @@
                                 <textarea id="description"
                                           class="materialize-textarea custom-text-area"
                                           name="description"
-                                          th:text="${meeting.description}"></textarea>
-                                <label class="label-field" for="description">Описание</label>
+                                          th:text="${meeting.description}"
+                                          placeholder=""></textarea>
+                                <label class="label-field active" for="description">Описание</label>
                             </div>
                         </div>
                     </div>
@@ -229,10 +230,10 @@
 <script type="text/javascript" src="/resources/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/materialize.min.js"></script>
 <script type="text/javascript" src="/resources/js/materialize.clockpicker.js"></script>
-<script type="text/javascript" src="/resources/js/meeting_settings.js"></script>
 <script type="text/javascript" src="/resources/js/moment.js"></script>
-<script type="text/javascript" src="/resources/js/search.js"></script>
+
 <script>
+//    Materialize.updateTextFields();
     $(".button-collapse").sideNav();
     $('.collapsible').collapsible();
     $('ul.tabs').tabs();
@@ -263,6 +264,9 @@
                                    donetext: "Готово"
                                });
 </script>
+<script type="text/javascript" src="/resources/js/meeting_settings.js"></script>
+<script type="text/javascript" src="/resources/js/search.js"></script>
+
 <script async="async" defer="defer"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbz_EN53yG23n_V_ciq76n_7Fr2E0Y1u8&amp;libraries=places&amp;callback=initMap">
 </script>

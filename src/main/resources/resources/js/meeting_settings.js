@@ -237,7 +237,6 @@ $(document).ready(function () {
                                    service.textSearch(request, function (results, status) {
                                        console.log(results);
                                        $("#station").val(results[0].name);
-                                       Materialize.updateTextFields();
                                    });
                                },
                                error: function (xhr) {
@@ -254,7 +253,6 @@ $(document).ready(function () {
 function setAddress(response) {
     var address = response.results[0]['formatted_address'].split(',');
     $("#location").val(address[0] + address[1] + ", " + address[2]);
-    Materialize.updateTextFields();
 }
 
 $("#location").click(function () {
