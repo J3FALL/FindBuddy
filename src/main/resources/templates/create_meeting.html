@@ -7,9 +7,9 @@
     <link type="text/css" rel="stylesheet" href="../resources/css/materialize.min.css"
           media="screen,projection"/>
     <link rel="stylesheet" href="../resources/css/style.css"/>
-    <link rel="stylesheet" href="../resources/css/create_meeting.css"/>
-    <link rel="stylesheet" href="../resources/css/materialize.clockpicker.css"/>
 
+    <link rel="stylesheet" href="../resources/css/materialize.clockpicker.css"/>
+    <link rel="stylesheet" href="../resources/css/create_meeting.css"/>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
@@ -143,40 +143,38 @@
                     <div class="row" id="title-row">
                         <div class="row">
                             <div class="input-field col s6 custom-input-field">
-                                <input id="title" type="text" name="title" required="" aria-required="true" />
-                                <label for="title" class="label-field" data-error="test">Заголовок встречи</label>
+                                <input id="title" type="text" name="title" style="margin-bottom: 0"/>
+                                <label for="title" class="label-field">Заголовок встречи</label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6 custom-input-field">
-                            <select id="category" name="category_id" required="required">
-                                <option value="" disabled="disabled" selected="selected">Выберите категорию</option>
+                            <select id="category_id" name="category_id">
+                                <option value="choose-category" selected="selected">Выберите категорию</option>
                                 <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
                             </select>
-                            <label for="category" class="label-field" >Категория</label>
+                            <label for="category_id" class="label-field" >Категория</label>
                         </div>
-                        <div class="input-field col s6 custom-input-field">
-                            <select id ="station" name="station_id">
-                                <option value="0" disabled="disabled" selected="selected">Выберите метро</option>
-                                <option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}">Station</option>
-                            </select>
-                            <label class="label-field">Метро</label>
+                        <div class="input-field col s12 m6 l6 custom-input-field">
+                            <label class="label-field" for="location">Место на карте</label>
+                            <input id="location" type="text" name="location" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12 m6 l3 custom-input-field" id="date">
-                            <input type="date" class="datepicker" id="datepicker" name="date" required="" aria-required="true"/>
+                        <div class="input-field col s12 m6 l3 custom-input-field " id="date">
+                            <input type="date" class="datepicker" id="datepicker" name="date"/>
                             <label for="datepicker" class="label-field">Дата</label>
                         </div>
                         <div class="input-field col s12 m6 l3 custom-input-field" id="time">
                             <label class="label-field" for="timepicker">Время</label>
-                            <input id="timepicker" class="timepicker" type="time" name="time" required="" aria-required="true"/>
+                            <input id="timepicker" class="timepicker" type="time" name="time"/>
                         </div>
-                        <div class="input-field col s12 m6 l6 custom-input-field" id="location">
-                            <label class="label-field" for="location">Место на карте</label>
-                            <input id="location_input" type="text" name="location" readonly="readonly"/>
+                        <div class="input-field col s6 custom-input-field station-wrapper">
+                            <input id="station" type="text" name="station" disabled="disabled" readonly="readonly" />
+                            <label class="label-field station-label">Метро</label>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="row">
@@ -214,7 +212,6 @@
 <script type="text/javascript" src="../resources/js/materialize.min.js"></script>
 <script type="text/javascript" src="../resources/js/materialize.clockpicker.js"></script>
 <script type="text/javascript" src="../resources/js/create_meeting.js"></script>
-<script type="text/javascript" src="../resources/js/jquery.validate.js"></script>
 <script type="text/javascript" src="../resources/js/moment.js"></script>
 <script type="text/javascript" src="../resources/js/search.js"></script>
 <script>
@@ -246,7 +243,7 @@
                                });
 </script>
 <script async="async" defer="defer"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsEM2yT9W6NrpKA8HEkDG3VLaa1K12A34&amp;callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbz_EN53yG23n_V_ciq76n_7Fr2E0Y1u8&amp;libraries=places&amp;callback=initMap">
 </script>
 </body>
 </html>

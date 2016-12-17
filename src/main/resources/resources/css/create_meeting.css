@@ -8,8 +8,13 @@
 
 }
 
-#location_input {
-    border-bottom: 1px solid #9e9e9e !important;
+#location {
+    border-bottom: 1px solid #9e9e9e;
+    color: rgba(0,0,0,0.87) !important;
+}
+
+#station {
+    border-bottom: 1px solid #9e9e9e;
     color: rgba(0,0,0,0.87) !important;
 }
 
@@ -29,4 +34,18 @@ label[data-error]:after {
 
 .custom-text-area {
     min-height: 1rem !important;
+}
+
+.station-wrapper:focus {
+    outline: none;
+}
+
+.station-label {
+    color: #9e9e9e !important;
+}
+
+@media screen and (max-width: 388px) {
+    #cancel-button {
+        margin-top: 3%;
+    }
 }

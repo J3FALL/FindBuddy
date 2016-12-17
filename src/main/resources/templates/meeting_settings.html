@@ -98,6 +98,7 @@
                     <div class="collapsible-body">
                         <ul>
                             <li><a class="waves-effect" th:href="|/user/0|">Профиль</a></li>
+                            <li><a class="waves-effect" th:href="|/settings|">Настройки</a></li>
                             <li><a class="waves-effect" href="/logout">Выход</a></li>
                         </ul>
                     </div>
@@ -108,10 +109,13 @@
         <li th:if="${username}"><a href="/feed" class="waves-effect">Моя
             лента</a></li>
         <li><a href="/" class="waves-effect">Все встречи</a></li>
-        <li><a href="/categories" class="waves-effect" onclick="">Все теги</a></li>
+        <li><a href="/categories" class="waves-effect" onclick="">Все категории</a></li>
         <li>
             <div class="divider"></div>
         </li>
+        <li th:if="${username}"><a th:href="@{/meetings/create}"
+                                   class="waves-effect btn light-blue accent-1">Создать
+            встречу</a></li>
     </ul>
     <nav class="#d7ccc8 grey darken-1 fixed">
         <div class="nav-wrapper">
@@ -143,9 +147,10 @@
                     <div class="row" id="title-row">
                         <div class="row">
                             <div class="input-field col s6 custom-input-field">
-                                <input id="title" type="text" name="title" required="" aria-required="true"
+                                <input id="title" type="text" name="title"
                                        th:value="${meeting.title}"/>
-                                <label for="title" class="label-field" data-error="test">Заголовок встречи</label>
+                                <label for="title" class="label-field">Заголовок
+                                    встречи</label>
                             </div>
                         </div>
                     </div>
@@ -153,47 +158,55 @@
                         <div class="input-field col s6 custom-input-field">
                             <select id="category" name="category_id">
                                 <option value="" disabled="disabled">Выберите категорию</option>
-                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
-                                        th:selected="${meeting.categoryId} == ${category.id} ? 'true' : 'false'">Category</option>
+                                <option th:each="category : ${categories}" th:value="${category.id}"
+                                        th:text="${category.name}"
+                                        th:selected="${meeting.categoryId} == ${category.id} ? 'true' : 'false'">
+                                    Category
+                                </option>
                             </select>
-                            <label class="label-field" >Категория</label>
+                            <label class="label-field">Категория</label>
                         </div>
-                        <div class="input-field col s6 custom-input-field">
-                            <select id ="station" name="station_id" th:selected="${meeting.stationId}">
-                                <option value="" disabled="disabled">Выберите метро</option>
-                                <option th:each="station : ${stations}" th:value="${station.id}" th:text="${station.name}">Station</option>
-                            </select>
-                            <label class="label-field">Метро</label>
+                        <div class="input-field col s12 m6 l6 custom-input-field">
+                            <label class="label-field" for="location">Место на карте</label>
+                            <input id="location" type="text" name="location"
+                                   readonly="readonly"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 m6 l3 custom-input-field" id="date">
-                            <input type="date" class="datepicker" id="datepicker" name="date" required="" aria-required="true" th:value="${meeting.convertDateToPickerFormat()}"/>
+                            <input type="date" class="datepicker" id="datepicker" name="date"
+                                   th:value="${meeting.convertDateToPickerFormat()}"/>
                             <label for="datepicker" class="label-field">Дата</label>
                         </div>
                         <div class="input-field col s12 m6 l3 custom-input-field" id="time">
                             <label class="label-field" for="timepicker">Время</label>
-                            <input id="timepicker" class="timepicker" type="time" name="time" required="" aria-required="true" th:value="${meeting.convertTimeToPickerFormat()}"/>
+                            <input id="timepicker" class="timepicker" type="time" name="time"
+                                   th:value="${meeting.convertTimeToPickerFormat()}"/>
                         </div>
-                        <div class="input-field col s12 m6 l6 custom-input-field" id="location">
-                            <label class="label-field" for="location">Место на карте</label>
-                            <input id="location_input" type="text" name="location" readonly="readonly"/>
+                        <div class="input-field col s6 custom-input-field">
+                            <input th:value="${meeting.station}" id="station" type="text" name="station" disabled="disabled" readonly="readonly"/>
+                            <label class="label-field">Метро</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="row">
                             <div class="input-field col s12 custom-input-field ">
-                                <textarea id="description" class="materialize-textarea custom-text-area" name="description" th:text="${meeting.description}"></textarea>
+                                <textarea id="description"
+                                          class="materialize-textarea custom-text-area"
+                                          name="description"
+                                          th:text="${meeting.description}"></textarea>
                                 <label class="label-field" for="description">Описание</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <button class="btn waves-effect waves-light" type="submit" name="action" id="publish-button" th:attr="meeting=${meeting.id}">Опубликовать
+                        <button class="btn waves-effect waves-light" type="submit" name="action"
+                                id="publish-button" th:attr="meeting=${meeting.id}">Опубликовать
                             <i class="material-icons right">send</i>
                         </button>
-                        <a class="btn waves-effect waves-light red" name="action" id="cancel-button">Отмена
+                        <a class="btn waves-effect waves-light red" name="action"
+                           id="cancel-button">Отмена
                             <i class="material-icons right">cancel</i>
                         </a>
                     </div>
@@ -205,7 +218,7 @@
     <!-- Modal Structure -->
     <div id="modal1" class="modal modal-fixed-footer">
         <div class="modal-content">
-            <div id="map" th:attr="lat=${meeting.latitude}, lng=${meeting.longitude}"></div>
+            <div id="map" th:attr="data-lat=${meeting.latitude}, data-lng=${meeting.longitude}"></div>
         </div>
         <div class="modal-footer">
             <a class="modal-action modal-close waves-effect waves-green btn-flat ">Ок</a>
@@ -216,7 +229,6 @@
 <script type="text/javascript" src="/resources/js/materialize.min.js"></script>
 <script type="text/javascript" src="/resources/js/materialize.clockpicker.js"></script>
 <script type="text/javascript" src="/resources/js/meeting_settings.js"></script>
-<script type="text/javascript" src="/resources/js/jquery.validate.js"></script>
 <script type="text/javascript" src="/resources/js/moment.js"></script>
 <script type="text/javascript" src="/resources/js/search.js"></script>
 <script>
@@ -227,16 +239,19 @@
     $('.datepicker').pickadate({
                                    selectMonth: true,
                                    selectYears: 1,
-                                   monthsFull: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
+                                   monthsFull: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май',
+                                                'Июнь', 'Июль', 'Август',
                                                 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-                                   monthsShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
+                                   monthsShort: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май',
+                                                 'Июнь', 'Июль', 'Август',
                                                  'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-                                   weekdaysFull: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+                                   weekdaysFull: ['Понедельник', 'Вторник', 'Среда', 'Четверг',
+                                                  'Пятница', 'Суббота', 'Воскресенье'],
                                    weekdaysShort: ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'],
                                    today: "Сегодня",
                                    clear: "",
                                    close: "Закрыть",
-                                   min : new Date()
+                                   min: new Date()
                                });
     $('#description').trigger('autoresize');
 </script>
@@ -248,7 +263,7 @@
                                });
 </script>
 <script async="async" defer="defer"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsEM2yT9W6NrpKA8HEkDG3VLaa1K12A34&amp;callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbz_EN53yG23n_V_ciq76n_7Fr2E0Y1u8&amp;libraries=places&amp;callback=initMap">
 </script>
 </body>
 </html>
