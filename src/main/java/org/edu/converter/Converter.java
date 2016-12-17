@@ -41,6 +41,7 @@ public class Converter {
                 .byDefault()
                 .customize(
                         new CustomMapper<User, UserDto>() {
+
                             @Override
                             public void mapAtoB(User user, UserDto userDto, MappingContext context) {
                                 Set<MeetingDto> createdMeetings = new HashSet<>();
@@ -56,8 +57,6 @@ public class Converter {
         mapperFactory.classMap(Meeting.class, MeetingDto.class)
                 .byDefault()
                 .field("author.id", "authorId")
-                .field("station.id", "stationId")
-                .field("station.name", "stationName")
                 .field("category.id", "categoryId")
                 .field("category.name", "categoryName")
                 .field("author.photo", "authorPhoto")

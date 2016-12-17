@@ -3,11 +3,9 @@ package org.edu.service.impl;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.edu.dao.CategoryDao;
 import org.edu.dao.MeetingDao;
-import org.edu.dao.StationDao;
 import org.edu.dao.UserDao;
 import org.edu.model.Category;
 import org.edu.model.Meeting;
-import org.edu.model.Station;
 import org.edu.model.User;
 import org.edu.service.MeetingService;
 import org.edu.util.NullAwareBeanUtilsBean;
@@ -36,18 +34,13 @@ public class MeetingServiceImpl implements MeetingService {
     @Autowired
     CategoryDao categoryDao;
 
-    @Autowired
-    StationDao stationDao;
-
     private Map<String, List<Meeting>> waitingUsersNewMeetings = new HashMap<>();
 
     @Override
     public void createMeeting(Meeting meeting, Principal principal) {
         User user = userDao.findByEmail(principal.getName());
-        Station station = stationDao.findOne(meeting.getStation().getId());
         Category category = categoryDao.findOne(meeting.getCategory().getId());
         meeting.setAuthor(user);
-        meeting.setStation(station);
         meeting.setCategory(category);
         //meeting.setCreateDate(Calendar.getInstance().getTime());
         meetingDao.create(meeting);
@@ -93,14 +86,9 @@ public class MeetingServiceImpl implements MeetingService {
     public boolean updateMeeting(Meeting meeting, Principal principal) {
         User principalUser = userDao.findByEmail(principal.getName());
         Category category = null;
-        Station station = null;
         if (meeting.getCategory() != null) {
             category = categoryDao.findOne(meeting.getCategory().getId());
         }
-        if (meeting.getStation() != null) {
-            station = stationDao.findOne(meeting.getStation().getId());
-        }
-
         Meeting checkingMeeting = meetingDao.findOne(meeting.getId());
         if (checkingMeeting != null && checkingMeeting.getAuthor().getId() == principalUser.getId()) {
             BeanUtilsBean notNull = new NullAwareBeanUtilsBean();
@@ -113,9 +101,6 @@ public class MeetingServiceImpl implements MeetingService {
             checkingMeeting.setAuthor(principalUser);
             if (category != null) {
                 checkingMeeting.setCategory(category);
-            }
-            if (station != null) {
-                checkingMeeting.setStation(station);
             }
             meetingDao.update(checkingMeeting);
             return true;
@@ -132,7 +117,6 @@ public class MeetingServiceImpl implements MeetingService {
             checkingMeeting.getAuthor().getCreatedMeetings().remove(checkingMeeting);
             checkingMeeting.getSubscribedUsers().clear();
             checkingMeeting.getCategory().deleteMeeting(checkingMeeting);
-            checkingMeeting.getStation().getMeetings().remove(checkingMeeting);
             meetingDao.delete(checkingMeeting);
             return true;
         }

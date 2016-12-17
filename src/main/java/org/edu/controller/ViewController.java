@@ -8,12 +8,10 @@ import org.edu.model.User;
 import org.edu.model.dto.CategoryDto;
 import org.edu.model.dto.CommentDto;
 import org.edu.model.dto.MeetingDto;
-import org.edu.model.dto.StationDto;
 import org.edu.model.dto.UserDto;
 import org.edu.service.CategoryService;
 import org.edu.service.CommentService;
 import org.edu.service.MeetingService;
-import org.edu.service.StationService;
 import org.edu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,9 +45,6 @@ public class ViewController {
 
     @Autowired
     private CategoryService categoryService;
-
-    @Autowired
-    private StationService stationService;
 
     @Autowired
     private CommentService commentService;
@@ -227,8 +222,6 @@ public class ViewController {
 
         model.addAttribute("categories",
                 Converter.convert(categoryService.getAllCategories(), CategoryDto.class));
-        model.addAttribute("stations",
-                Converter.convert(stationService.getAllStations(), StationDto.class));
         setHeaderVariables(model, principal);
         return "create_meeting";
     }
@@ -287,7 +280,6 @@ public class ViewController {
                 model.addAttribute("meeting", Converter.convert(meeting, MeetingDto.class));
             else return "access_denied";
         }
-        model.addAttribute("stations", stationService.getAllStations());
         model.addAttribute("categories", categoryService.getAllCategories());
         return "meeting_settings";
     }

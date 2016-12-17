@@ -4,13 +4,11 @@ import org.edu.dao.CategoryDao;
 import org.edu.dao.CommentDao;
 import org.edu.dao.PrivilegeDao;
 import org.edu.dao.RoleDao;
-import org.edu.dao.StationDao;
 import org.edu.dao.UserDao;
 import org.edu.model.Category;
 import org.edu.model.Comment;
 import org.edu.model.Privilege;
 import org.edu.model.Role;
-import org.edu.model.Station;
 import org.edu.model.User;
 import org.edu.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,15 +47,10 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
     CategoryDao categoryDao;
 
     @Autowired
-    StationDao stationDao;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     StorageService storageService;
-
-
 
 
     @Override
@@ -111,11 +104,6 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
         category2.setName("Концерт");
         category2.setUsers(new HashSet<>(Arrays.asList(user)));
         createIfNotFound(category2);
-        final Station station = new Station();
-        station.setId(1);
-        station.setColor("blue");
-        station.setName("Невский проспект");
-        createIfNotFound(station);
         storageService.init();
         alreadySetup = true;
     }
@@ -165,14 +153,5 @@ public class SetupLoader implements ApplicationListener<ContextRefreshedEvent> {
             categoryDao.create(newCategory);
         }
         return category;
-    }
-
-    @Transactional
-    private Station createIfNotFound(final Station station) {
-        Station checkingStation = stationDao.findOne(station.getId());
-        if (checkingStation == null) {
-            stationDao.create(station);
-        }
-        return checkingStation;
     }
 }
