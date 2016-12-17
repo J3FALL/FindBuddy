@@ -192,4 +192,14 @@ public class MeetingServiceImpl implements MeetingService {
     public Long getMeetingBySearchStringNum(String searchString, int pageNum, int num) {
         return meetingDao.findMeetingBySearchStringNum(searchString, pageNum, num);
     }
+
+    @Override
+    public List<Meeting> getMeetingByCategory(long categoryId, int pageNum, int num) {
+        return meetingDao.findMeetingByCategory(categoryId, pageNum, num);
+    }
+
+    @Override
+    public Long getMeetingByCategoryNum(long categoryId, int pageNum, int num) {
+        return meetingDao.findMeetingByCategoryNum(categoryId, pageNum, num);
+    }
 }

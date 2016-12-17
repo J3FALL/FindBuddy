@@ -113,8 +113,8 @@ public class MeetingDto {
         return station;
     }
 
-    public void setStation(String stationName) {
-        this.station = stationName;
+    public void setStation(String station) {
+        this.station = station;
     }
 
     @JsonProperty("category_id")

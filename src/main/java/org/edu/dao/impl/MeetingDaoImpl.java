@@ -164,4 +164,23 @@ public class MeetingDaoImpl extends AbstractHibernateDao<Meeting> implements Mee
                 .uniqueResult();
 
     }
+
+    @Override
+    public List<Meeting> findMeetingByCategory(long categoryId, int pageNum, int num) {
+        List meetings = getCurrentSession()
+                .createQuery("from Meeting where category_id = :first")
+                .setParameter("first", categoryId)
+                .setFirstResult((pageNum - 1) * num)
+                .setMaxResults(num)
+                .list();
+        return meetings;
+    }
+
+    @Override
+    public Long findMeetingByCategoryNum(long categoryId, int pageNum, int num) {
+        return (Long) getCurrentSession()
+                .createQuery("select count(*) from Meeting where category_id = :first")
+                .setParameter("first", categoryId)
+                .uniqueResult();
+    }
 }

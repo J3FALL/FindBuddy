@@ -49,4 +49,8 @@ public interface MeetingService {
     List<Meeting> getMeetingBySearchString(String searchString, int pageNum, int num);
 
     Long getMeetingBySearchStringNum(String searchString, int pageNum, int num);
+
+    List<Meeting> getMeetingByCategory(long categoryId, int pageNum, int num);
+
+    Long getMeetingByCategoryNum(long categoryId, int pageNum, int num);
 }
