@@ -146,9 +146,9 @@ public class MeetingDaoImpl extends AbstractHibernateDao<Meeting> implements Mee
     public List findMeetingBySearchString(String searchString, int pageNum, int num) {
         System.out.println(searchString);
         List meetings = getCurrentSession()
-                .createQuery("from Meeting where title like :first or description like :second order by createDate")
+                .createNativeQuery("select * from meetings where title ilike :first order by create_date")
                 .setParameter("first", "%" + searchString + "%")
-                .setParameter("second", "%" + searchString + "%")
+                .addEntity(Meeting.class)
                 .setFirstResult((pageNum - 1) * num)
                 .setMaxResults(num)
                 .list();
@@ -158,9 +158,9 @@ public class MeetingDaoImpl extends AbstractHibernateDao<Meeting> implements Mee
     @Override
     public Long findMeetingBySearchStringNum(String searchString, int pageNum, int num) {
         return (Long) getCurrentSession()
-                .createQuery("select count(*) from Meeting where title like :first or description like :second")
+                .createNativeQuery("select count(*) from meetings where title ilike :first")
                 .setParameter("first", "%" + searchString + "%")
-                .setParameter("second", "%" + searchString + "%")
+                .addScalar("count", StandardBasicTypes.LONG)
                 .uniqueResult();
 
     }
