@@ -100,21 +100,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--<div style="margin-bottom: 0">-->
-                            <!--<a th:href="@{'/meeting/' + ${meeting.id}}" class="col l9" style="padding-left: 0">-->
-                            <!--<h5 class="meeting-header black-text"-->
-                            <!--style="display: inline-block"-->
-                            <!--th:text="${meeting.title}">-->
-                            <!--</h5>-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--<div class="meeting-date col l3 s4 m3 right">-->
-                            <!--<h5 class="center flow-text"-->
-                            <!--th:text="${meeting.convertDate()}"></h5>-->
-                            <!--&lt;!&ndash;<h5 class="right-align" style="margin: 0">октября</h5>&ndash;&gt;-->
-                            <!--<h5 class="flow-text center" style="margin-top: 0;"-->
-                            <!--th:text="${meeting.convertTime()}"></h5>-->
-                            <!--</div>-->
                             <div class="meeting-bottom col s8 left" style="padding-left: 0">
                                 <ul class="meeting-info">
                                     <li class="">
@@ -144,14 +129,14 @@
                     </li>
                     <!--/*@thymesVar id="leftArrowDisabled" type=""*/-->
                     <li th:unless="${leftArrowDisabled}" class="waves-effect">
-                        <a th:href="|${currentLocation}?pageNum=| + (${currentPageNum} - 1) + |&amp;category=${category}">
+                        <a th:href="|/${currentLocation}?pageNum=| + (${currentPageNum} - 1) + |&amp;category=${category}">
                             <i class="material-icons">chevron_left</i>
                         </a>
                     </li>
                     <!--/*@thymesVar id="active" type=""*/-->
                     <li th:each="i : ${#numbers.sequence(1, pageNum)}"
                         th:class="${active} == ${i} ? 'active waves-effect pagination_item' :  'waves-effect pagination_item'">
-                        <a th:href="|${currentLocation}?pageNum=| + ${currentPageNum} + |&amp;category=${category}|" th:text="${i}"></a>
+                        <a th:href="|/${currentLocation}?pageNum=| + (${i}) + |&amp;category=${category}|" th:text="${i}"></a>
                     </li>
                     <!--/*@thymesVar id="rightArrowDisabled" type=""*/-->
                     <li th:if="${rightArrowDisabled}" class="disabled">
@@ -161,7 +146,7 @@
                     </li>
                     <!--/*@thymesVar id="rightArrowDisabled" type=""*/-->
                     <li th:unless="${rightArrowDisabled}" class="waves-effect">
-                        <a th:href="|${currentLocation}?pageNum=| + (${currentPageNum} + 1) + |&amp;category=${category}|">
+                        <a th:href="|/${currentLocation}?pageNum=| + (${currentPageNum} + 1) + |&amp;category=${category}|">
                             <i class="material-icons">chevron_right</i>
                         </a>
                     </li>

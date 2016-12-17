@@ -151,7 +151,7 @@
                     <!--/*@thymesVar id="active" type=""*/-->
                     <li th:each="i : ${#numbers.sequence(1, pageNum)}"
                         th:class="${active} == ${i} ? 'active waves-effect pagination_item' :  'waves-effect pagination_item'">
-                        <a th:href="|${currentLocation}?pageNum=| + ${currentPageNum} + |&amp;searchString=${searchString}|" th:text="${i}"></a>
+                        <a th:href="|${currentLocation}?pageNum=| + ${i} + |&amp;searchString=${searchString}|" th:text="${i}"></a>
                     </li>
                     <!--/*@thymesVar id="rightArrowDisabled" type=""*/-->
                     <li th:if="${rightArrowDisabled}" class="disabled">
