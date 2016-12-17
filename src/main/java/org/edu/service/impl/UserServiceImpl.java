@@ -24,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -180,5 +181,15 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Meeting> getSubscriptions(long userId, int pageNum, int num) {
+        return userDao.findSubscriptions(userId, pageNum, num);
+    }
+
+    @Override
+    public Long getSubscriptionsNum(long userId, int pageNum, int num) {
+        return userDao.findSubscriptionsNum(userId, pageNum, num);
     }
 }

@@ -320,4 +320,21 @@ public class ViewController {
         model.addAttribute("categoryName", category.getName());
         return "meetings_category";
     }
+
+    @RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
+    public String getSubscriptions(Model model, @RequestParam(name = "pageNum", required = false) Integer pageNum,
+                                   Principal principal) {
+        setHeaderVariables(model, principal);
+        User user = userService.getUserByEmail(principal.getName());
+
+        if (pageNum == null)
+            pageNum = 1;
+        List<Meeting> subscriptions = userService.getSubscriptions(user.getId(), pageNum, meetingOnPageNum);
+        double pageCount =
+                Math.ceil(userService.getSubscriptionsNum(user.getId(), pageNum, meetingOnPageNum) / (double) meetingOnPageNum);
+        if (subscriptions != null) {
+            setMeetingVariables(model, Converter.convert(subscriptions, MeetingDto.class), pageNum, "subscriptions", pageCount);
+        }
+        return "subscriptions";
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 
@@ -34,4 +35,8 @@ public interface UserService {
     String uploadPhoto(MultipartFile photo, Principal principal);
 
     boolean deletePhoto(Principal principal);
+
+    List<Meeting> getSubscriptions(long userId, int pageNum, int num);
+
+    Long getSubscriptionsNum(long userId, int pageNum, int num);
 }
