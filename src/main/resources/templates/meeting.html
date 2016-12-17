@@ -71,8 +71,8 @@
                 <div class="col s12 m10 l10 offset-l1 offset-m1">
                     <div class="meeting-author row">
                         <a th:if="${meeting.authorId}" th:href="|/user/${meeting.authorId}|">
-                            <img th:src="${meeting.authorPhoto} != null ? |/images/${meeting.authorPhoto}|
-                             : |/images/no_photo.png|"
+                            <img th:src="${meeting.authorPhoto} != null ? |/icons/${meeting.authorPhoto}|
+                             : |/icons/no_photo.png|"
                                  class="author-avatar responsive-img circle"
                                  style="vertical-align:middle"/>
                               <span class="black-text author-link"
@@ -163,7 +163,7 @@
                                     <div class="comment-author">
                                         <a th:href="|/user/${comment.authorId}|">
                                             <img th:src="${comment.authorPhoto} != null ?
-                                    |/images/${comment.authorPhoto}| : |/images/no_photo.png|"
+                                    |/icons/${comment.authorPhoto}| : |/icons/no_photo.png|"
                                                  class="author-avatar responsive-img circle"
                                                  style="vertical-align:middle"/>
                                     <span class="black-text author-link"

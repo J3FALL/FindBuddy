@@ -24,16 +24,19 @@ import javax.imageio.ImageIO;
 public class FileStorageService implements StorageService {
 
     private final String imagesLocation;
+    private final String iconLocation;
 
     @Autowired
     public FileStorageService(Environment env) {
         imagesLocation = env.getProperty("image.location");
+        iconLocation = env.getProperty("icon.location");
     }
 
     @Override
     public void init() {
         try {
             Files.createDirectory(Paths.get(imagesLocation));
+            Files.createDirectory(Paths.get(iconLocation));
         } catch (IOException e) {
             System.err.print("File already exists");
         }
@@ -41,16 +44,18 @@ public class FileStorageService implements StorageService {
 
     @Override
     public String store(MultipartFile photo, String userName) throws IOException {
-        File imageDestination = new File(imagesLocation + File.separator + LocalDateTime.now().hashCode() + ".jpg");
+        int imageName = LocalDateTime.now().hashCode();
+        File imageDestination = new File(imagesLocation + File.separator + imageName + ".jpg");
+        File iconDestination = new File(iconLocation + File.separator + imageName + ".jpg");
         BufferedImage bufferedProfileImage = ImageIO.read(photo.getInputStream());
         if (bufferedProfileImage == null) {
             return null;
         }
-        cropAndWriteImage(bufferedProfileImage, imageDestination);
+        cropAndWriteImage(bufferedProfileImage, imageDestination, iconDestination);
         return imageDestination.getName();
     }
 
-    private void cropAndWriteImage(BufferedImage bufferedProfileImage, File destFile) throws IOException {
+    private void cropAndWriteImage(BufferedImage bufferedProfileImage, File imageDestFile, File iconDestFile) throws IOException {
         int height = bufferedProfileImage.getHeight();
         int width = bufferedProfileImage.getWidth();
         BufferedImage out;
@@ -64,17 +69,24 @@ public class FileStorageService implements StorageService {
         }
         Thumbnails.of(out)
                 .outputQuality(0.7)
-                .size(out.getWidth(), out.getHeight())
+                .size(300, 300)
                 .outputFormat("jpg")
-                .toFile(destFile);
+                .toFile(imageDestFile);
+
+        Thumbnails.of(out)
+                .outputQuality(0.7)
+                .size(70, 70)
+                .outputFormat("jpg")
+                .toFile(iconDestFile);
     }
 
 
     @Override
     public boolean delete(User user) {
         if (user.getPhoto() != null) {
-            File file = new File(imagesLocation + File.separator + user.getPhoto());
-            return file.delete();
+            File image = new File(imagesLocation + File.separator + user.getPhoto());
+            File icon = new File(iconLocation + File.separator + user.getPhoto());
+            return image.delete() && icon.delete();
         }
         return false;
     }

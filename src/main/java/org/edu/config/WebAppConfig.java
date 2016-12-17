@@ -20,6 +20,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/resources/");
         registry.addResourceHandler("/images/**").addResourceLocations("file:" + env.getProperty("image.location"));
+        registry.addResourceHandler("/icons/**").addResourceLocations("file:" + env.getProperty("icon.location"));
     }
 
     @Bean

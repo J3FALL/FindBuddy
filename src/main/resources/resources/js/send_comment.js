@@ -24,8 +24,8 @@ function drawNewComment(newComment) {
     var date = moment(newComment.date).locale("ru").utcOffset(0, true).format("DD MMM HH:mm");
     var context = {
         authorLink: "/user/" + newComment.authorId,
-        authorPhoto: newComment.authorPhoto != null ? "/images/" + newComment.authorPhoto :
-                     "/images/no_photo.png" ,
+        authorPhoto: newComment.authorPhoto != null ? "/icons/" + newComment.authorPhoto :
+                     "/icons/no_photo.png" ,
         authorName: newComment.authorName,
         commentText: newComment.text,
         commentDate: date
